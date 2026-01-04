@@ -5,34 +5,28 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AppNavigator from './src/navigator/AppNavigator';
+import { SidebarProvider } from './src/store/SidebarContext';
+import Sidebar from './src/components/Sidebar';
+
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+    <SidebarProvider>
+      <SafeAreaProvider>
+        <StatusBar
+          barStyle={isDarkMode ? 'dark-content' : 'light-content'}
+          backgroundColor="#000000"
+          translucent={true}
+        />
+        <AppNavigator />
+        <Sidebar />
+      </SafeAreaProvider>
+    </SidebarProvider>
   );
 }
 
