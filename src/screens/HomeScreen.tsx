@@ -14,6 +14,7 @@ import ReportsSection from '../components/ReportsSection';
 import PanchangSection from '../components/PanchangSection';
 import HoroscopeSection from '../components/HoroscopeSection';
 import AstroAIPage from '../components/AstroAIPage';
+import ApiTestScreen from './ApiTestScreen';
 import { homeTabs } from '../data/data';
 
 export default function HomeScreen() {
@@ -23,6 +24,8 @@ export default function HomeScreen() {
     switch (selectedSection) {
       case '2025':
         return <Section2025 />;
+      case 'API Test':
+        return <ApiTestScreen />;
       case 'Astro Shop':
         return <AstroShopSection />;
       case 'Consult':

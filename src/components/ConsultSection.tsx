@@ -8,49 +8,9 @@ import {
   FlatList,
 } from 'react-native';
 import { Heart, Briefcase, Star } from 'lucide-react-native';
+import { consultFilters, consultAstrologers } from '../data/data';
 
 export default function ConsultSection() {
-  const filterButtons = [
-    { label: 'All', icon: null },
-    { label: 'Love', icon: <Heart size={16} color="#FFFFFF" /> },
-    { label: 'Career', icon: <Briefcase size={16} color="#FFFFFF" /> },
-    { label: 'Marriage', icon: null },
-  ];
-
-  const astrologers = [
-    {
-      name: 'Mr. Krishnam',
-      type: 'Vedic astrology',
-      rating: '4.5',
-      reviews: '288947',
-      price: 'FREE',
-      verified: true,
-    },
-    {
-      name: 'Rrupa',
-      type: 'Tarot',
-      rating: '4.9',
-      reviews: '15',
-      price: '₹30/min',
-      verified: true,
-    },
-    {
-      name: 'Anika',
-      type: 'Vedic astrology',
-      rating: '4.4',
-      reviews: '10',
-      price: '₹17/min',
-      verified: true,
-    },
-    {
-      name: 'Nirmla D',
-      type: 'Numerology',
-      rating: '4.5',
-      reviews: '6',
-      price: '₹36/min',
-      verified: true,
-    },
-  ];
 
   return (
     <ScrollView style={styles.container}>
@@ -59,28 +19,34 @@ export default function ConsultSection() {
         showsHorizontalScrollIndicator={false}
         style={styles.filterContainer}
       >
-        {filterButtons?.map((btn, idx) => (
-          <TouchableOpacity
-            key={idx}
-            style={[styles.filterButton, idx === 0 && styles.activeFilter]}
-          >
-            <View style={styles.filterButtonContent}>
-              {btn.icon}
-              <Text
-                style={[
-                  styles.filterText,
-                  idx === 0 && styles.activeFilterText,
-                ]}
-              >
-                {btn.label}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {consultFilters?.map((btn, idx) => {
+          let IconComponent = null;
+          if (btn.iconKey === 'Heart') IconComponent = Heart;
+          if (btn.iconKey === 'Briefcase') IconComponent = Briefcase;
+          
+          return (
+            <TouchableOpacity
+              key={idx}
+              style={[styles.filterButton, idx === 0 && styles.activeFilter]}
+            >
+              <View style={styles.filterButtonContent}>
+                {IconComponent && <IconComponent size={16} color="#FFFFFF" />}
+                <Text
+                  style={[
+                    styles.filterText,
+                    idx === 0 && styles.activeFilterText,
+                  ]}
+                >
+                  {btn.label}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </ScrollView>
 
       <FlatList
-        data={astrologers}
+        data={consultAstrologers}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.astrologerCard}>
