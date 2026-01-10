@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Menu, Wallet, Bell, Search } from 'lucide-react-native';
 import { useSidebar } from '../store/SidebarContext';
+import { appConfig } from '../data/data';
 
 export default function Header() {
   const { toggleSidebar } = useSidebar();
@@ -12,7 +13,7 @@ export default function Header() {
         <TouchableOpacity onPress={toggleSidebar}>
           <Menu size={24} color="#FFFFFF" />
         </TouchableOpacity>
-        <Text style={styles.title}>AstroSage AI</Text>
+        <Text style={styles.title}>{appConfig.appName}</Text>
       </View>
       <View style={styles.right}>
         <TouchableOpacity>
@@ -21,7 +22,7 @@ export default function Header() {
         <TouchableOpacity style={styles.bellContainer}>
           <Bell size={24} color="#FFFFFF" />
           <View style={styles.notificationBadge}>
-            <Text style={styles.notificationText}>80</Text>
+            <Text style={styles.notificationText}>{appConfig.notificationCount}</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity>

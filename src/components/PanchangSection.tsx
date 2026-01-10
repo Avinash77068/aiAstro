@@ -1,26 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { panchangItems } from '../data/data';
 
 export default function PanchangSection() {
-  const items = [
-    { icon: '☀️', title: 'Daily Panchang' },
-    { icon: '📅', title: 'Monthly Calendar' },
-    { icon: '🕉️', title: 'Hindu Calendar' },
-    { icon: '☀️', title: 'Yearly Vrat' },
-    { icon: '🎉', title: 'Festival 2026' },
-    { icon: '⏰', title: 'Hora' },
-    { icon: '🕐', title: 'Chogadia' },
-    { icon: '🕐', title: 'Do Ghati' },
-    { icon: '🕐', title: 'Rahu Kaal' },
-    { icon: '📅', title: 'Other Calendars' },
-    { icon: '🔮', title: 'Panchak' },
-    { icon: '⚡', title: 'Bhadra' },
-  ];
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.grid}>
-        {items.map((item, idx) => (
+        {panchangItems.map((item, idx) => (
           <View key={idx} style={styles.gridItem}>
             <Text style={styles.itemIcon}>{item.icon}</Text>
             <Text style={styles.itemTitle}>{item.title}</Text>

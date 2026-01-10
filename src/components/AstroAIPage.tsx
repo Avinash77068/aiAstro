@@ -15,44 +15,9 @@ import {
   Heart,
   MessageCircle,
 } from 'lucide-react-native';
+import { aiOptions, quickActions, astrologers } from '../data/data';
 
 export default function AstroAIPage() {
-  const aiOptions = [
-    {
-      icon: <Text style={styles.optionIcon}>🔶</Text>,
-      title: 'Kundli AI',
-      bgColor: '#FBBF24',
-    },
-    {
-      icon: <Text style={styles.optionIcon}>💛</Text>,
-      title: 'Matching',
-      bgColor: '#374151',
-    },
-    {
-      icon: <Text style={styles.optionIcon}>⚖️</Text>,
-      title: 'Horoscope',
-      bgColor: '#374151',
-    },
-    {
-      icon: <Text style={styles.optionIcon}>📄</Text>,
-      title: 'Predictions',
-      bgColor: '#374151',
-    },
-  ];
-
-  const quickActions = [
-    { icon: <Briefcase size={24} color="#FBBF24" />, label: 'Career' },
-    { icon: <User size={24} color="#FBBF24" />, label: 'Mental Health' },
-    { icon: <Calendar size={24} color="#FBBF24" />, label: 'Today' },
-    { icon: <Heart size={24} color="#FBBF24" />, label: 'Love' },
-  ];
-
-  const astrologers = [
-    { name: 'Mr. Krishnam', price: 'FREE' },
-    { name: 'Neelabh', price: '₹18/min' },
-    { name: 'Virendra R.', price: '₹18/min' },
-    { name: 'Atrendra', price: '₹18/min' },
-  ];
 
   return (
     <ScrollView style={styles.container}>
@@ -67,7 +32,7 @@ export default function AstroAIPage() {
             style={[styles.aiOption, { backgroundColor: option.bgColor }]}
           >
             <View style={styles.aiOptionContent}>
-              {option.icon}
+              <Text style={styles.optionIcon}>{option.icon}</Text>
               <Text
                 style={[
                   styles.aiOptionText,
@@ -97,12 +62,18 @@ export default function AstroAIPage() {
         showsHorizontalScrollIndicator={false}
         style={styles.quickActions}
       >
-        {quickActions.map((action, idx) => (
-          <TouchableOpacity key={idx} style={styles.quickAction}>
-            <View style={styles.quickActionIcon}>{action.icon}</View>
-            <Text style={styles.quickActionLabel}>{action.label}</Text>
-          </TouchableOpacity>
-        ))}
+        {quickActions.map((action, idx) => {
+          const IconComponent = { Briefcase, User, Calendar, Heart }[action.iconKey];
+          if (!IconComponent) return null;
+          return (
+            <TouchableOpacity key={idx} style={styles.quickAction}>
+              <View style={styles.quickActionIcon}>
+                <IconComponent size={24} color="#FBBF24" />
+              </View>
+              <Text style={styles.quickActionLabel}>{action.label}</Text>
+            </TouchableOpacity>
+          );
+        })}
       </ScrollView>
 
       <View style={styles.sectionHeader}>

@@ -6,22 +6,9 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { section2025Items } from '../data/data';
 
 export default function Section2025() {
-  const items = [
-    { icon: '⚖️', title: 'Horoscope 2025' },
-    { icon: '🪐', title: 'Jupiter Transit 2025' },
-    { icon: '🪐', title: 'Saturn Transit 2025' },
-    { icon: '💛', title: 'Love Horoscope 2025' },
-    { icon: '💼', title: 'Career Horoscope 2025' },
-    { icon: '🧘', title: 'Chinese Horoscope 2025' },
-    { icon: '🎓', title: 'Education Horoscope 2025' },
-    { icon: '💰', title: 'Finance Horoscope 2025' },
-    { icon: '📖', title: 'Lalkitab Horoscope 2025' },
-    { icon: '🔢', title: 'Numerology 2025' },
-    { icon: '💑', title: 'Vivah Muhurat 2025' },
-    { icon: '👶', title: 'Mundan Muhurat 2025' },
-  ];
 
   return (
     <ScrollView style={styles.container}>
@@ -35,7 +22,7 @@ export default function Section2025() {
       </View>
 
       <View style={styles.grid}>
-        {items.map((item, idx) => (
+        {section2025Items.map((item, idx) => (
           <View key={idx} style={styles.gridItem}>
             <Text style={styles.itemIcon}>{item.icon}</Text>
             <Text style={styles.itemTitle}>{item.title}</Text>

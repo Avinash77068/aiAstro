@@ -14,6 +14,7 @@ import ReportsSection from '../components/ReportsSection';
 import PanchangSection from '../components/PanchangSection';
 import HoroscopeSection from '../components/HoroscopeSection';
 import AstroAIPage from '../components/AstroAIPage';
+import { homeTabs } from '../data/data';
 
 export default function HomeScreen() {
   const [selectedSection, setSelectedSection] = useState('2025');
@@ -39,16 +40,7 @@ export default function HomeScreen() {
     }
   };
 
-  const tabs = [
-    'Home',
-    '2025',
-    'Astro Shop',
-    'Consult',
-    'Reports',
-    'Video',
-    'Panchang',
-    'Horoscope',
-  ];
+  const tabs = homeTabs;
 
   return (
     <View style={styles.container}>

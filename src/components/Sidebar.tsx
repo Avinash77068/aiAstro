@@ -23,6 +23,7 @@ import {
 } from 'lucide-react-native';
 import { useSidebar } from '../store/SidebarContext';
 import SidebarItem from './SidebarItem';
+import { sidebarMenuItems, appConfig } from '../data/data';
 
 const { width, height } = Dimensions.get('window');
 const SIDEBAR_WIDTH = 320;
@@ -61,57 +62,36 @@ const Sidebar: React.FC = () => {
               <User size={40} color="#9CA3AF" />
             </View>
             <View>
-              <Text style={styles.name}>918334904005</Text>
-              <Text style={styles.plan}>Basic</Text>
+              <Text style={styles.name}>{appConfig.userProfile.name}</Text>
+              <Text style={styles.plan}>{appConfig.userProfile.plan}</Text>
             </View>
           </View>
 
           {/* Menu Items */}
           <View style={styles.menu}>
-            <SidebarItem
-              icon={<Bell size={24} color="#FFFFFF" />}
-              text="Notification Setting"
-            />
-            <SidebarItem
-              icon={<Globe size={24} color="#FFFFFF" />}
-              text="Change Language"
-            />
-            <SidebarItem
-              icon={<TrendingUp size={24} color="#FFFFFF" />}
-              text="Upgrade Plan"
-            />
-            <SidebarItem
-              icon={<XCircle size={24} color="#FFFFFF" />}
-              text="Remove Ads"
-            />
-            <SidebarItem
-              icon={<MessageSquare size={24} color="#FFFFFF" />}
-              text="Feedback"
-            />
-            <SidebarItem
-              icon={<Star size={24} color="#FFFFFF" />}
-              text="Rate AstroSage AI"
-            />
-            <SidebarItem
-              icon={<Users size={24} color="#FFFFFF" />}
-              text="About Us"
-            />
-            <SidebarItem
-              icon={<FileText size={24} color="#FFFFFF" />}
-              text="Astrologer Registration"
-            />
-            <SidebarItem
-              icon={<BookOpen size={24} color="#FFFFFF" />}
-              text="Choose Your Kundli"
-            />
-            <SidebarItem
-              icon={<Download size={24} color="#FFFFFF" />}
-              text="Downloads"
-            />
-            <SidebarItem
-              icon={<Gift size={24} color="#FFFFFF" />}
-              text="Refer & Earn"
-            />
+            {sidebarMenuItems.map((item, idx) => {
+              const IconComponent = {
+                Bell,
+                Globe,
+                TrendingUp,
+                XCircle,
+                MessageSquare,
+                Star,
+                Users,
+                FileText,
+                BookOpen,
+                Download,
+                Gift,
+              }[item.iconKey];
+              if (!IconComponent) return null;
+              return (
+                <SidebarItem
+                  key={idx}
+                  icon={<IconComponent size={24} color="#FFFFFF" />}
+                  text={item.text}
+                />
+              );
+            })}
           </View>
         </View>
       </Animated.View>

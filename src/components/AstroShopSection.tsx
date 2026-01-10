@@ -6,22 +6,9 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { shopProducts } from '../data/data';
 
 export default function AstroShopSection() {
-  const products = [
-    { name: 'Brihat Kundli', img: '📋' },
-    { name: 'Rudraksha', img: '📿' },
-    { name: 'Yantra', img: '🔶' },
-    { name: 'Gemstone', img: '💎' },
-    { name: 'Mala', img: '📿' },
-    { name: 'Jadi', img: '🌿' },
-    { name: 'Services', img: '💰' },
-    { name: 'Kundli AI+', img: '📄' },
-    { name: 'CogniAstro', img: '🧠' },
-    { name: 'Miscellaneous', img: '✨' },
-    { name: 'Aroma', img: '🕯️' },
-    { name: 'Bracelet', img: '📿' },
-  ];
 
   return (
     <ScrollView style={styles.container}>
@@ -34,7 +21,7 @@ export default function AstroShopSection() {
       </View>
 
       <View style={styles.grid}>
-        {products?.map((product, idx) => (
+        {shopProducts?.map((product, idx) => (
           <View key={idx + 1} style={styles.gridItem}>
             <Text style={styles.itemIcon}>{product.img}</Text>
             <Text style={styles.itemTitle}>{product.name}</Text>

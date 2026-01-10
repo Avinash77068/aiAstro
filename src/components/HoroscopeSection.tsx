@@ -1,19 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { horoscopeItems } from '../data/data';
 
 export default function HoroscopeSection() {
-  const items = [
-    { icon: '📅', title: 'Daily' },
-    { icon: '📅', title: 'Weekly' },
-    { icon: '💛', title: 'Weekly Love' },
-    { icon: '📅', title: 'Monthly' },
-    { icon: '📅', title: 'Yearly' },
-  ];
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.grid}>
-        {items?.map((item, idx) => (
+        {horoscopeItems?.map((item, idx) => (
           <View key={idx + 1} style={styles.gridItem}>
             <Text style={styles.itemIcon}>{item.icon}</Text>
             <Text style={styles.itemTitle}>{item.title}</Text>

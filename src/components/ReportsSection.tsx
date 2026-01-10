@@ -6,22 +6,9 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { reports } from '../data/data';
 
 export default function ReportsSection() {
-  const reports = [
-    { icon: '📄', title: 'Life Report' },
-    { icon: '📅', title: 'Monthly Report' },
-    { icon: '📋', title: 'Daily Report' },
-    { icon: '🪐', title: 'Sade Sati Report' },
-    { icon: '📄', title: 'Ascendant Prediction' },
-    { icon: '📅', title: 'Annual Prediction' },
-    { icon: '🔄', title: 'Mangal Dosh' },
-    { icon: '🐍', title: 'Kaal Sarp Dosh' },
-    { icon: '🌙', title: 'Moon Sign' },
-    { icon: '📕', title: 'Lal Kitab Debt' },
-    { icon: '📕', title: 'Lal Kitab Teva' },
-    { icon: '👶', title: 'Baby Names' },
-  ];
 
   return (
     <ScrollView style={styles.container}>
