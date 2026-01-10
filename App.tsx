@@ -7,10 +7,9 @@
 
 import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import AppNavigator from './src/navigator/AppNavigator';
 import { SidebarProvider } from './src/store/SidebarContext';
 import Sidebar from './src/components/Sidebar';
-
+import RootNavigator from './src/navigator/RootNavigator';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -23,7 +22,7 @@ function App() {
           backgroundColor="#000000"
           translucent={true}
         />
-        <AppNavigator />
+        <RootNavigator />
         <Sidebar />
       </SafeAreaProvider>
     </SidebarProvider>
