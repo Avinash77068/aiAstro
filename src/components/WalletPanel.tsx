@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Wallet, X, CreditCard, TrendingUp, TrendingDown, Plus, ArrowUpRight, ArrowDownLeft } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
+import BottomModal from './BottomModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -84,17 +85,11 @@ export default function WalletPanel({ visible, onClose }: WalletPanelProps) {
   };
 
   return (
-    <Modal
+    <BottomModal
       visible={visible}
-      transparent={true}
-      animationType="slide"
-      onRequestClose={onClose}
-    >
-      <View style={styles.overlay}>
-        <TouchableOpacity style={styles.overlayTouchable} onPress={onClose} />
-
-        <View style={styles.panel}>
-          {/* Header */}
+      onClose={onClose}
+      header={
+        <>
           <View style={styles.header}>
             <View style={styles.headerLeft}>
               <Wallet size={24} color={COLORS.primary} />
@@ -104,6 +99,16 @@ export default function WalletPanel({ visible, onClose }: WalletPanelProps) {
               <X size={20} color={COLORS.textSecondary} />
             </TouchableOpacity>
           </View>
+        </>
+      }
+      showCloseButton={false}
+    >
+      <View style={styles.overlay}>
+        <TouchableOpacity style={styles.overlayTouchable} onPress={onClose} />
+
+        <View style={styles.panel}>
+          {/* Header */}
+       
 
           <ScrollView showsVerticalScrollIndicator={false}>
             {/* Balance Card */}
@@ -124,7 +129,9 @@ export default function WalletPanel({ visible, onClose }: WalletPanelProps) {
                 <Plus size={20} color={COLORS.textInverse} />
                 <Text style={styles.actionButtonText}>Add Money</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.actionButton, styles.actionButtonSecondary]}>
+              <TouchableOpacity
+                style={[styles.actionButton, styles.actionButtonSecondary]}
+              >
                 <ArrowUpRight size={20} color={COLORS.primary} />
                 <Text style={styles.actionButtonTextSecondary}>Send</Text>
               </TouchableOpacity>
@@ -136,7 +143,7 @@ export default function WalletPanel({ visible, onClose }: WalletPanelProps) {
                 { key: 'all', label: 'All' },
                 { key: 'credit', label: 'Credits' },
                 { key: 'debit', label: 'Debits' },
-              ].map((filter) => (
+              ].map(filter => (
                 <TouchableOpacity
                   key={filter.key}
                   style={[
@@ -148,7 +155,8 @@ export default function WalletPanel({ visible, onClose }: WalletPanelProps) {
                   <Text
                     style={[
                       styles.filterButtonText,
-                      selectedFilter === filter.key && styles.filterButtonTextActive,
+                      selectedFilter === filter.key &&
+                        styles.filterButtonTextActive,
                     ]}
                   >
                     {filter.label}
@@ -161,14 +169,18 @@ export default function WalletPanel({ visible, onClose }: WalletPanelProps) {
             <View style={styles.transactionSection}>
               <Text style={styles.sectionTitle}>Recent Transactions</Text>
 
-              {filteredTransactions.map((transaction) => {
+              {filteredTransactions.map(transaction => {
                 const IconComponent = transaction.icon;
                 return (
                   <View key={transaction.id} style={styles.transactionItem}>
                     <View style={styles.transactionIcon}>
                       <IconComponent
                         size={20}
-                        color={transaction.type === 'credit' ? COLORS.success : COLORS.error}
+                        color={
+                          transaction.type === 'credit'
+                            ? COLORS.success
+                            : COLORS.error
+                        }
                       />
                     </View>
 
@@ -200,7 +212,7 @@ export default function WalletPanel({ visible, onClose }: WalletPanelProps) {
           </ScrollView>
         </View>
       </View>
-    </Modal>
+    </BottomModal>
   );
 }
 

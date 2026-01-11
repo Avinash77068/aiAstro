@@ -8,7 +8,7 @@
 
   "android:clean": "cd android && ./gradlew clean",
 
-  "android:debug": "cd android && ./gradlew assembleDebug",
+  "android:debug": "npm run android",
 
   "android:release": "cd android && ./gradlew assembleRelease",
 

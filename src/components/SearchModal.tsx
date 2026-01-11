@@ -9,31 +9,16 @@ import {
   FlatList,
   Dimensions,
 } from 'react-native';
-import { Search, X, Clock, TrendingUp, Star, MessageCircle } from 'lucide-react-native';
-import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
+import { Search, X } from 'lucide-react-native';
+import {
+  COLORS,
+  TEXT_SIZES,
+  SPACING,
+  BORDER_RADIUS,
+} from '../constants/colors';
+import BottomModal from './BottomModal';
 
 const { width, height } = Dimensions.get('window');
-
-// Mock search data
-const searchData = {
-  recent: [
-    { id: '1', query: 'Gemini horoscope today', type: 'horoscope', icon: Star },
-    { id: '2', query: 'Career guidance', type: 'consultation', icon: MessageCircle },
-    { id: '3', query: 'Love compatibility', type: 'matching', icon: TrendingUp },
-  ],
-  suggestions: [
-    'Daily Horoscope',
-    'Love Horoscope',
-    'Career Prediction',
-    'Marriage Compatibility',
-    'Kundli Matching',
-    'Gemstone Recommendation',
-    'Panchang Today',
-    'Chinese Horoscope',
-    'Numerology',
-    'Vastu Consultation',
-  ],
-};
 
 interface SearchModalProps {
   visible: boolean;
@@ -42,26 +27,7 @@ interface SearchModalProps {
 
 export default function SearchModal({ visible, onClose }: SearchModalProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-
-  useEffect(() => {
-    if (searchQuery.trim()) {
-      setIsSearching(true);
-      // Mock search results
-      const filtered = searchData.suggestions.filter(item =>
-        item.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setSearchResults(filtered.map((item, index) => ({
-        id: `result_${index}`,
-        title: item,
-        type: 'suggestion',
-      })));
-    } else {
-      setIsSearching(false);
-      setSearchResults([]);
-    }
-  }, [searchQuery]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -72,140 +38,41 @@ export default function SearchModal({ visible, onClose }: SearchModalProps) {
     setIsSearching(false);
   };
 
-  const selectRecentSearch = (item: any) => {
-    setSearchQuery(item.query);
-    // Here you would navigate to the appropriate screen or perform the search
-    console.log('Selected:', item.query);
-  };
-
-  const selectSuggestion = (item: any) => {
-    setSearchQuery(item.title);
-    // Here you would navigate to the appropriate screen or perform the search
-    console.log('Selected suggestion:', item.title);
-  };
-
-  const renderRecentSearch = ({ item }: { item: any }) => {
-    const IconComponent = item.icon;
-    return (
-      <TouchableOpacity
-        style={styles.recentItem}
-        onPress={() => selectRecentSearch(item)}
-      >
-        <View style={styles.recentIcon}>
-          <IconComponent size={16} color={COLORS.textSecondary} />
-        </View>
-        <Text style={styles.recentText}>{item.query}</Text>
-        <Clock size={14} color={COLORS.textTertiary} />
-      </TouchableOpacity>
-    );
-  };
-
-  const renderSuggestion = ({ item }: { item: any }) => (
-    <TouchableOpacity
-      style={styles.suggestionItem}
-      onPress={() => selectSuggestion(item)}
-    >
-      <Search size={16} color={COLORS.textSecondary} />
-      <Text style={styles.suggestionText}>{item.title}</Text>
-    </TouchableOpacity>
-  );
-
   return (
-    <Modal
+    <BottomModal
+      showCloseButton={false}
       visible={visible}
-      transparent={true}
-      animationType="fade"
-      onRequestClose={onClose}
-    >
-      <View style={styles.overlay}>
-        <TouchableOpacity style={styles.overlayTouchable} onPress={onClose} />
-
-        <View style={styles.modal}>
-          {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.searchContainer}>
-              <Search size={20} color={COLORS.textSecondary} style={styles.searchIcon} />
-              <TextInput
-                style={styles.searchInput}
-                placeholder="Search astrology, horoscopes, consultations..."
-                placeholderTextColor={COLORS.textTertiary}
-                value={searchQuery}
-                onChangeText={handleSearch}
-                autoFocus={true}
-                returnKeyType="search"
-              />
-              {searchQuery.length > 0 && (
-                <TouchableOpacity onPress={clearSearch}>
-                  <X size={18} color={COLORS.textSecondary} />
-                </TouchableOpacity>
-              )}
-            </View>
-            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Text style={styles.cancelText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Content */}
-          <View style={styles.content}>
-            {isSearching ? (
-              // Search Results
-              <View style={styles.resultsSection}>
-                <Text style={styles.sectionTitle}>Search Results</Text>
-                <FlatList
-                  data={searchResults}
-                  keyExtractor={(item) => item.id}
-                  renderItem={renderSuggestion}
-                  showsVerticalScrollIndicator={false}
-                  contentContainerStyle={styles.resultsList}
-                  ListEmptyComponent={
-                    <View style={styles.emptyState}>
-                      <Search size={48} color={COLORS.textTertiary} />
-                      <Text style={styles.emptyStateTitle}>No results found</Text>
-                      <Text style={styles.emptyStateText}>
-                        Try different keywords or check your spelling
-                      </Text>
-                    </View>
-                  }
-                />
-              </View>
-            ) : (
-              // Recent Searches and Suggestions
-              <>
-                {/* Recent Searches */}
-                {searchData.recent.length > 0 && (
-                  <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Recent Searches</Text>
-                    <FlatList
-                      data={searchData.recent}
-                      keyExtractor={(item) => item.id}
-                      renderItem={renderRecentSearch}
-                      showsVerticalScrollIndicator={false}
-                      contentContainerStyle={styles.recentList}
-                    />
-                  </View>
-                )}
-
-                {/* Popular Suggestions */}
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Popular Searches</Text>
-                  <FlatList
-                    data={searchData.suggestions.slice(0, 8).map((item, index) => ({
-                      id: `suggestion_${index}`,
-                      title: item,
-                      type: 'suggestion',
-                    }))}
-                    keyExtractor={(item) => item.id}
-                    renderItem={renderSuggestion}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={styles.suggestionsList}
-                  />
-                </View>
-              </>
+      onClose={onClose}
+      height="10%"
+      header={
+        <View style={styles.header}>
+          <View style={styles.searchContainer}>
+            <Search
+              size={20}
+              color={COLORS.textSecondary}
+              style={styles.searchIcon}
+            />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search astrology, horoscopes, consultations..."
+              placeholderTextColor={COLORS.textTertiary}
+              value={searchQuery}
+              onChangeText={handleSearch}
+              autoFocus={true}
+              returnKeyType="search"
+            />
+            {searchQuery.length > 0 && (
+              <TouchableOpacity onPress={clearSearch}>
+                <X size={18} color={COLORS.textSecondary} />
+              </TouchableOpacity>
             )}
           </View>
+          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+            <Text style={styles.cancelText}>Cancel</Text>
+          </TouchableOpacity>
         </View>
-      </View>
-    </Modal>
+      }
+    ></BottomModal>
   );
 }
 

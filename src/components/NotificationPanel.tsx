@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Bell, X, Clock, MessageCircle, Star, TrendingUp } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
+import BottomModal from './BottomModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -110,18 +111,12 @@ export default function NotificationPanel({ visible, onClose }: NotificationPane
   };
 
   return (
-    <Modal
+    <BottomModal
       visible={visible}
-      transparent={true}
-      animationType="slide"
-      onRequestClose={onClose}
-    >
-      <View style={styles.overlay}>
-        <TouchableOpacity style={styles.overlayTouchable} onPress={onClose} />
-
-        <View style={styles.panel}>
-          {/* Header */}
-          <View style={styles.header}>
+      onClose={onClose}
+      showCloseButton={false}
+      header={
+        <View style={styles.header}>
             <View style={styles.headerLeft}>
               <Bell size={24} color={COLORS.primary} />
               <Text style={styles.headerTitle}>Notifications</Text>
@@ -143,6 +138,12 @@ export default function NotificationPanel({ visible, onClose }: NotificationPane
               </TouchableOpacity>
             </View>
           </View>
+      }
+    >
+      <View style={styles.overlay}>
+        <TouchableOpacity style={styles.overlayTouchable} onPress={onClose} />
+
+        <View style={styles.panel}>
 
           {/* Notifications List */}
           <FlatList
@@ -163,7 +164,7 @@ export default function NotificationPanel({ visible, onClose }: NotificationPane
           />
         </View>
       </View>
-    </Modal>
+    </BottomModal>
   );
 }
 
