@@ -122,7 +122,7 @@ export const homeTabs = [
     'Home',
     'API Test',
     '2025',
-    'Astro Shop',
+    // 'Astro Shop',
     'Consult',
     'Reports',
     'Video',

@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/Header';
+import ConsultSection from '../components/ConsultSection';
 
 export default function AskScreen() {
   return (
     <View style={styles.container}>
       <Header />
-      <ScrollView style={styles.content}>
-        <Text style={styles.title}>Ask Questions</Text>
-        <Text style={styles.subtitle}>Get answers from expert astrologers</Text>
+      <ScrollView>
+        <View style={styles.consultSection}>
+          <ConsultSection />
+        </View>
       </ScrollView>
     </View>
   );
@@ -19,9 +21,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#111827',
   },
-  content: {
-    flex: 1,
-    padding: 16,
+  consultSection: {
+    marginTop: 16,
   },
   title: {
     color: '#FFFFFF',

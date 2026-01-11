@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Header from '../components/Header';
 import Section2025 from '../components/Section2025';
-import AstroShopSection from '../components/AstroShopSection';
+// import AstroShopSection from '../components/AstroShopSection';
 import ConsultSection from '../components/ConsultSection';
 import ReportsSection from '../components/ReportsSection';
 import PanchangSection from '../components/PanchangSection';
@@ -27,7 +27,7 @@ export default function HomeScreen() {
       case 'API Test':
         return <ApiTestScreen />;
       case 'Astro Shop':
-        return <AstroShopSection />;
+        return null
       case 'Consult':
         return <ConsultSection />;
       case 'Reports':
