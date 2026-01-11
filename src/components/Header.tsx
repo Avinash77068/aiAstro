@@ -1,36 +1,84 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Menu, Wallet, Bell, Search } from 'lucide-react-native';
 import { useSidebar } from '../store/SidebarContext';
 import { appConfig } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING } from '../constants/colors';
+import NotificationPanel from './NotificationPanel';
+import WalletPanel from './WalletPanel';
+import SearchModal from './SearchModal';
 
 export default function Header() {
   const { toggleSidebar } = useSidebar();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showWallet, setShowWallet] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+
+  useEffect(() => {}, [showNotifications]);
+
+  useEffect(() => {}, [showWallet]);
+
+  useEffect(() => {}, [showSearch]);
+
+  const handleNotificationPress = () => {
+    setShowNotifications(prev => {
+      return true;
+    });
+  };
+
+  const handleWalletPress = () => {
+    setShowWallet(prev => {
+      return true;
+    });
+  };
+
+  const handleSearchPress = () => {
+    setShowSearch(prev => {
+      return true;
+    });
+  };
+
+  const closeAllPanels = () => {
+    setShowNotifications(false);
+    setShowWallet(false);
+    setShowSearch(false);
+  };
 
   return (
-    <View style={styles.header}>
-      <View style={styles.left}>
-        <TouchableOpacity onPress={toggleSidebar}>
-          <Menu size={24} color="#FFFFFF" />
-        </TouchableOpacity>
-        <Text style={styles.title}>{appConfig.appName}</Text>
+    <>
+      <View style={styles.header}>
+        <View style={styles.left}>
+          <TouchableOpacity onPress={toggleSidebar}>
+            <Menu size={24} color={COLORS.textPrimary} />
+          </TouchableOpacity>
+          <Text style={styles.title}>{appConfig.appName}</Text>
+        </View>
+        <View style={styles.right}>
+          <TouchableOpacity onPress={handleWalletPress}>
+            <Wallet size={24} color={COLORS.textPrimary} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.bellContainer}
+            onPress={handleNotificationPress}
+          >
+            <Bell size={24} color={COLORS.textPrimary} />
+            <View style={styles.notificationBadge}>
+              <Text style={styles.notificationText}>
+                {appConfig.notificationCount}
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleSearchPress}>
+            <Search size={24} color={COLORS.textPrimary} />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.right}>
-        <TouchableOpacity>
-          <Wallet size={24} color="#FFFFFF" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.bellContainer}>
-          <Bell size={24} color="#FFFFFF" />
-          <View style={styles.notificationBadge}>
-            <Text style={styles.notificationText}>{appConfig.notificationCount}</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Search size={24} color="#FFFFFF" />
-        </TouchableOpacity>
-      </View>
-    </View>
+
+      {/* Panels and Modals - Outside View for proper z-index */}
+      <NotificationPanel visible={showNotifications} onClose={closeAllPanels} />
+      <WalletPanel visible={showWallet} onClose={closeAllPanels} />
+      <SearchModal visible={showSearch} onClose={closeAllPanels} />
+    </>
   );
 }
 
