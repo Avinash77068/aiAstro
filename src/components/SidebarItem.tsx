@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { COLORS } from '../constants/colors';
 
 interface SidebarItemProps {
   icon: React.ReactNode;
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   text: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 16,
   },
 });

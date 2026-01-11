@@ -16,6 +16,7 @@ import HoroscopeSection from '../components/HoroscopeSection';
 import AstroAIPage from '../components/AstroAIPage';
 import ApiTestScreen from './ApiTestScreen';
 import { homeTabs } from '../data/data';
+import { COLORS } from '../constants/colors';
 
 export default function HomeScreen() {
   const [selectedSection, setSelectedSection] = useState('2025');
@@ -83,13 +84,13 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827', // gray-900
+    backgroundColor: COLORS.background, // gray-900
   },
   content: {
     flex: 1,
   },
   tabsContainer: {
-    backgroundColor: '#374151', // gray-800
+    backgroundColor: COLORS.cardBackground, // gray-800
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
@@ -101,12 +102,12 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     borderBottomWidth: 2,
-    borderBottomColor: '#FBBF24', // yellow-500
+    borderBottomColor: COLORS.primary, // yellow-500
   },
   tabText: {
-    color: '#9CA3AF', // gray-400
+    color: COLORS.textSecondary, // gray-400
   },
   activeTabText: {
-    color: '#FBBF24', // yellow-500
+    color: COLORS.primary, // yellow-500
   },
 });

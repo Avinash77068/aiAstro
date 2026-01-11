@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { section2025Items } from '../data/data';
+import { COLORS, TEXT_SIZES, FONT_WEIGHTS, SPACING, BORDER_RADIUS } from '../constants/colors';
 
 export default function Section2025() {
 
@@ -36,39 +37,39 @@ export default function Section2025() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: SPACING.lg,
   },
   banner: {
-    backgroundColor: 'linear-gradient(to right, #1e3a8a, #7c3aed)', // blue-900 to purple-900
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 24,
+    backgroundColor: '#1e3a8a', // Use single color instead of gradient array
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING['2xl'],
+    marginBottom: SPACING['2xl'],
     alignItems: 'center',
   },
   bannerTitle: {
-    fontSize: 20,
+    fontSize: TEXT_SIZES['2xl'],
     fontWeight: 'bold',
-    color: '#FBBF24', // yellow-400
+    color: COLORS.primary,
   },
   bannerSubtitle: {
-    fontSize: 14,
-    color: '#FFFFFF',
+    fontSize: TEXT_SIZES.base,
+    color: COLORS.textPrimary,
   },
   bannerText: {
-    fontSize: 12,
-    color: '#D1D5DB', // gray-300
+    fontSize: TEXT_SIZES.sm,
+    color: COLORS.textSecondary,
   },
   bannerButton: {
-    marginTop: 8,
-    backgroundColor: '#FBBF24',
-    paddingHorizontal: 16,
-    paddingVertical: 4,
-    borderRadius: 4,
+    marginTop: SPACING.sm,
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.xs,
+    borderRadius: BORDER_RADIUS.sm,
   },
   bannerButtonText: {
-    color: '#000000',
+    color: COLORS.textInverse,
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: TEXT_SIZES.base,
   },
   grid: {
     flexDirection: 'row',
@@ -76,20 +77,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   gridItem: {
-    width: '30%', // 3 per row
-    backgroundColor: '#374151', // gray-800
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
+    width: '30%',
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING.lg,
     alignItems: 'center',
   },
   itemIcon: {
     fontSize: 36,
-    marginBottom: 8,
+    marginBottom: SPACING.sm,
   },
   itemTitle: {
-    fontSize: 12,
-    color: '#FFFFFF',
+    fontSize: TEXT_SIZES.sm,
+    color: COLORS.textPrimary,
     textAlign: 'center',
   },
 });

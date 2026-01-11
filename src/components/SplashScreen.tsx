@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Sparkles } from 'lucide-react-native';
+import { COLORS } from '../constants/colors';
 
 interface SplashScreenProps {
   onFinish: () => void;
@@ -46,7 +47,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
         ]}
       >
         <View style={styles.iconContainer}>
-          <Sparkles size={80} color="#FBBF24" />
+          <Sparkles size={80} color={COLORS.primary} />
         </View>
         <Text style={styles.title}>AstroSage AI</Text>
         <Text style={styles.subtitle}>Your Personal Astrology Guide</Text>
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 24,
-    shadowColor: '#FBBF24',
+    shadowColor: COLORS.primary,
     shadowOffset: {
       width: 0,
       height: 0,
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
   loadingProgress: {
     height: '100%',
     width: '100%', // Set initial width to 100% for scaling
-    backgroundColor: '#FBBF24',
+    backgroundColor: COLORS.primary,
     borderRadius: 2,
   },
   footer: {

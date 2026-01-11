@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { shopProducts } from '../data/data';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 
 export default function AstroShopSection() {
 
@@ -35,34 +36,34 @@ export default function AstroShopSection() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: SPACING.lg,
   },
   banner: {
-    backgroundColor: 'linear-gradient(to right, #dc2626, #ea580c)', // red-900 to orange-900
-    borderRadius: 8,
-    padding: 24,
-    marginBottom: 24,
+    backgroundColor: COLORS.error, // Use centralized error color for red gradient
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING['2xl'],
+    marginBottom: SPACING['2xl'],
     alignItems: 'center',
   },
   bannerTitle: {
-    fontSize: 36,
+    fontSize: TEXT_SIZES['4xl'],
     fontWeight: 'bold',
-    color: '#FBBF24',
+    color: COLORS.primary,
   },
   bannerSubtitle: {
-    fontSize: 14,
-    marginBottom: 12,
+    fontSize: TEXT_SIZES.base,
+    marginBottom: SPACING.md,
   },
   bannerButton: {
-    backgroundColor: '#FBBF24',
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-    borderRadius: 4,
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.sm,
+    borderRadius: BORDER_RADIUS.sm,
   },
   bannerButtonText: {
-    color: '#000000',
+    color: COLORS.textInverse,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: TEXT_SIZES.base,
   },
   grid: {
     flexDirection: 'row',
@@ -71,19 +72,19 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     width: '30%',
-    backgroundColor: '#374151',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING.lg,
     alignItems: 'center',
   },
   itemIcon: {
     fontSize: 48,
-    marginBottom: 8,
+    marginBottom: SPACING.sm,
   },
   itemTitle: {
-    fontSize: 14,
-    color: '#FFFFFF',
+    fontSize: TEXT_SIZES.sm,
+    color: COLORS.textPrimary,
     textAlign: 'center',
   },
 });

@@ -16,6 +16,7 @@ import {
   MessageCircle,
 } from 'lucide-react-native';
 import { aiOptions, quickActions, astrologers } from '../data/data';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 
 export default function AstroAIPage() {
 
@@ -36,7 +37,7 @@ export default function AstroAIPage() {
               <Text
                 style={[
                   styles.aiOptionText,
-                  option.bgColor === '#FBBF24' && styles.aiOptionTextActive,
+                  option.bgColor === COLORS.primary && styles.aiOptionTextActive,
                 ]}
               >
                 {option.title}
@@ -68,7 +69,7 @@ export default function AstroAIPage() {
           return (
             <TouchableOpacity key={idx} style={styles.quickAction}>
               <View style={styles.quickActionIcon}>
-                <IconComponent size={24} color="#FBBF24" />
+                <IconComponent size={24} color={COLORS.primary} />
               </View>
               <Text style={styles.quickActionLabel}>{action.label}</Text>
             </TouchableOpacity>
@@ -107,7 +108,7 @@ export default function AstroAIPage() {
         </TouchableOpacity>
         <TouchableOpacity style={styles.chatButton}>
           <View style={styles.chatButtonContent}>
-            <MessageCircle size={20} color="#FFFFFF" />
+            <MessageCircle size={20} color={COLORS.textInverse} />
             <Text style={styles.chatText}>Free Chat</Text>
           </View>
         </TouchableOpacity>
@@ -141,12 +142,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   aiOptionText: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 14,
     fontWeight: 'bold',
   },
   aiOptionTextActive: {
-    color: '#000000',
+    color: COLORS.textInverse,
   },
   inputContainer: {
     backgroundColor: '#374151',
@@ -158,11 +159,11 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 16,
   },
   sendButton: {
-    backgroundColor: '#FBBF24',
+    backgroundColor: COLORS.primary,
     borderRadius: 50,
     width: 40,
     height: 40,
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   sendText: {
-    color: '#000000',
+    color: COLORS.textInverse,
     fontSize: 18,
   },
   quickActions: {
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
   },
   quickActionLabel: {
     fontSize: 12,
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     textAlign: 'center',
   },
   sectionHeader: {
@@ -205,10 +206,10 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
   },
   sectionArrow: {
-    color: '#FBBF24',
+    color: COLORS.primary,
     fontSize: 16,
   },
   astrologers: {
@@ -228,16 +229,16 @@ const styles = StyleSheet.create({
   },
   astrologerName: {
     fontSize: 12,
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     marginBottom: 4,
     textAlign: 'center',
   },
   astrologerPrice: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: COLORS.textTertiary,
   },
   freePrice: {
-    color: '#10B981',
+    color: COLORS.success,
   },
   bottomButtons: {
     flexDirection: 'row',
@@ -246,19 +247,19 @@ const styles = StyleSheet.create({
   },
   callButton: {
     flex: 1,
-    backgroundColor: '#16A34A',
+    backgroundColor: COLORS.success,
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
   },
   callText: {
-    color: '#FFFFFF',
+    color: COLORS.textInverse,
     fontWeight: 'bold',
     fontSize: 16,
   },
   chatButton: {
     flex: 1,
-    backgroundColor: '#2563EB',
+    backgroundColor: COLORS.info,
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
@@ -268,7 +269,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   chatText: {
-    color: '#FFFFFF',
+    color: COLORS.textInverse,
     fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 8,

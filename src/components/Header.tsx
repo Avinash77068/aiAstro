@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Menu, Wallet, Bell, Search } from 'lucide-react-native';
 import { useSidebar } from '../store/SidebarContext';
 import { appConfig } from '../data/data';
+import { COLORS, TEXT_SIZES, SPACING } from '../constants/colors';
 
 export default function Header() {
   const { toggleSidebar } = useSidebar();
@@ -35,8 +36,8 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#000000',
-    padding: 16,
+    backgroundColor: COLORS.headerBackground,
+    padding: SPACING.md,
     paddingTop: 60, // For status bar
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -45,17 +46,17 @@ const styles = StyleSheet.create({
   left: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: SPACING.md,
   },
   title: {
-    color: '#FFFFFF',
-    fontSize: 20,
+    color: COLORS.textPrimary,
+    fontSize: TEXT_SIZES.lg,
     fontWeight: 'bold',
   },
   right: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    gap: SPACING.md,
   },
   bellContainer: {
     position: 'relative',
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -4,
     right: -4,
-    backgroundColor: '#DC2626',
+    backgroundColor: COLORS.notificationBadge,
     borderRadius: 10,
     width: 20,
     height: 20,
@@ -72,8 +73,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   notificationText: {
-    color: '#FFFFFF',
-    fontSize: 10,
+    color: COLORS.textPrimary,
+    fontSize: TEXT_SIZES.xs,
     fontWeight: 'bold',
   },
 });

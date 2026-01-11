@@ -12,6 +12,8 @@ import AstroAIScreen from '../screens/AstroAIScreen';
 import LiveScreen from '../screens/LiveScreen';
 import AskScreen from '../screens/AskScreen';
 import HistoryScreen from '../screens/HistoryScreen';
+import { COLORS } from '../constants/colors';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -36,15 +38,15 @@ export default function BottomTabNavigator() {
 
           return icon;
         },
-        tabBarActiveTintColor: '#FBBF24', // yellow-500
-        tabBarInactiveTintColor: '#9CA3AF', // gray-400
+        tabBarActiveTintColor: COLORS.primary, // yellow-500
+        tabBarInactiveTintColor: COLORS.textSecondary, // gray-400
         tabBarStyle: {
-          backgroundColor: '#000000', // black
+          backgroundColor: COLORS.background, // black
         },
         headerStyle: {
-          backgroundColor: '#000000',
+          backgroundColor: COLORS.background,
         },
-        headerTintColor: '#FFFFFF',
+        headerTintColor: COLORS.textInverse,
         headerTitleStyle: {
           fontWeight: 'bold',
         },

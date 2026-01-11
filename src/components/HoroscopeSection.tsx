@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { horoscopeItems } from '../data/data';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 
 export default function HoroscopeSection() {
 
@@ -21,7 +22,7 @@ export default function HoroscopeSection() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: SPACING.lg,
   },
   grid: {
     flexDirection: 'row',
@@ -30,20 +31,20 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     width: '30%',
-    backgroundColor: '#374151',
-    borderRadius: 8,
-    padding: 24,
-    marginBottom: 16,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING['2xl'],
+    marginBottom: SPACING.lg,
     alignItems: 'center',
   },
   itemIcon: {
     fontSize: 48,
-    marginBottom: 8,
+    marginBottom: SPACING.sm,
   },
   itemTitle: {
-    fontSize: 14,
+    fontSize: TEXT_SIZES.sm,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     textAlign: 'center',
   },
 });

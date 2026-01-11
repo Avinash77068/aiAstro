@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Heart, Briefcase, Star } from 'lucide-react-native';
 import { consultFilters, consultAstrologers } from '../data/data';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 
 export default function ConsultSection() {
 
@@ -30,7 +31,7 @@ export default function ConsultSection() {
               style={[styles.filterButton, idx === 0 && styles.activeFilter]}
             >
               <View style={styles.filterButtonContent}>
-                {IconComponent && <IconComponent size={16} color="#FFFFFF" />}
+                {IconComponent && <IconComponent size={16} color={COLORS.textInverse} />}
                 <Text
                   style={[
                     styles.filterText,
@@ -63,7 +64,7 @@ export default function ConsultSection() {
             </View>
             <View style={styles.ratingPrice}>
               <View style={styles.rating}>
-                <Star size={16} color="#FBBF24" fill="#FBBF24" />
+                <Star size={16} color={COLORS.primary} fill={COLORS.primary} />
                 <Text style={styles.ratingText}>{item.rating}</Text>
                 <Text style={styles.reviews}>({item.reviews})</Text>
               </View>
@@ -94,117 +95,117 @@ export default function ConsultSection() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: SPACING.lg,
   },
   filterContainer: {
-    marginBottom: 16,
+    marginBottom: SPACING.lg,
   },
   filterButton: {
-    backgroundColor: '#374151',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    backgroundColor: COLORS.cardBackground,
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.sm,
     borderRadius: 20,
-    marginRight: 8,
+    marginRight: SPACING.sm,
   },
   activeFilter: {
-    backgroundColor: '#FBBF24',
+    backgroundColor: COLORS.primary,
   },
   filterButtonContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   filterText: {
-    color: '#FFFFFF',
-    marginLeft: 4,
+    color: COLORS.textPrimary,
+    marginLeft: SPACING.xs,
   },
   activeFilterText: {
-    color: '#000000',
+    color: COLORS.textInverse,
   },
   astrologerCard: {
-    backgroundColor: '#374151',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING.lg,
   },
   astrologerInfo: {
     flexDirection: 'row',
-    marginBottom: 12,
+    marginBottom: SPACING.md,
   },
   avatar: {
     width: 64,
     height: 64,
-    backgroundColor: '#4B5563',
+    backgroundColor: COLORS.border,
     borderRadius: 32,
   },
   details: {
-    marginLeft: 12,
+    marginLeft: SPACING.md,
     flex: 1,
   },
   name: {
-    fontSize: 16,
+    fontSize: TEXT_SIZES.base,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     flexDirection: 'row',
     alignItems: 'center',
   },
   verified: {
-    color: '#3B82F6',
-    marginLeft: 4,
+    color: COLORS.info,
+    marginLeft: SPACING.xs,
   },
   type: {
-    color: '#D1D5DB',
-    fontSize: 14,
+    color: COLORS.textSecondary,
+    fontSize: TEXT_SIZES.sm,
   },
   languages: {
-    color: '#9CA3AF',
-    fontSize: 12,
+    color: COLORS.textTertiary,
+    fontSize: TEXT_SIZES.xs,
   },
   ratingPrice: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: SPACING.md,
   },
   rating: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   ratingText: {
-    color: '#FFFFFF',
-    marginLeft: 4,
+    color: COLORS.textPrimary,
+    marginLeft: SPACING.xs,
   },
   reviews: {
-    color: '#9CA3AF',
-    marginLeft: 4,
+    color: COLORS.textTertiary,
+    marginLeft: SPACING.xs,
   },
   price: {
-    fontSize: 16,
+    fontSize: TEXT_SIZES.base,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
   },
   freePrice: {
-    color: '#10B981',
+    color: COLORS.success,
   },
   buttons: {
     flexDirection: 'row',
-    gap: 8,
+    gap: SPACING.sm,
   },
   callButton: {
     flex: 1,
-    backgroundColor: '#FBBF24',
-    paddingVertical: 8,
-    borderRadius: 4,
+    backgroundColor: COLORS.primary,
+    paddingVertical: SPACING.sm,
+    borderRadius: BORDER_RADIUS.sm,
     alignItems: 'center',
   },
   chatButton: {
     flex: 1,
-    backgroundColor: '#FBBF24',
-    paddingVertical: 8,
-    borderRadius: 4,
+    backgroundColor: COLORS.primary,
+    paddingVertical: SPACING.sm,
+    borderRadius: BORDER_RADIUS.sm,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#000000',
+    color: COLORS.textInverse,
     fontWeight: 'bold',
   },
 });

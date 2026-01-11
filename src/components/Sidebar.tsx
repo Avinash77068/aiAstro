@@ -24,6 +24,7 @@ import {
 import { useSidebar } from '../store/SidebarContext';
 import SidebarItem from './SidebarItem';
 import { sidebarMenuItems, appConfig } from '../data/data';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 
 const { width, height } = Dimensions.get('window');
 const SIDEBAR_WIDTH = 320;
@@ -59,7 +60,7 @@ const Sidebar: React.FC = () => {
           {/* Profile Section */}
           <View style={styles.profile}>
             <View style={styles.avatar}>
-              <User size={40} color="#9CA3AF" />
+              <User size={40} color={COLORS.textTertiary} />
             </View>
             <View>
               <Text style={styles.name}>{appConfig.userProfile.name}</Text>
@@ -87,7 +88,7 @@ const Sidebar: React.FC = () => {
               return (
                 <SidebarItem
                   key={idx}
-                  icon={<IconComponent size={24} color="#FFFFFF" />}
+                  icon={<IconComponent size={24} color={COLORS.textPrimary} />}
                   text={item.text}
                 />
               );
@@ -141,12 +142,12 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     paddingBottom: 24,
     borderBottomWidth: 1,
-    borderBottomColor: '#374151',
+    borderBottomColor: COLORS.border,
   },
   avatar: {
     width: 64,
     height: 64,
-    backgroundColor: '#374151',
+    backgroundColor: COLORS.cardBackground,
     borderRadius: 32,
     justifyContent: 'center',
     alignItems: 'center',
@@ -154,11 +155,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
   },
   plan: {
     fontSize: 14,
-    color: '#9CA3AF',
+    color: COLORS.textTertiary,
   },
   menu: {
     // space-y-1 equivalent

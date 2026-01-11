@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { panchangItems } from '../data/data';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 
 export default function PanchangSection() {
 
@@ -21,7 +22,7 @@ export default function PanchangSection() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: SPACING.lg,
   },
   grid: {
     flexDirection: 'row',
@@ -30,19 +31,19 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     width: '30%',
-    backgroundColor: '#374151',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING.lg,
     alignItems: 'center',
   },
   itemIcon: {
     fontSize: 36,
-    marginBottom: 8,
+    marginBottom: SPACING.sm,
   },
   itemTitle: {
-    fontSize: 12,
-    color: '#FFFFFF',
+    fontSize: TEXT_SIZES.sm,
+    color: COLORS.textPrimary,
     textAlign: 'center',
   },
 });

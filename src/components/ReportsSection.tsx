@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { reports } from '../data/data';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 
 export default function ReportsSection() {
 
@@ -33,29 +34,29 @@ export default function ReportsSection() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: SPACING.lg,
   },
   banner: {
-    backgroundColor: 'linear-gradient(to right, #dc2626, #ea580c)',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 24,
+    backgroundColor: '#dc2626', // Use single color from gradient
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING['2xl'],
     alignItems: 'center',
   },
   bannerTitle: {
-    fontSize: 20,
+    fontSize: TEXT_SIZES.lg,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
   },
   bannerSubtitle: {
-    fontSize: 14,
-    color: '#FFFFFF',
+    fontSize: TEXT_SIZES.sm,
+    color: COLORS.textPrimary,
   },
   bannerPrice: {
-    fontSize: 24,
+    fontSize: TEXT_SIZES.lg,
     fontWeight: 'bold',
-    color: '#FBBF24',
-    marginTop: 8,
+    color: COLORS.primary,
+    marginTop: SPACING.sm,
   },
   grid: {
     flexDirection: 'row',
@@ -64,19 +65,19 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     width: '30%',
-    backgroundColor: '#374151',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING.lg,
     alignItems: 'center',
   },
   itemIcon: {
     fontSize: 36,
-    marginBottom: 8,
+    marginBottom: SPACING.sm,
   },
   itemTitle: {
-    fontSize: 12,
-    color: '#FFFFFF',
+    fontSize: TEXT_SIZES.sm,
+    color: COLORS.textPrimary,
     textAlign: 'center',
   },
 });

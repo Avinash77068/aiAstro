@@ -19,6 +19,7 @@ import {
   getNotifications,
   getChatHistory,
 } from '../services/api';
+import { COLORS } from '../constants/colors';
 
 export default function ApiTestScreen() {
   const [loading, setLoading] = useState(false);
@@ -95,7 +96,7 @@ export default function ApiTestScreen() {
 
         {loading && (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#FBBF24" />
+            <ActivityIndicator size="large" color={COLORS.primary} />
             <Text style={styles.loadingText}>Testing API...</Text>
           </View>
         )}
@@ -116,20 +117,20 @@ export default function ApiTestScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
+    backgroundColor: COLORS.background,
   },
   content: {
     flex: 1,
     padding: 16,
   },
   title: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 8,
   },
   subtitle: {
-    color: '#9CA3AF',
+    color: COLORS.textSecondary,
     fontSize: 16,
     marginBottom: 24,
   },
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   testButton: {
-    backgroundColor: '#FBBF24',
+    backgroundColor: COLORS.primary,
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 8,
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   testButtonText: {
-    color: '#000000',
+    color: COLORS.textInverse,
     fontWeight: 'bold',
     fontSize: 14,
   },
@@ -159,17 +160,17 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   loadingText: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     marginTop: 16,
     fontSize: 16,
   },
   resultsContainer: {
-    backgroundColor: '#374151',
+    backgroundColor: COLORS.cardBackground,
     borderRadius: 8,
     padding: 16,
   },
   resultsTitle: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 12,
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     maxHeight: 300,
   },
   resultsText: {
-    color: '#D1D5DB',
+    color: COLORS.textSecondary,
     fontSize: 12,
     fontFamily: 'monospace',
   },
