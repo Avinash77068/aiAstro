@@ -11,7 +11,11 @@ import { Heart, Briefcase, Star } from 'lucide-react-native';
 import { consultFilters, consultAstrologers } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 
-export default function ConsultSection() {
+interface ConsultSectionProps {
+  navigation?: any;
+}
+
+export default function ConsultSection({ navigation }: ConsultSectionProps) {
 
   return (
     <ScrollView style={styles.container}>
@@ -49,7 +53,7 @@ export default function ConsultSection() {
       <FlatList
         data={consultAstrologers}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View style={styles.astrologerCard}>
             <View style={styles.astrologerInfo}>
               <View style={styles.avatar} />
@@ -78,10 +82,44 @@ export default function ConsultSection() {
               </Text>
             </View>
             <View style={styles.buttons}>
-              <TouchableOpacity style={styles.callButton}>
+              <TouchableOpacity 
+                style={styles.callButton} 
+                onPress={() => {
+                  console.log('Starting call with', item.name);
+                  if (navigation) {
+                    navigation.navigate('Chat', { 
+                      astrologer: {
+                        id: index.toString(),
+                        name: item.name,
+                        type: item.type,
+                        rating: item.rating,
+                        price: item.price,
+                        verified: item.verified,
+                      }
+                    });
+                  }
+                }}
+              >
                 <Text style={styles.buttonText}>Call</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.chatButton}>
+              <TouchableOpacity 
+                style={styles.chatButton} 
+                onPress={() => {
+                  console.log('Starting chat with', item.name);
+                  if (navigation) {
+                    navigation.navigate('Chat', { 
+                      astrologer: {
+                        id: index.toString(),
+                        name: item.name,
+                        type: item.type,
+                        rating: item.rating,
+                        price: item.price,
+                        verified: item.verified,
+                      }
+                    });
+                  }
+                }}
+              >
                 <Text style={styles.buttonText}>Chat</Text>
               </TouchableOpacity>
             </View>

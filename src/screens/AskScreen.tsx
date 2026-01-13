@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import ConsultSection from '../components/ConsultSection';
 
 export default function AskScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Header />
       <ScrollView>
         <View style={styles.consultSection}>
-          <ConsultSection />
+          <ConsultSection navigation={navigation} />
         </View>
       </ScrollView>
     </View>
