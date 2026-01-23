@@ -42,11 +42,11 @@ export interface ConsultFilter {
 }
 
 export interface AppConfig {
-  appName: string;
-  notificationCount: string;
+  appName: string | null;
+  notificationCount: string | null;
   userProfile: {
-    name: string;
-    plan: string;
+    name: string | null;
+    plan: string | null;
   };
 }
 

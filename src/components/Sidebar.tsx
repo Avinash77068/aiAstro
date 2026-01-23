@@ -33,14 +33,8 @@ const SIDEBAR_WIDTH = 320;
 
 const Sidebar: React.FC = () => {
   const { data: homeData } = useAppSelector(state => state.homeReducer);
-    const appConfig: AppConfig = homeData?.appConfig || { 
-      appName: 'Astro AI', 
-      notificationCount: '0',
-      userProfile: {
-        name: 'Guest',
-        plan: 'Basic'
-      }
-    };
+  const { user } = useAppSelector(state => state.authReducer);
+  const appConfig: AppConfig | undefined = homeData?.appConfig;
   const { sidebarOpen, toggleSidebar } = useSidebar();
   const translateX = useRef(new Animated.Value(-SIDEBAR_WIDTH)).current;
 
@@ -74,8 +68,8 @@ const Sidebar: React.FC = () => {
               <User size={40} color={COLORS.textTertiary} />
             </View>
             <View>
-              <Text style={styles.name}>{appConfig.userProfile.name}</Text>
-              <Text style={styles.plan}>{appConfig.userProfile.plan}</Text>
+              <Text style={styles.name}>{user?.name || 'Guest'}</Text>
+              <Text style={styles.plan}>{appConfig?.userProfile?.plan || 'Basic'}</Text>
             </View>
           </View>
 
