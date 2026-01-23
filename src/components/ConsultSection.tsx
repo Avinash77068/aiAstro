@@ -19,24 +19,8 @@ interface ConsultSectionProps {
 }
 
 export default function ConsultSection({ navigation }: ConsultSectionProps) {
-  const { data: userData, loading: userLoading, error: userError } = useAppSelector(state => state.userReducer);
-  const { data: homeData, loading: homeLoading, error: homeError } = useAppSelector(state => state.homeReducer);
-  const { data: astrologerData, loading: astrologerLoading, error: astrologerError } = useAppSelector(state => state.astrologerReducer);
-
-  useEffect(() => {
-    if (userData) {
-      console.log('Redux Storage Data:', JSON.stringify(userData, null, 2));
-      console.log('Total Users from API:', userData.length);
-    }
-    if (homeData) {
-      console.log('Home Data:', JSON.stringify(homeData, null, 2));
-      console.log('Consult Filters:', homeData.consultFilters);
-    }
-    if (astrologerData) {
-      console.log('Astrologer Data:', JSON.stringify(astrologerData, null, 2));
-      console.log('Total Astrologers:', astrologerData.length);
-    }
-  }, [userData, homeData, astrologerData]);
+  const { data: homeData } = useAppSelector(state => state.homeReducer);
+  const { data: astrologerData } = useAppSelector(state => state.astrologerReducer);
 
   const consultFilters = homeData?.consultFilters || [];
   const astrologers = astrologerData.length > 0 ? astrologerData : (consultAstrologers as any);
@@ -73,13 +57,6 @@ export default function ConsultSection({ navigation }: ConsultSectionProps) {
           );
         })}
       </ScrollView>
-
-      {astrologerLoading && (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
-          <Text style={styles.loadingText}>Loading astrologers...</Text>
-        </View>
-      )}
 
       <FlatList
         data={astrologers}
