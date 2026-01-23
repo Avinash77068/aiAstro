@@ -5,7 +5,7 @@ export const homeThunk = createAsyncThunk(
   'home/fetchHomeData',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/user/');
+      const response = await api.get('/homepage/');
       console.log('Home data response:', response.data);
       const data = response.data;
 
