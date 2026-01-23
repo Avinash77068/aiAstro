@@ -7,6 +7,7 @@ import {
   ScrollView,
   FlatList,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import { Heart, Briefcase, Star } from 'lucide-react-native';
 import { consultAstrologers } from '../data/data';
@@ -20,6 +21,7 @@ interface ConsultSectionProps {
 export default function ConsultSection({ navigation }: ConsultSectionProps) {
   const { data: userData, loading: userLoading, error: userError } = useAppSelector(state => state.userReducer);
   const { data: homeData, loading: homeLoading, error: homeError } = useAppSelector(state => state.homeReducer);
+  const { data: astrologerData, loading: astrologerLoading, error: astrologerError } = useAppSelector(state => state.astrologerReducer);
 
   useEffect(() => {
     if (userData) {
@@ -30,9 +32,14 @@ export default function ConsultSection({ navigation }: ConsultSectionProps) {
       console.log('Home Data:', JSON.stringify(homeData, null, 2));
       console.log('Consult Filters:', homeData.consultFilters);
     }
-  }, [userData, homeData]);
+    if (astrologerData) {
+      console.log('Astrologer Data:', JSON.stringify(astrologerData, null, 2));
+      console.log('Total Astrologers:', astrologerData.length);
+    }
+  }, [userData, homeData, astrologerData]);
 
   const consultFilters = homeData?.consultFilters || [];
+  const astrologers = astrologerData.length > 0 ? astrologerData : (consultAstrologers as any);
 
   return (
     <ScrollView style={styles.container}>
@@ -67,20 +74,48 @@ export default function ConsultSection({ navigation }: ConsultSectionProps) {
         })}
       </ScrollView>
 
+      {astrologerLoading && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={COLORS.primary} />
+          <Text style={styles.loadingText}>Loading astrologers...</Text>
+        </View>
+      )}
+
       <FlatList
-        data={consultAstrologers}
-        keyExtractor={(item, index) => index.toString()}
+        data={astrologers}
+        keyExtractor={(item, index) => item._id || index.toString()}
         renderItem={({ item, index }) => (
           <View style={styles.astrologerCard}>
             <View style={styles.astrologerInfo}>
-              <View style={styles.avatar} />
+              {item.image ? (
+                <Image
+                  source={{ uri: item.image }}
+                  style={styles.avatar}
+                  resizeMode="cover"
+                />
+              ) : (
+                <View style={styles.avatar} />
+              )}
               <View style={styles.details}>
-                <Text style={styles.name}>
-                  {item.name}
+                <View style={styles.nameRow}>
+                  <Text style={styles.name}>{item.name}</Text>
                   {item.verified && <Text style={styles.verified}>✓</Text>}
-                </Text>
+                  {item.status && (
+                    <View style={[
+                      styles.statusBadge,
+                      item.status === 'ONLINE' ? styles.onlineBadge : styles.offlineBadge
+                    ]}>
+                      <Text style={styles.statusText}>{item.status}</Text>
+                    </View>
+                  )}
+                </View>
                 <Text style={styles.type}>{item.type}</Text>
-                <Text style={styles.languages}>English, Hindi</Text>
+                <Text style={styles.languages}>
+                  {item.languages ? item.languages.join(', ') : 'English, Hindi'}
+                </Text>
+                {item.experience && (
+                  <Text style={styles.experience}>Exp: {item.experience}</Text>
+                )}
               </View>
             </View>
             <View style={styles.ratingPrice}>
@@ -262,5 +297,41 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.textInverse,
     fontWeight: 'bold',
+  },
+  loadingContainer: {
+    padding: SPACING.xl,
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: SPACING.sm,
+    color: COLORS.textSecondary,
+    fontSize: TEXT_SIZES.sm,
+  },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.xs,
+  },
+  statusBadge: {
+    paddingHorizontal: SPACING.xs,
+    paddingVertical: 2,
+    borderRadius: 4,
+    marginLeft: SPACING.xs,
+  },
+  onlineBadge: {
+    backgroundColor: '#10B981',
+  },
+  offlineBadge: {
+    backgroundColor: '#6B7280',
+  },
+  statusText: {
+    color: COLORS.textInverse,
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+  experience: {
+    color: COLORS.textTertiary,
+    fontSize: TEXT_SIZES.xs,
+    marginTop: 2,
   },
 });
