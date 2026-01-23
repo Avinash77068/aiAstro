@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  FlatList,
   Image,
 } from 'react-native';
 import {
@@ -16,15 +15,16 @@ import {
   Heart,
   MessageCircle,
 } from 'lucide-react-native';
-import { astrologers } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { useAppSelector } from '../redux/hooks';
 
 export default function AstroAIPage() {
   const { data: homeData } = useAppSelector(state => state.homeReducer);
+  const { data: astrologerData } = useAppSelector(state => state.astrologerReducer);
   
   const aiOptions = homeData?.aiOptions || [];
   const quickActions = homeData?.quickActions || [];
+  const astrologers = astrologerData.slice(0, 5) || [];
 
   return (
     <ScrollView style={styles.container}>
@@ -99,8 +99,16 @@ export default function AstroAIPage() {
         style={styles.astrologers}
       >
         {astrologers.map((astro, idx) => (
-          <View key={idx} style={styles.astrologer}>
-            <View style={styles.astrologerAvatar} />
+          <View key={astro._id || idx} style={styles.astrologer}>
+            {astro.image ? (
+              <Image
+                source={{ uri: astro.image }}
+                style={styles.astrologerAvatar}
+                resizeMode="cover"
+              />
+            ) : (
+              <View style={styles.astrologerAvatar} />
+            )}
             <Text style={styles.astrologerName}>{astro.name}</Text>
             <Text
               style={[

@@ -19,7 +19,7 @@ import { COLORS } from '../constants/colors';
 
 export default function HomeScreen() {
   const [selectedSection, setSelectedSection] = useState('2025');
-  const { data: homeData, loading: homeLoading } = useAppSelector(state => state.homeReducer);
+  const { data: homeData } = useAppSelector(state => state.homeReducer);
 
   const renderContent = () => {
     switch (selectedSection) {
@@ -37,23 +37,12 @@ export default function HomeScreen() {
         return <HoroscopeSection />;
       case 'Home':
         return <AstroAIPage />;
-      // case 'Video':
-      //   return null;
       default:
         return <Section2025 />;
     }
   };
 
-  const tabs = homeData?.homeTabs || ['Home', '2025', 'Consult', 'Reports', 'Panchang', 'Horoscope'];
-
-  if (homeLoading) {
-    return (
-      <View style={[styles.container, styles.centerContent]}>
-        <ActivityIndicator size="large" color={COLORS.primary} />
-        <Text style={styles.loadingText}>Loading...</Text>
-      </View>
-    );
-  }
+  const tabs = homeData?.homeTabs;
 
   return (
     <View style={styles.container}>
@@ -93,13 +82,13 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background, // gray-900
+    backgroundColor: COLORS.background, 
   },
   content: {
     flex: 1,
   },
   tabsContainer: {
-    backgroundColor: COLORS.cardBackground, // gray-800
+    backgroundColor: COLORS.cardBackground, 
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
@@ -111,13 +100,13 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     borderBottomWidth: 2,
-    borderBottomColor: COLORS.primary, // yellow-500
+    borderBottomColor: COLORS.primary, 
   },
   tabText: {
-    color: COLORS.textSecondary, // gray-400
+    color: COLORS.textSecondary, 
   },
   activeTabText: {
-    color: COLORS.primary, // yellow-500
+    color: COLORS.primary, 
   },
   centerContent: {
     justifyContent: 'center',

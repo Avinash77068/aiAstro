@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import { Heart, Briefcase, Star } from 'lucide-react-native';
-import { consultAstrologers } from '../data/data';
+
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { useAppSelector } from '../redux/hooks';
 
@@ -23,7 +23,7 @@ export default function ConsultSection({ navigation }: ConsultSectionProps) {
   const { data: astrologerData } = useAppSelector(state => state.astrologerReducer);
 
   const consultFilters = homeData?.consultFilters || [];
-  const astrologers = astrologerData.length > 0 ? astrologerData : (consultAstrologers as any);
+  const astrologers = astrologerData.length > 0 ? astrologerData : [];
 
   return (
     <ScrollView style={styles.container}>

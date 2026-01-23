@@ -23,13 +23,24 @@ import {
 } from 'lucide-react-native';
 import { useSidebar } from '../customComponents/SidebarContext';
 import SidebarItem from './SidebarItem';
-import { sidebarMenuItems, appConfig } from '../data/data';
+import { sidebarMenuItems } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
+import { AppConfig } from '../redux/slices/home/homeSlice';
+import { useAppSelector } from '../redux/hooks';
 
 const { width, height } = Dimensions.get('window');
 const SIDEBAR_WIDTH = 320;
 
 const Sidebar: React.FC = () => {
+  const { data: homeData } = useAppSelector(state => state.homeReducer);
+    const appConfig: AppConfig = homeData?.appConfig || { 
+      appName: 'Astro AI', 
+      notificationCount: '0',
+      userProfile: {
+        name: 'Guest',
+        plan: 'Basic'
+      }
+    };
   const { sidebarOpen, toggleSidebar } = useSidebar();
   const translateX = useRef(new Animated.Value(-SIDEBAR_WIDTH)).current;
 

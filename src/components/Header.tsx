@@ -2,13 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Menu, Wallet, Bell, Search } from 'lucide-react-native';
 import { useSidebar } from '../customComponents/SidebarContext';
-import { appConfig } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING } from '../constants/colors';
 import NotificationPanel from './NotificationPanel';
 import WalletPanel from './WalletPanel';
 import SearchModal from './SearchModal';
+import { useAppSelector } from '../redux/hooks';
+import { AppConfig } from '../redux/slices/home/homeSlice';
 
 export default function Header() {
+  const { data: homeData } = useAppSelector(state => state.homeReducer);
+  const appConfig: AppConfig = homeData?.appConfig || { 
+    appName: 'Astro AI', 
+    notificationCount: '0',
+    userProfile: {
+      name: 'Guest',
+      plan: 'Basic'
+    }
+  };
   const { toggleSidebar } = useSidebar();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showWallet, setShowWallet] = useState(false);
@@ -51,7 +61,7 @@ export default function Header() {
           <TouchableOpacity onPress={toggleSidebar}>
             <Menu size={24} color={COLORS.textPrimary} />
           </TouchableOpacity>
-          <Text style={styles.title}>{appConfig.appName}</Text>
+          <Text style={styles.title}>{appConfig?.appName}</Text>
         </View>
         <View style={styles.right}>
           <TouchableOpacity onPress={handleWalletPress}>
