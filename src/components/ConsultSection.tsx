@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,20 +6,21 @@ import {
   StyleSheet,
   ScrollView,
   FlatList,
-  ActivityIndicator,
 } from 'react-native';
 import { Heart, Briefcase, Star } from 'lucide-react-native';
 import { consultFilters, consultAstrologers } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { useAppSelector } from '../redux/hooks';
-
 interface ConsultSectionProps {
   navigation?: any;
 }
 
 export default function ConsultSection({ navigation }: ConsultSectionProps) {
-  const { data: userData, loading, error } = useAppSelector(state => state.userReducer);
-
+const {
+  data: userData,
+  loading,
+  error,
+} = useAppSelector(state => state.userReducer);
 
   return (
     <ScrollView style={styles.container}>
@@ -249,50 +250,5 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.textInverse,
     fontWeight: 'bold',
-  },
-  storageInfoCard: {
-    backgroundColor: COLORS.cardBackground,
-    borderRadius: BORDER_RADIUS.md,
-    padding: SPACING.lg,
-    marginBottom: SPACING.lg,
-    borderWidth: 2,
-    borderColor: COLORS.primary,
-  },
-  storageTitle: {
-    fontSize: TEXT_SIZES.lg,
-    fontWeight: 'bold',
-    color: COLORS.primary,
-    marginBottom: SPACING.md,
-  },
-  storageText: {
-    fontSize: TEXT_SIZES.sm,
-    color: COLORS.textPrimary,
-    marginBottom: SPACING.xs,
-  },
-  errorText: {
-    fontSize: TEXT_SIZES.sm,
-    color: COLORS.error,
-    marginTop: SPACING.sm,
-  },
-  sampleUser: {
-    marginTop: SPACING.md,
-    paddingTop: SPACING.md,
-    borderTopWidth: 1,
-    borderTopColor: COLORS.border,
-  },
-  sampleTitle: {
-    fontSize: TEXT_SIZES.base,
-    fontWeight: 'bold',
-    color: COLORS.textPrimary,
-    marginBottom: SPACING.xs,
-  },
-  loadingContainer: {
-    padding: SPACING.xl,
-    alignItems: 'center',
-  },
-  loadingText: {
-    marginTop: SPACING.md,
-    color: COLORS.textSecondary,
-    fontSize: TEXT_SIZES.sm,
   },
 });
