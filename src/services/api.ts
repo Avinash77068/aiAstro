@@ -3,7 +3,7 @@ import {startNetworkLogging} from 'react-native-network-logger';
 
 startNetworkLogging();
 
-const API_BASE_URL = 'https://api.escuelajs.co/api/v1/';
+const API_BASE_URL = 'http://10.0.2.2:3000/';
 
 const api = axios.create({
   baseURL: API_BASE_URL,

@@ -1,16 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { panchangItems } from '../data/data';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
+import { useAppSelector } from '../redux/hooks';
 
 export default function PanchangSection() {
+  const { data: homeData } = useAppSelector(state => state.homeReducer);
+  const panchangItems = homeData?.panchangItems || [];
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.grid}>
         {panchangItems.map((item, idx) => (
           <View key={idx} style={styles.gridItem}>
-            <Text style={styles.itemIcon}>{item.icon}</Text>
+            {item.image && (
+              <Image
+                source={{ uri: item.image }}
+                style={styles.itemImage}
+                resizeMode="contain"
+              />
+            )}
             <Text style={styles.itemTitle}>{item.title}</Text>
           </View>
         ))}
@@ -39,6 +47,11 @@ const styles = StyleSheet.create({
   },
   itemIcon: {
     fontSize: 36,
+    marginBottom: SPACING.sm,
+  },
+  itemImage: {
+    width: 50,
+    height: 50,
     marginBottom: SPACING.sm,
   },
   itemTitle: {

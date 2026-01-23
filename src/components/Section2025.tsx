@@ -5,11 +5,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Image,
 } from 'react-native';
-import { section2025Items } from '../data/data';
 import { COLORS, TEXT_SIZES, FONT_WEIGHTS, SPACING, BORDER_RADIUS } from '../constants/colors';
+import { useAppSelector } from '../redux/hooks';
 
 export default function Section2025() {
+  const { data: homeData } = useAppSelector(state => state.homeReducer);
+  const section2025Items = homeData?.section2025Items || [];
 
   return (
     <ScrollView style={styles.container}>
@@ -25,7 +28,13 @@ export default function Section2025() {
       <View style={styles.grid}>
         {section2025Items.map((item, idx) => (
           <View key={idx} style={styles.gridItem}>
-            <Text style={styles.itemIcon}>{item.icon}</Text>
+            {item.image && (
+              <Image
+                source={{ uri: item.image }}
+                style={styles.itemImage}
+                resizeMode="contain"
+              />
+            )}
             <Text style={styles.itemTitle}>{item.title}</Text>
           </View>
         ))}
@@ -86,6 +95,11 @@ const styles = StyleSheet.create({
   },
   itemIcon: {
     fontSize: 36,
+    marginBottom: SPACING.sm,
+  },
+  itemImage: {
+    width: 50,
+    height: 50,
     marginBottom: SPACING.sm,
   },
   itemTitle: {

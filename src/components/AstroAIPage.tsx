@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   FlatList,
+  Image,
 } from 'react-native';
 import {
   Briefcase,
@@ -15,10 +16,15 @@ import {
   Heart,
   MessageCircle,
 } from 'lucide-react-native';
-import { aiOptions, quickActions, astrologers } from '../data/data';
+import { astrologers } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
+import { useAppSelector } from '../redux/hooks';
 
 export default function AstroAIPage() {
+  const { data: homeData } = useAppSelector(state => state.homeReducer);
+  
+  const aiOptions = homeData?.aiOptions || [];
+  const quickActions = homeData?.quickActions || [];
 
   return (
     <ScrollView style={styles.container}>
@@ -33,7 +39,13 @@ export default function AstroAIPage() {
             style={[styles.aiOption, { backgroundColor: option.bgColor }]}
           >
             <View style={styles.aiOptionContent}>
-              <Text style={styles.optionIcon}>{option.icon}</Text>
+              {option.image && (
+                <Image
+                  source={{ uri: option.image }}
+                  style={styles.optionImage}
+                  resizeMode="contain"
+                />
+              )}
               <Text
                 style={[
                   styles.aiOptionText,
@@ -138,7 +150,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   optionIcon: {
-    fontSize: 36,
+    fontSize: 32,
+    marginBottom: 8,
+  },
+  optionImage: {
+    width: 40,
+    height: 40,
     marginBottom: 8,
   },
   aiOptionText: {

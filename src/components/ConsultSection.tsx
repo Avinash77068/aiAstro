@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,22 +6,33 @@ import {
   StyleSheet,
   ScrollView,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import { Heart, Briefcase, Star } from 'lucide-react-native';
-import { consultFilters, consultAstrologers } from '../data/data';
+import { consultAstrologers } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { useAppSelector } from '../redux/hooks';
+
 interface ConsultSectionProps {
   navigation?: any;
 }
 
 export default function ConsultSection({ navigation }: ConsultSectionProps) {
-const {
-  data: userData,
-  loading,
-  error,
-} = useAppSelector(state => state.userReducer);
-console.log('userData', userData);
+  const { data: userData, loading: userLoading, error: userError } = useAppSelector(state => state.userReducer);
+  const { data: homeData, loading: homeLoading, error: homeError } = useAppSelector(state => state.homeReducer);
+
+  useEffect(() => {
+    if (userData) {
+      console.log('Redux Storage Data:', JSON.stringify(userData, null, 2));
+      console.log('Total Users from API:', userData.length);
+    }
+    if (homeData) {
+      console.log('Home Data:', JSON.stringify(homeData, null, 2));
+      console.log('Consult Filters:', homeData.consultFilters);
+    }
+  }, [userData, homeData]);
+
+  const consultFilters = homeData?.consultFilters || [];
 
   return (
     <ScrollView style={styles.container}>

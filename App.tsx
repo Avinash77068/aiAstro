@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
@@ -9,12 +9,18 @@ import Sidebar from './src/components/Sidebar';
 import RootNavigator from './src/navigator/RootNavigator';
 import NetworkLoggerButton from './src/customComponents/NetworkLoggerButton';
 import { store, persistor } from './src/redux/store';
-// import { userThunk } from './src/redux/slices/user/userThunk';
-
-
+import { userThunk } from './src/redux/slices/user/userThunk';
+import { homeThunk } from './src/redux/slices/home/homeThunk';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
+  
+  useEffect(() => {
+    console.log('Dispatching API calls...');
+    store.dispatch(userThunk());
+    store.dispatch(homeThunk());
+  }, []);
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

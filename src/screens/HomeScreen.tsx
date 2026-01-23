@@ -5,21 +5,21 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import Header from '../components/Header';
 import Section2025 from '../components/Section2025';
-// import AstroShopSection from '../components/AstroShopSection';
 import ConsultSection from '../components/ConsultSection';
 import ReportsSection from '../components/ReportsSection';
 import PanchangSection from '../components/PanchangSection';
 import HoroscopeSection from '../components/HoroscopeSection';
 import AstroAIPage from '../components/AstroAIPage';
-
-import { homeTabs } from '../data/data';
+import { useAppSelector } from '../redux/hooks';
 import { COLORS } from '../constants/colors';
 
 export default function HomeScreen() {
   const [selectedSection, setSelectedSection] = useState('2025');
+  const { data: homeData, loading: homeLoading } = useAppSelector(state => state.homeReducer);
 
   const renderContent = () => {
     switch (selectedSection) {
@@ -37,12 +37,23 @@ export default function HomeScreen() {
         return <HoroscopeSection />;
       case 'Home':
         return <AstroAIPage />;
+      case 'Video':
+        return null;
       default:
         return <Section2025 />;
     }
   };
 
-  const tabs = homeTabs;
+  const tabs = homeData?.homeTabs || ['Home', '2025', 'Consult', 'Reports', 'Panchang', 'Horoscope'];
+
+  if (homeLoading) {
+    return (
+      <View style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -107,5 +118,14 @@ const styles = StyleSheet.create({
   },
   activeTabText: {
     color: COLORS.primary, // yellow-500
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 12,
+    color: COLORS.textSecondary,
+    fontSize: 16,
   },
 });

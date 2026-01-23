@@ -3,14 +3,18 @@ import {persistStore, persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {combineReducers} from '@reduxjs/toolkit';
 import userReducer from './slices/user/userSlice';
+import homeReducer from './slices/home/homeSlice';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['userReducer'],
+  whitelist: ['userReducer', 'homeReducer'],
 };
 
-const rootReducer = combineReducers({userReducer});
+const rootReducer = combineReducers({
+  userReducer,
+  homeReducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

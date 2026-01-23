@@ -5,11 +5,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Image,
 } from 'react-native';
-import { reports } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
+import { useAppSelector } from '../redux/hooks';
 
 export default function ReportsSection() {
+  const { data: homeData } = useAppSelector(state => state.homeReducer);
+  const reports = homeData?.reports || [];
 
   return (
     <ScrollView style={styles.container}>
@@ -22,8 +25,17 @@ export default function ReportsSection() {
       <View style={styles.grid}>
         {reports.map((report, idx) => (
           <View key={idx} style={styles.gridItem}>
-            <Text style={styles.itemIcon}>{report.icon}</Text>
+            {report.image && (
+              <Image
+                source={{ uri: report.image }}
+                style={styles.itemImage}
+                resizeMode="contain"
+              />
+            )}
             <Text style={styles.itemTitle}>{report.title}</Text>
+            {report.price && (
+              <Text style={styles.itemPrice}>{report.price}</Text>
+            )}
           </View>
         ))}
       </View>
@@ -75,9 +87,20 @@ const styles = StyleSheet.create({
     fontSize: 36,
     marginBottom: SPACING.sm,
   },
+  itemImage: {
+    width: 50,
+    height: 50,
+    marginBottom: SPACING.sm,
+  },
   itemTitle: {
     fontSize: TEXT_SIZES.sm,
     color: COLORS.textPrimary,
     textAlign: 'center',
+  },
+  itemPrice: {
+    fontSize: TEXT_SIZES.xs,
+    color: COLORS.primary,
+    fontWeight: 'bold',
+    marginTop: SPACING.xs,
   },
 });
