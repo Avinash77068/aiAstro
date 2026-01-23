@@ -1,38 +1,39 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
+import React, { useEffect } from 'react';
 import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { SidebarProvider } from './src/store/SidebarContext';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { SidebarProvider } from './src/customComponents/SidebarContext';
 import Sidebar from './src/components/Sidebar';
 import RootNavigator from './src/navigator/RootNavigator';
+import NetworkLoggerButton from './src/customComponents/NetworkLoggerButton';
+import { store, persistor } from './src/redux/store';
+
+
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SidebarProvider>
-      <SafeAreaProvider>
-        <StatusBar
-          barStyle={isDarkMode ? 'dark-content' : 'light-content'}
-          backgroundColor="#000000"
-          translucent={true}
-        />
-        <RootNavigator />
-        <Sidebar />
-      </SafeAreaProvider>
-    </SidebarProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <SidebarProvider>
+          <SafeAreaProvider>
+            <StatusBar
+              barStyle={isDarkMode ? 'dark-content' : 'light-content'}
+              backgroundColor="#000000"
+              translucent={true}
+            />
+            <RootNavigator />
+            <Sidebar />
+            <NetworkLoggerButton />
+          </SafeAreaProvider>
+        </SidebarProvider>
+      </PersistGate>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+
 
 export default App;

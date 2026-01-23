@@ -120,7 +120,6 @@ export const sidebarMenuItems = [
 
 export const homeTabs = [
     'Home',
-    'API Test',
     '2025',
     // 'Astro Shop',
     'Consult',

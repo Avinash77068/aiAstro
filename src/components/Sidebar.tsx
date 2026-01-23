@@ -21,7 +21,7 @@ import {
   Gift,
   User,
 } from 'lucide-react-native';
-import { useSidebar } from '../store/SidebarContext';
+import { useSidebar } from '../customComponents/SidebarContext';
 import SidebarItem from './SidebarItem';
 import { sidebarMenuItems, appConfig } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';

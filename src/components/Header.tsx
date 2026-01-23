@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Menu, Wallet, Bell, Search } from 'lucide-react-native';
-import { useSidebar } from '../store/SidebarContext';
+import { useSidebar } from '../customComponents/SidebarContext';
 import { appConfig } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING } from '../constants/colors';
 import NotificationPanel from './NotificationPanel';
