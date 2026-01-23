@@ -37,8 +37,8 @@ export default function HomeScreen() {
         return <HoroscopeSection />;
       case 'Home':
         return <AstroAIPage />;
-      case 'Video':
-        return null;
+      // case 'Video':
+      //   return null;
       default:
         return <Section2025 />;
     }

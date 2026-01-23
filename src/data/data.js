@@ -124,7 +124,7 @@ export const homeTabs = [
     // 'Astro Shop',
     'Consult',
     'Reports',
-    'Video',
+    // 'Video',
     'Panchang',
     'Horoscope',
 ];
