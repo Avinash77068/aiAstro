@@ -109,13 +109,15 @@ export default function OnboardingScreen({onComplete}: OnboardingScreenProps) {
         </View>
       </View>
 
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
-          <Text style={styles.loadingText}>Setting up your profile...</Text>
+      {renderStep()}
+      
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <View style={styles.loadingBox}>
+            <ActivityIndicator size="large" color={COLORS.primary} />
+            <Text style={styles.loadingText}>Setting up your profile...</Text>
+          </View>
         </View>
-      ) : (
-        renderStep()
       )}
 
       {error && (
@@ -154,6 +156,22 @@ const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingBox: {
+    backgroundColor: COLORS.cardBackground,
+    padding: SPACING.xl,
+    borderRadius: 16,
     alignItems: 'center',
   },
   loadingText: {
