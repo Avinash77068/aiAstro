@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Sparkles } from 'lucide-react-native';
 import { COLORS } from '../constants/colors';
 
+
 interface SplashScreenProps {
   onFinish: () => void;
 }
