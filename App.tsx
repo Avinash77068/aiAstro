@@ -1,6 +1,6 @@
 
-import React, { useEffect } from 'react';
-import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
+import React from 'react';
+import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -9,16 +9,12 @@ import Sidebar from './src/components/Sidebar';
 import RootNavigator from './src/navigator/RootNavigator';
 import NetworkLoggerButton from './src/customComponents/NetworkLoggerButton';
 import { store, persistor } from './src/redux/store';
-import { userThunk } from './src/redux/slices/user/userThunk';
+// import { userThunk } from './src/redux/slices/user/userThunk';
 
 
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
-  useEffect(() => {
-    console.log('Dispatching userThunk...');
-    store.dispatch(userThunk());
-  }, []);
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

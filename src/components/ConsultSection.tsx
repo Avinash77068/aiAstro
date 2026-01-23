@@ -21,6 +21,7 @@ const {
   loading,
   error,
 } = useAppSelector(state => state.userReducer);
+console.log('userData', userData);
 
   return (
     <ScrollView style={styles.container}>
