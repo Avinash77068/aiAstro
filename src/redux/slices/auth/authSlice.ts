@@ -20,6 +20,7 @@ export interface AuthState {
   onboardingCompleted: boolean;
   phoneVerified: boolean;
   phoneNumber: string | null;
+  isNewUser: boolean;
 }
 
 const initialState: AuthState = {
@@ -30,6 +31,7 @@ const initialState: AuthState = {
   onboardingCompleted: false,
   phoneVerified: false,
   phoneNumber: null,
+  isNewUser: true,
 };
 
 const authSlice = createSlice({
@@ -42,6 +44,7 @@ const authSlice = createSlice({
       state.onboardingCompleted = false;
       state.phoneVerified = false;
       state.phoneNumber = null;
+      state.isNewUser = true;
     },
     clearError: state => {
       state.error = null;
@@ -79,11 +82,21 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(verifyOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber: string; token?: string}>) => {
+      .addCase(verifyOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber: string; token?: string; isNewUser?: boolean; user?: any}>) => {
         state.loading = false;
         state.phoneVerified = true;
         state.phoneNumber = action.payload.phoneNumber;
-        if (action.payload.token) {
+        state.isNewUser = action.payload.isNewUser !== false;
+        
+        if (!action.payload.isNewUser && action.payload.user) {
+          state.user = {
+            ...action.payload.user,
+            phoneNumber: action.payload.phoneNumber,
+            token: action.payload.token,
+          } as UserData;
+          state.isAuthenticated = true;
+          state.onboardingCompleted = true;
+        } else if (action.payload.token) {
           state.user = {...state.user, phoneNumber: action.payload.phoneNumber, token: action.payload.token} as UserData;
         }
       })

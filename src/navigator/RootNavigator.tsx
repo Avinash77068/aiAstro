@@ -9,7 +9,7 @@ import SplashScreen from '../components/SplashScreen';
 
 const RootNavigator: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { isAuthenticated, onboardingCompleted, phoneVerified } = useAppSelector(state => state.authReducer);
+  const { isAuthenticated, onboardingCompleted, phoneVerified, isNewUser } = useAppSelector(state => state.authReducer);
 
   const handleSplashFinish = () => {
     setIsLoading(false);
@@ -33,8 +33,13 @@ const RootNavigator: React.FC = () => {
     return <AuthContainer onComplete={handlePhoneAuthComplete} />;
   }
 
-  // Show onboarding if phone verified but not completed onboarding
-  if (phoneVerified && (!isAuthenticated || !onboardingCompleted)) {
+  // If existing user (isNewUser = false), go directly to home
+  if (phoneVerified && !isNewUser && isAuthenticated && onboardingCompleted) {
+    return <AppNavigator />;
+  }
+
+  // Show onboarding only for new users
+  if (phoneVerified && isNewUser && (!isAuthenticated || !onboardingCompleted)) {
     return <OnboardingScreen onComplete={handleOnboardingComplete} />;
   }
 

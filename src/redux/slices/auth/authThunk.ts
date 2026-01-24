@@ -52,6 +52,8 @@ export const verifyOTPThunk = createAsyncThunk(
         return {
           phoneNumber: payload.phoneNumber,
           token: response.data.data?.token,
+          isNewUser: response.data.data?.isNewUser !== false,
+          user: response.data.data?.user,
         };
       }
 
