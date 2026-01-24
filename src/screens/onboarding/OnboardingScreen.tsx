@@ -14,7 +14,7 @@ interface OnboardingScreenProps {
 
 export default function OnboardingScreen({onComplete}: OnboardingScreenProps) {
   const dispatch = useAppDispatch();
-  const {loading, error} = useAppSelector(state => state.authReducer);
+  const {loading, error, phoneNumber} = useAppSelector(state => state.authReducer);
 
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -40,7 +40,7 @@ export default function OnboardingScreen({onComplete}: OnboardingScreenProps) {
   };
 
   const handleGenderNext = async (gender: string) => {
-    const finalData = {...formData, gender};
+    const finalData = {...formData, gender, phoneNumber: phoneNumber || undefined};
     setFormData(finalData);
 
     try {

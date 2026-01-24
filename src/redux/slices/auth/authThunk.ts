@@ -6,7 +6,64 @@ interface LoginPayload {
   place: string;
   dateOfBirth: string;
   gender: string;
+  phoneNumber?: string;
 }
+
+interface SendOTPPayload {
+  phoneNumber: string;
+}
+
+interface VerifyOTPPayload {
+  phoneNumber: string;
+  otp: string;
+}
+
+export const sendOTPThunk = createAsyncThunk(
+  'auth/sendOTP',
+  async (payload: SendOTPPayload, {rejectWithValue}) => {
+    try {
+      const response = await api.post('/user/send-otp', payload);
+      console.log('Send OTP response:', response.data);
+      
+      if (response.data.success) {
+        return {
+          phoneNumber: payload.phoneNumber,
+        };
+      }
+
+      throw new Error(response.data.message || 'Failed to send OTP');
+    } catch (error: any) {
+      console.error('Send OTP error:', error);
+      return rejectWithValue(
+        error.response?.data?.message || error.message || 'Failed to send OTP',
+      );
+    }
+  },
+);
+
+export const verifyOTPThunk = createAsyncThunk(
+  'auth/verifyOTP',
+  async (payload: VerifyOTPPayload, {rejectWithValue}) => {
+    try {
+      const response = await api.post('/user/verify-otp', payload);
+      console.log('Verify OTP response:', response.data);
+      
+      if (response.data.success) {
+        return {
+          phoneNumber: payload.phoneNumber,
+          token: response.data.data?.token,
+        };
+      }
+
+      throw new Error(response.data.message || 'Invalid OTP');
+    } catch (error: any) {
+      console.error('Verify OTP error:', error);
+      return rejectWithValue(
+        error.response?.data?.message || error.message || 'Failed to verify OTP',
+      );
+    }
+  },
+);
 
 export const loginThunk = createAsyncThunk(
   'auth/login',

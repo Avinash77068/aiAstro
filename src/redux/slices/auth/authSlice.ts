@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { loginThunk } from './authThunk';
+import { loginThunk, sendOTPThunk, verifyOTPThunk } from './authThunk';
 
 
 export interface UserData {
@@ -9,6 +9,7 @@ export interface UserData {
   gender: string;
   userId?: string;
   token?: string;
+  phoneNumber?: string;
 }
 
 export interface AuthState {
@@ -17,6 +18,8 @@ export interface AuthState {
   isAuthenticated: boolean;
   error: string | null;
   onboardingCompleted: boolean;
+  phoneVerified: boolean;
+  phoneNumber: string | null;
 }
 
 const initialState: AuthState = {
@@ -25,6 +28,8 @@ const initialState: AuthState = {
   isAuthenticated: false,
   error: null,
   onboardingCompleted: false,
+  phoneVerified: false,
+  phoneNumber: null,
 };
 
 const authSlice = createSlice({
@@ -35,6 +40,8 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.onboardingCompleted = false;
+      state.phoneVerified = false;
+      state.phoneNumber = null;
     },
     clearError: state => {
       state.error = null;
@@ -53,6 +60,34 @@ const authSlice = createSlice({
         state.onboardingCompleted = true;
       })
       .addCase(loginThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(sendOTPThunk.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(sendOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber: string}>) => {
+        state.loading = false;
+        state.phoneNumber = action.payload.phoneNumber;
+      })
+      .addCase(sendOTPThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(verifyOTPThunk.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber: string; token?: string}>) => {
+        state.loading = false;
+        state.phoneVerified = true;
+        state.phoneNumber = action.payload.phoneNumber;
+        if (action.payload.token) {
+          state.user = {...state.user, phoneNumber: action.payload.phoneNumber, token: action.payload.token} as UserData;
+        }
+      })
+      .addCase(verifyOTPThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
