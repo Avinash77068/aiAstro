@@ -17,8 +17,10 @@ import {
 } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { useAppSelector } from '../redux/hooks';
+import { useNavigation } from '@react-navigation/native';
 
 export default function AstroAIPage() {
+  const navigation = useNavigation<any>();
   const { data: homeData } = useAppSelector(state => state.homeReducer);
   const { data: astrologerData } = useAppSelector(state => state.astrologerReducer);
   
@@ -49,7 +51,8 @@ export default function AstroAIPage() {
               <Text
                 style={[
                   styles.aiOptionText,
-                  option.bgColor === COLORS.primary && styles.aiOptionTextActive,
+                  option.bgColor === COLORS.primary &&
+                    styles.aiOptionTextActive,
                 ]}
               >
                 {option.title}
@@ -76,7 +79,9 @@ export default function AstroAIPage() {
         style={styles.quickActions}
       >
         {quickActions.map((action, idx) => {
-          const IconComponent = { Briefcase, User, Calendar, Heart }[action.iconKey];
+          const IconComponent = { Briefcase, User, Calendar, Heart }[
+            action.iconKey
+          ];
           if (!IconComponent) return null;
           return (
             <TouchableOpacity key={idx} style={styles.quickAction}>
@@ -123,10 +128,20 @@ export default function AstroAIPage() {
       </ScrollView>
 
       <View style={styles.bottomButtons}>
-        <TouchableOpacity style={styles.callButton}>
+        <TouchableOpacity
+          style={styles.callButton}
+          onPress={() => {
+            navigation.navigate('Home', { section: 'Consult' });
+          }}
+        >
           <Text style={styles.callText}>📞 Call</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.chatButton}>
+        <TouchableOpacity
+          style={styles.chatButton}
+          onPress={() => {
+            navigation.navigate('Home', { section: 'Consult' });
+          }}
+        >
           <View style={styles.chatButtonContent}>
             <MessageCircle size={20} color={COLORS.textInverse} />
             <Text style={styles.chatText}>Free Chat</Text>
@@ -276,6 +291,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
+    opacity:.3
   },
   callText: {
     color: COLORS.textInverse,

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
+  StyleSheet
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
 import Section2025 from '../components/Section2025';
 import ConsultSection from '../components/ConsultSection';
@@ -18,8 +18,15 @@ import { useAppSelector } from '../redux/hooks';
 import { COLORS, TEXT_SIZES } from '../constants/colors';
 
 export default function HomeScreen() {
+  const route = useRoute<any>();
   const [selectedSection, setSelectedSection] = useState('2025');
   const { data: homeData } = useAppSelector(state => state.homeReducer);
+
+  useEffect(() => {
+    if (route.params?.section) {
+      setSelectedSection(route.params.section);
+    }
+  }, [route.params]);
 
   const renderContent = () => {
     switch (selectedSection) {
