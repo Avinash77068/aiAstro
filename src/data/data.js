@@ -11,5 +11,6 @@ export const sidebarMenuItems = [
     { iconKey: 'BookOpen', text: 'Choose Your Kundli' },
     { iconKey: 'Download', text: 'Downloads' },
     { iconKey: 'Gift', text: 'Refer & Earn' },
+    { iconKey: 'LogOut', text: 'LogOut' },
 ];
 

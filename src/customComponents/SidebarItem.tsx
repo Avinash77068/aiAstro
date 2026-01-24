@@ -5,11 +5,12 @@ import { COLORS } from '../constants/colors';
 interface SidebarItemProps {
   icon: React.ReactNode;
   text: string;
+  onPress?: () => void;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ icon, text }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ icon, text, onPress = () => {} }) => {
   return (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={onPress}>
       <View style={styles.icon}>{icon}</View>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>

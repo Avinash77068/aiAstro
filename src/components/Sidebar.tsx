@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -20,23 +20,47 @@ import {
   Download,
   Gift,
   User,
+  LogOut,
 } from 'lucide-react-native';
 import { useSidebar } from '../customComponents/SidebarContext';
-import SidebarItem from './SidebarItem';
+import SidebarItem from '../customComponents/SidebarItem';
+import AlertDialog from '../customComponents/AlertDialog';
 import { sidebarMenuItems } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { AppConfig } from '../redux/slices/home/homeSlice';
-import { useAppSelector } from '../redux/hooks';
+import { useAppSelector, useAppDispatch } from '../redux/hooks';
+import { logout } from '../redux/slices/auth/authSlice';
 
 const { width, height } = Dimensions.get('window');
 const SIDEBAR_WIDTH = 320;
 
 const Sidebar: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { data: homeData } = useAppSelector(state => state.homeReducer);
   const { user } = useAppSelector(state => state.authReducer);
   const appConfig: AppConfig | undefined = homeData?.appConfig;
   const { sidebarOpen, toggleSidebar } = useSidebar();
   const translateX = useRef(new Animated.Value(-SIDEBAR_WIDTH)).current;
+  const [showLogoutAlert, setShowLogoutAlert] = useState(false);
+
+  const handleLogoutPress = () => {
+    setShowLogoutAlert(true);
+  };
+
+  const handleLogoutConfirm = () => {
+    setShowLogoutAlert(false);
+    dispatch(logout());
+    toggleSidebar();
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutAlert(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toggleSidebar(); 
+  };
 
   useEffect(() => {
     Animated.timing(translateX, {
@@ -88,6 +112,7 @@ const Sidebar: React.FC = () => {
                 BookOpen,
                 Download,
                 Gift,
+                LogOut,
               }[item.iconKey];
               if (!IconComponent) return null;
               return (
@@ -95,12 +120,24 @@ const Sidebar: React.FC = () => {
                   key={idx}
                   icon={<IconComponent size={24} color={COLORS.textPrimary} />}
                   text={item.text}
+                  onPress={item.iconKey === 'LogOut' ? handleLogoutPress : undefined}
                 />
               );
             })}
           </View>
         </View>
       </Animated.View>
+
+      <AlertDialog
+        visible={showLogoutAlert}
+        title="Confirm Logout"
+        message="Are you sure you want to log out?"
+        onCancel={handleLogoutCancel}
+        onConfirm={handleLogoutConfirm}
+        cancelText="Cancel"
+        confirmText="Logout"
+        confirmButtonColor={COLORS.error || '#EF4444'}
+      />
     </View>
   );
 };
