@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: COLORS.textPrimary,
-    fontSize: TEXT_SIZES.lg,
+    fontSize: TEXT_SIZES.xl,
     fontWeight: 'bold',
   },
   right: {

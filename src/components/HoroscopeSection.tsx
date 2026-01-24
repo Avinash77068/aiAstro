@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemIcon: {
-    fontSize: 48,
+    fontSize:TEXT_SIZES.lg,
     marginBottom: SPACING.sm,
   },
   itemImage: {

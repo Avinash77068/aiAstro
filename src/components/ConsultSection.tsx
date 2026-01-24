@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     color: COLORS.textInverse,
-    fontSize: 10,
+    fontSize: TEXT_SIZES.xs,
     fontWeight: 'bold',
   },
   experience: {

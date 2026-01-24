@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xl,
   },
   title: {
-    fontSize: 28,
+    fontSize: TEXT_SIZES['3xl'],
     fontWeight: 'bold',
     color: COLORS.textPrimary,
     textAlign: 'center',

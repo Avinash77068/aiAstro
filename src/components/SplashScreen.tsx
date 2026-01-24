@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Sparkles } from 'lucide-react-native';
-import { COLORS } from '../constants/colors';
+import { COLORS, TEXT_SIZES } from '../constants/colors';
 
 
 interface SplashScreenProps {
@@ -107,14 +107,14 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   title: {
-    fontSize: 32,
+    fontSize: TEXT_SIZES['4xl'],
     fontWeight: 'bold',
     color: '#FFFFFF',
     marginBottom: 8,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: TEXT_SIZES.base,
     color: '#9CA3AF',
     marginBottom: 40,
     textAlign: 'center',
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: '#6B7280',
-    fontSize: 14,
+    fontSize: TEXT_SIZES['4xl'],
     textAlign: 'center',
   },
 });

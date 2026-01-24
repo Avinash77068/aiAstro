@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import ConsultSection from '../components/ConsultSection';
+import { TEXT_SIZES } from '../constants/colors';
 
 export default function AskScreen() {
   const navigation = useNavigation();
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: TEXT_SIZES['2xl'],
     fontWeight: 'bold',
     marginBottom: 16,
   },

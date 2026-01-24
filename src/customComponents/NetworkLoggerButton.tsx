@@ -1,3 +1,4 @@
+import { TEXT_SIZES } from '../constants/colors';
 import React, {useState} from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import NetworkLogger from 'react-native-network-logger';
@@ -41,14 +42,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
     zIndex: 999,
   },
   networkLoggerButtonText: {
-    fontSize: 24,
+    fontSize: TEXT_SIZES.lg,
     color: '#fff',
   },
   networkLoggerOverlay: {
@@ -72,14 +73,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
     zIndex: 10000,
   },
   closeButtonText: {
-    fontSize: 24,
+    fontSize: TEXT_SIZES['4xl'],
     color: '#fff',
     fontWeight: 'bold',
   },

@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   optionIcon: {
-    fontSize: 32,
+    fontSize: TEXT_SIZES['4xl'],
     marginBottom: 8,
   },
   optionImage: {
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   aiOptionText: {
     color: COLORS.textPrimary,
-    fontSize: 14,
+    fontSize: TEXT_SIZES.base,
     fontWeight: 'bold',
   },
   aiOptionTextActive: {
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     backgroundColor: '#374151',
-    borderRadius: 8,
+    borderRadius: BORDER_RADIUS.md,
     padding: 16,
     marginBottom: 24,
     flexDirection: 'row',
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     color: COLORS.textPrimary,
-    fontSize: 16,
+    fontSize: TEXT_SIZES.lg,
   },
   sendButton: {
     backgroundColor: COLORS.primary,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   },
   sendText: {
     color: COLORS.textInverse,
-    fontSize: 18,
+    fontSize: TEXT_SIZES.lg,
   },
   quickActions: {
     marginBottom: 24,
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   quickActionLabel: {
-    fontSize: 12,
+    fontSize: TEXT_SIZES.sm,
     color: COLORS.textPrimary,
     textAlign: 'center',
   },
@@ -229,13 +229,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: TEXT_SIZES.lg,
     fontWeight: 'bold',
     color: COLORS.textPrimary,
   },
   sectionArrow: {
     color: COLORS.primary,
-    fontSize: 16,
+    fontSize: TEXT_SIZES.lg,
   },
   astrologers: {
     marginBottom: 24,
@@ -253,13 +253,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   astrologerName: {
-    fontSize: 12,
+    fontSize: TEXT_SIZES.sm,
     color: COLORS.textPrimary,
     marginBottom: 4,
     textAlign: 'center',
   },
   astrologerPrice: {
-    fontSize: 12,
+    fontSize: TEXT_SIZES.sm,
     color: COLORS.textTertiary,
   },
   freePrice: {
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
   callText: {
     color: COLORS.textInverse,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: TEXT_SIZES.lg,
   },
   chatButton: {
     flex: 1,
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
   chatText: {
     color: COLORS.textInverse,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: TEXT_SIZES.lg,
     marginLeft: 8,
   },
 });

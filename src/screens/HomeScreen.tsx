@@ -15,7 +15,7 @@ import PanchangSection from '../components/PanchangSection';
 import HoroscopeSection from '../components/HoroscopeSection';
 import AstroAIPage from '../components/AstroAIPage';
 import { useAppSelector } from '../redux/hooks';
-import { COLORS } from '../constants/colors';
+import { COLORS, TEXT_SIZES } from '../constants/colors';
 
 export default function HomeScreen() {
   const [selectedSection, setSelectedSection] = useState('2025');
@@ -115,6 +115,6 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 12,
     color: COLORS.textSecondary,
-    fontSize: 16,
+    fontSize: TEXT_SIZES.base,
   },
 });

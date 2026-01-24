@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/Header';
+import { TEXT_SIZES } from '../constants/colors';
 
 export default function AstroAIScreen() {
   return (
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: TEXT_SIZES['2xl'],
     fontWeight: 'bold',
     marginBottom: 16,
   },
