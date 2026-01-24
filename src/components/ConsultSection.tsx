@@ -112,6 +112,7 @@ export default function ConsultSection({ navigation }: ConsultSectionProps) {
             </View>
             <View style={styles.buttons}>
               <TouchableOpacity 
+                disabled={item.status !== 'ONLINE'}
                 style={styles.callButton} 
                 onPress={() => {
                   console.log('Starting call with', item.name);
@@ -273,6 +274,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.sm,
     borderRadius: BORDER_RADIUS.sm,
     alignItems: 'center',
+    opacity: 0.3,
   },
   chatButton: {
     flex: 1,
@@ -280,6 +282,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.sm,
     borderRadius: BORDER_RADIUS.sm,
     alignItems: 'center',
+    
   },
   buttonText: {
     color: COLORS.textInverse,
