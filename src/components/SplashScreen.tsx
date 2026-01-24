@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: '#6B7280',
-    fontSize: TEXT_SIZES['4xl'],
+    fontSize: TEXT_SIZES.base,
     textAlign: 'center',
   },
 });
