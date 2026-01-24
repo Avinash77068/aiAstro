@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  Image,
 } from 'react-native';
 import { Send, Phone, Video, ArrowLeft } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
@@ -27,6 +28,14 @@ interface Astrologer {
   rating: number;
   price: string;
   verified: boolean;
+  image?: string;
+  languages?: string[];
+  experience?: string;
+  reviews?: number;
+  status?: string;
+  sessionType?: string;
+  specialization?: string[];
+  description?: string;
 }
 
 // Mock astrologer data (you can pass this as props later)
@@ -61,11 +70,19 @@ const mockMessages: Message[] = [
 ];
 
 interface ChatScreenProps {
+  route?: {
+    params?: {
+      astrologer?: Astrologer;
+    };
+  };
+  navigation?: any;
   astrologer?: Astrologer;
   onBack?: () => void;
 }
 
-export default function ChatScreen({ astrologer = mockAstrologer, onBack }: ChatScreenProps) {
+export default function ChatScreen({ route, navigation, onBack }: ChatScreenProps) {
+  const astrologerData = route?.params?.astrologer;
+  
   const [messages, setMessages] = useState<Message[]>(mockMessages);
   const [inputText, setInputText] = useState('');
   const flatListRef = useRef<FlatList>(null);
@@ -101,13 +118,19 @@ export default function ChatScreen({ astrologer = mockAstrologer, onBack }: Chat
   };
 
   const startCall = () => {
-    // Here you would implement call functionality
-    console.log('Starting voice call with', astrologer.name);
+    console.log('Starting voice call with', astrologerData?.name);
   };
 
   const startVideoCall = () => {
-    // Here you would implement video call functionality
-    console.log('Starting video call with', astrologer.name);
+    console.log('Starting video call with', astrologerData?.name);
+  };
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else if (navigation) {
+      navigation.goBack();
+    }
   };
 
   const renderMessage = ({ item }: { item: Message }) => (
@@ -126,20 +149,28 @@ export default function ChatScreen({ astrologer = mockAstrologer, onBack }: Chat
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          {onBack && (
-            <TouchableOpacity onPress={onBack} style={styles.backButton}>
+          {(onBack || navigation) && (
+            <TouchableOpacity onPress={handleBack} style={styles.backButton}>
               <ArrowLeft size={24} color={COLORS.textPrimary} />
             </TouchableOpacity>
           )}
           <View style={styles.astrologerInfo}>
-            <View style={styles.avatar} />
+            {astrologerData?.image ? (
+              <Image  
+                source={{ uri: astrologerData.image }}
+                style={styles.avatar}
+                resizeMode="cover"
+              />
+            ) : (
+              <View style={styles.avatar} />
+            )}
             <View>
               <Text style={styles.astrologerName}>
-                {astrologer.name}
-                {astrologer.verified && <Text style={styles.verified}> ✓</Text>}
+                {astrologerData?.name}
+                {astrologerData?.verified && <Text style={styles.verified}> ✓</Text>}
               </Text>
-              <Text style={styles.astrologerType}>{astrologer.type}</Text>
-              <Text style={styles.price}>{astrologer.price}</Text>
+              <Text style={styles.astrologerType}>{astrologerData?.type}</Text>
+              <Text style={styles.price}>{astrologerData?.price}</Text>
             </View>
           </View>
         </View>

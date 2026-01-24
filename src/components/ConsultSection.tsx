@@ -118,12 +118,17 @@ export default function ConsultSection({ navigation }: ConsultSectionProps) {
                   if (navigation) {
                     navigation.navigate('Chat', { 
                       astrologer: {
-                        id: index.toString(),
+                        id: item._id || index.toString(),
                         name: item.name,
                         type: item.type,
                         rating: item.rating,
                         price: item.price,
                         verified: item.verified,
+                        image: item.image,
+                        languages: item.languages,
+                        experience: item.experience,
+                        reviews: item.reviews,
+                        status: item.status,
                       }
                     });
                   }
@@ -138,12 +143,17 @@ export default function ConsultSection({ navigation }: ConsultSectionProps) {
                   if (navigation) {
                     navigation.navigate('Chat', { 
                       astrologer: {
-                        id: index.toString(),
+                        id: item._id || index.toString(),
                         name: item.name,
                         type: item.type,
                         rating: item.rating,
                         price: item.price,
                         verified: item.verified,
+                        image: item.image,
+                        languages: item.languages,
+                        experience: item.experience,
+                        reviews: item.reviews,
+                        status: item.status,
                       }
                     });
                   }
