@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: SPACING.lg,
+    padding: SPACING.sm,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
     backgroundColor: COLORS.cardBackground,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backButton: {
-    marginRight: SPACING.md,
+    marginRight: SPACING.xs,
     padding: SPACING.sm,
   },
   astrologerInfo: {

@@ -6,19 +6,16 @@ import {
   StyleSheet,
   ScrollView,
   FlatList,
-  ActivityIndicator,
   Image,
 } from 'react-native';
 import { Heart, Briefcase, Star } from 'lucide-react-native';
 
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { useAppSelector } from '../redux/hooks';
+import { useNavigation } from '@react-navigation/native';
 
-interface ConsultSectionProps {
-  navigation?: any;
-}
-
-export default function ConsultSection({ navigation }: ConsultSectionProps) {
+export default function ConsultSection() {
+  const navigation: any = useNavigation();
   const { data: homeData } = useAppSelector(state => state.homeReducer);
   const { data: astrologerData } = useAppSelector(state => state.astrologerReducer);
 
@@ -115,7 +112,6 @@ export default function ConsultSection({ navigation }: ConsultSectionProps) {
                 disabled={item.status !== 'ONLINE'}
                 style={styles.callButton} 
                 onPress={() => {
-                  console.log('Starting call with', item.name);
                   if (navigation) {
                     navigation.navigate('Chat', { 
                       astrologer: {
