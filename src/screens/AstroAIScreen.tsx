@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import Header from 'common/Header';
+import Header from '../common/Header';
 import { TEXT_SIZES } from '../constants/colors';
 
 export default function AstroAIScreen() {

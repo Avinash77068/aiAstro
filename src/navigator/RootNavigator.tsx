@@ -5,7 +5,7 @@ import AuthContainer from '../screens/auth/AuthContainer';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import AppNavigator from './AppNavigator';
 import { useAppSelector } from '../redux/hooks';
-import SplashScreen from '../components/SplashScreen';
+import SplashScreen from '../screens/auth/SplashScreen';
 
 const RootNavigator: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);

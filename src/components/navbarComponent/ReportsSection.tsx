@@ -7,8 +7,8 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
-import { useAppSelector } from '../redux/hooks';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../constants/colors';
+import { useAppSelector } from '../../redux/hooks';
 
 export default function ReportsSection() {
   const { data: homeData } = useAppSelector(state => state.homeReducer);
