@@ -13,9 +13,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Send, Phone, Video, ArrowLeft } from 'lucide-react-native';
-import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
-import { useAppSelector, useAppDispatch } from '../redux/hooks';
-import { sendMessageThunk } from '../redux/slices/chat/chatThunk';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../constants/colors';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { sendMessageThunk } from '../../redux/slices/chat/chatThunk';
 
 
 interface Message {
@@ -57,18 +57,19 @@ interface ChatScreenProps {
 export default function ChatScreen({ route, navigation, onBack }: ChatScreenProps) {
   const dispatch = useAppDispatch();
   const astrologerData = route?.params?.astrologer;
+  const astrologerId = astrologerData?.id || 'default';
   const { user } = useAppSelector(state => state.authReducer);
-  const { messages: reduxMessages, loading } = useAppSelector(state => state.chatReducer);
+  const { messagesByAstrologer, loading } = useAppSelector(state => state.chatReducer);
   
-  const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingText, setTypingText] = useState('');
   const flatListRef = useRef<FlatList>(null);
 
-  useEffect(() => {
-    if (reduxMessages.length > 0) {
-      setMessages(reduxMessages);
-    }
-  }, [reduxMessages]);
+  const messages = messagesByAstrologer[astrologerId] || [];
+  const displayMessages = isTyping 
+    ? [...messages.slice(0, -1), { ...messages[messages.length - 1], text: typingText }]
+    : messages;
 
   const sendMessage = async () => {
     if (inputText.trim() === '' || !user?.userId) return;
@@ -77,40 +78,42 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
     setInputText('');
 
     try {
-      const result = await dispatch(sendMessageThunk({
+      await dispatch(sendMessageThunk({
         userId: user.userId,
         message: messageText,
+        astrologerId: astrologerId,
       })).unwrap();
 
-      console.log('=== API Response ===');
-      console.log('Full Result:', JSON.stringify(result, null, 2));
-      console.log('User Message:', result.userMessage);
-      console.log('Bot Response:', result.botResponse);
-      console.log('Timestamp:', result.timestamp);
-      console.log('==================');
+      const botMessage = messages[messages.length - 1];
+      if (botMessage && !botMessage.isUser) {
+        setIsTyping(true);
+        setTypingText('');
+        
+        const fullText = botMessage.text;
+        let currentIndex = 0;
+        
+        const typingInterval = setInterval(() => {
+          if (currentIndex < fullText.length) {
+            setTypingText(fullText.substring(0, currentIndex + 1));
+            currentIndex++;
+            
+            setTimeout(() => {
+              flatListRef.current?.scrollToEnd({ animated: true });
+            }, 50);
+          } else {
+            clearInterval(typingInterval);
+            setIsTyping(false);
+            setTypingText('');
+          }
+        }, 30);
+      }
 
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: result.botResponse,
-        isUser: false,
-        timestamp: new Date(result.timestamp),
-      };
-      setMessages(prev => [...prev, botMessage]);
+      setTimeout(() => {
+        flatListRef.current?.scrollToEnd({ animated: true });
+      }, 100);
     } catch (error) {
       console.error('Failed to send message:', error);
-      
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: 'Sorry, failed to send message. Please try again.',
-        isUser: false,
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, errorMessage]);
     }
-
-    setTimeout(() => {
-      flatListRef.current?.scrollToEnd({ animated: true });
-    }, 100);
   };
 
   const startCall = () => {
@@ -183,7 +186,7 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
       {/* Messages */}
       <FlatList
         ref={flatListRef}
-        data={messages}
+        data={displayMessages}
         keyExtractor={(item) => item.id}
         renderItem={renderMessage}
         style={styles.messagesContainer}

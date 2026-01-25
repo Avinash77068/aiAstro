@@ -4,6 +4,7 @@ import api from '../../../services/api';
 interface SendMessagePayload {
   userId: string;
   message: string;
+  astrologerId?: string;
 }
 
 export const sendMessageThunk = createAsyncThunk(
@@ -17,6 +18,7 @@ export const sendMessageThunk = createAsyncThunk(
           userMessage: response.data.data.message,
           botResponse: response.data.data.astroResponse,
           timestamp: response.data.data.timestamp,
+          astrologerId: response.data.data.astrologerId,
         };
       }
 

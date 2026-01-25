@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNavigator from './BottomTabNavigator';
-import ChatScreen from '../components/ChatScreen';
+import ChatScreen from '../components/chat/ChatScreen';
 
 const Stack = createStackNavigator();
 

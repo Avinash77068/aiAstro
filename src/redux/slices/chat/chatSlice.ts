@@ -11,7 +11,7 @@ export interface Message {
 }
 
 interface ChatState {
-  messages: Message[];
+  messagesByAstrologer: Record<string, Message[]>;
   loading: boolean;
   error: string | null;
 }
@@ -19,7 +19,7 @@ interface ChatState {
 /* ---------- INITIAL STATE ---------- */
 
 const initialState: ChatState = {
-  messages: [],
+  messagesByAstrologer: {},
   loading: false,
   error: null,
 };
@@ -30,8 +30,12 @@ const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    clearChat: state => {
-      state.messages = [];
+    clearChat: (state, action: PayloadAction<string | undefined>) => {
+      if (action.payload) {
+        delete state.messagesByAstrologer[action.payload];
+      } else {
+        state.messagesByAstrologer = {};
+      }
       state.error = null;
     },
   },
@@ -47,6 +51,12 @@ const chatSlice = createSlice({
       .addCase(sendMessageThunk.fulfilled, (state, action) => {
         state.loading = false;
 
+        const astrologerId = action.meta.arg.astrologerId || 'default';
+
+        if (!state.messagesByAstrologer[astrologerId]) {
+          state.messagesByAstrologer[astrologerId] = [];
+        }
+
         const userMessage: Message = {
           id: Date.now().toString(),
           text: action.payload.userMessage,
@@ -61,8 +71,8 @@ const chatSlice = createSlice({
           timestamp: new Date(action.payload.timestamp),
         };
 
-        state.messages.push(userMessage);
-        state.messages.push(botMessage);
+        state.messagesByAstrologer[astrologerId].push(userMessage);
+        state.messagesByAstrologer[astrologerId].push(botMessage);
       })
 
       .addCase(sendMessageThunk.rejected, (state, action) => {
