@@ -27,7 +27,7 @@ export default function AstroAIPage() {
   const aiOptions = homeData?.aiOptions || [];
   const quickActions = homeData?.quickActions || [];
   const astrologers = astrologerData || [];
-  console.log('astrologers', astrologers);
+  console.log('astrologers', aiOptions);
   return (
     <ScrollView style={styles.container}>
       <ScrollView
@@ -35,22 +35,12 @@ export default function AstroAIPage() {
         showsHorizontalScrollIndicator={false}
         style={styles.aiOptions}
       >
-        {aiOptions?.map((option, idx) => {
-          const getNavigationRoute = (title: string) => {
-            if (title.includes('Kundli')) return 'KundliAI';
-            if (title.includes('Matching')) return 'MatchingAI';
-            if (title.includes('Love')) return 'LoveAI';
-            if (title.includes('Health')) return 'HealthAI';
-            return null;
-          };
-
-          const route = getNavigationRoute(option.title);
-
+        {aiOptions?.map((option:any, idx) => {
           return (
             <TouchableOpacity
               key={idx + 1}
               style={[styles.aiOption, { backgroundColor: option.bgColor }]}
-              onPress={() => route && navigation.navigate(route)}
+              onPress={() => navigation.navigate(option.route)}
             >
               <View style={styles.aiOptionContent}>
                 {option.image && (
