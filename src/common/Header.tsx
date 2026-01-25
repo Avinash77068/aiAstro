@@ -3,9 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Menu, Wallet, Bell, Search } from 'lucide-react-native';
 import { useSidebar } from '../customComponents/SidebarContext';
 import { COLORS, TEXT_SIZES, SPACING } from '../constants/colors';
-import NotificationPanel from './NotificationPanel';
-import WalletPanel from './WalletPanel';
-import SearchModal from './SearchModal';
+import NotificationPanel from '../components/NotificationPanel';
+import WalletPanel from '../components/WalletPanel';
+import SearchModal from '../components/SearchModal';
 import { useAppSelector } from '../redux/hooks';
 import { AppConfig } from '../redux/slices/home/homeSlice';
 

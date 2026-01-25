@@ -7,13 +7,13 @@ import {
   StyleSheet
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import Header from '../components/Header';
-import Section2025 from '../components/Section2025';
-import ConsultSection from '../components/ConsultSection';
-import ReportsSection from '../components/ReportsSection';
-import PanchangSection from '../components/PanchangSection';
-import HoroscopeSection from '../components/HoroscopeSection';
-import AstroAIPage from '../components/AstroAIPage';
+import Header from '../common/Header';
+import Section2025 from '../components/navbarComponent/Section2025';
+import ConsultSection from '../components/bottomTabComponent/ConsultSection';
+import ReportsSection from '../components/navbarComponent/ReportsSection';
+import PanchangSection from '../components/navbarComponent/PanchangSection';
+import HoroscopeSection from '../components/navbarComponent/HoroscopeSection';
+import AstroAIPage from '../components/bottomTabComponent/AstroAIPage';
 import { useAppSelector } from '../redux/hooks';
 import { COLORS, TEXT_SIZES } from '../constants/colors';
 

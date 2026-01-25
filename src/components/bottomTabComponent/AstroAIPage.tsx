@@ -15,8 +15,8 @@ import {
   Heart,
   MessageCircle,
 } from 'lucide-react-native';
-import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
-import { useAppSelector } from '../redux/hooks';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../constants/colors';
+import { useAppSelector } from '../../redux/hooks';
 import { useNavigation } from '@react-navigation/native';
 
 export default function AstroAIPage() {

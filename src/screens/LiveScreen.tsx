@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import Header from '../components/Header';
+
 import { TEXT_SIZES } from '../constants/colors';
+import Header from 'common/Header';
 
 export default function LiveScreen() {
   return (

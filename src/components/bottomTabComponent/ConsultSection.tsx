@@ -10,9 +10,10 @@ import {
 } from 'react-native';
 import { Heart, Briefcase, Star } from 'lucide-react-native';
 
-import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
-import { useAppSelector } from '../redux/hooks';
+
 import { useNavigation } from '@react-navigation/native';
+import { useAppSelector } from '../../redux/hooks';
+import { BORDER_RADIUS, COLORS, SPACING, TEXT_SIZES } from '../../constants/colors';
 
 export default function ConsultSection() {
   const navigation: any = useNavigation();

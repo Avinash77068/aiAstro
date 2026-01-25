@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Sparkles } from 'lucide-react-native';
-import { COLORS, TEXT_SIZES } from '../constants/colors';
+import { COLORS, TEXT_SIZES } from '../../constants/colors';
 
 
 interface SplashScreenProps {
