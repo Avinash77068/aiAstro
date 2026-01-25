@@ -16,7 +16,7 @@ import {
   SPACING,
   BORDER_RADIUS,
 } from '../constants/colors';
-import BottomModal from './BottomModal';
+import BottomModal from '../customComponents/BottomModal';
 
 const { width, height } = Dimensions.get('window');
 
