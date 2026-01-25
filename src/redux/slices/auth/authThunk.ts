@@ -7,14 +7,17 @@ interface LoginPayload {
   dateOfBirth: string;
   gender: string;
   phoneNumber?: string;
+  email?: string;
 }
 
 interface SendOTPPayload {
-  phoneNumber: string;
+  phoneNumber?: string;
+  email?: string;
 }
 
 interface VerifyOTPPayload {
-  phoneNumber: string;
+  phoneNumber?: string;
+  email?: string;
   otp: string;
 }
 
@@ -28,6 +31,7 @@ export const sendOTPThunk = createAsyncThunk(
       if (response.data.success) {
         return {
           phoneNumber: payload.phoneNumber,
+          email: payload.email,
         };
       }
 
@@ -50,6 +54,7 @@ export const verifyOTPThunk = createAsyncThunk(
       if (response.data.success) {
         return {
           phoneNumber: payload.phoneNumber,
+          email: payload.email,
           token: response.data.data?.token,
           isNewUser: response.data.data?.isNewUser !== false,
           userId: response.data.data?.userId,

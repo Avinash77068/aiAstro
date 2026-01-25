@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, ActivityIndicator, Text} from 'react-native';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
 import {loginThunk} from '../../redux/slices/auth/authThunk';
 import NameStep from './NameStep';
@@ -22,7 +23,15 @@ export default function OnboardingScreen({onComplete}: OnboardingScreenProps) {
     place: '',
     dateOfBirth: '',
     gender: '',
+    email: '',
   });
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+      offlineAccess: true,
+    });
+  }, []);
 
   const handleNameNext = (name: string) => {
     setFormData(prev => ({...prev, name}));
@@ -58,11 +67,24 @@ export default function OnboardingScreen({onComplete}: OnboardingScreenProps) {
     }
   };
 
+  const handleGoogleSignIn = (userData: {name: string; email: string; photo?: string}) => {
+    setFormData(prev => ({
+      ...prev,
+      name: userData.name,
+      email: userData.email,
+    }));
+    setCurrentStep(1);
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 0:
         return (
-          <NameStep onNext={handleNameNext} initialValue={formData.name} />
+          <NameStep 
+            onNext={handleNameNext} 
+            onGoogleSignIn={handleGoogleSignIn}
+            initialValue={formData.name} 
+          />
         );
       case 1:
         return (

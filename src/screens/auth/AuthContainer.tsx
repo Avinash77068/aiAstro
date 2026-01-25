@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
 import {sendOTPThunk, verifyOTPThunk} from '../../redux/slices/auth/authThunk';
 import PhoneAuthScreen from './PhoneAuthScreen';
@@ -14,10 +15,26 @@ export default function AuthContainer({onComplete}: AuthContainerProps) {
   const dispatch = useAppDispatch();
   const {loading, phoneNumber} = useAppSelector(state => state.authReducer);
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
+  const [authType, setAuthType] = useState<'phone' | 'email'>('phone');
+  const [identifier, setIdentifier] = useState('');
 
-  const handleSendOTP = async (phone: string) => {
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+      offlineAccess: true,
+    });
+  }, []);
+
+  const handleSendOTP = async (value: string, type: 'phone' | 'email') => {
     try {
-      await dispatch(sendOTPThunk({phoneNumber: phone})).unwrap();
+      setAuthType(type);
+      setIdentifier(value);
+      
+      if (type === 'phone') {
+        await dispatch(sendOTPThunk({phoneNumber: value})).unwrap();
+      } else {
+        await dispatch(sendOTPThunk({email: value})).unwrap();
+      }
       setStep('otp');
     } catch (error) {
       console.error('Failed to send OTP:', error);
@@ -25,10 +42,14 @@ export default function AuthContainer({onComplete}: AuthContainerProps) {
   };
 
   const handleVerifyOTP = async (otp: string) => {
-    if (!phoneNumber) return;
+    if (!identifier) return;
 
     try {
-      await dispatch(verifyOTPThunk({phoneNumber, otp})).unwrap();
+      if (authType === 'phone') {
+        await dispatch(verifyOTPThunk({phoneNumber: identifier, otp})).unwrap();
+      } else {
+        await dispatch(verifyOTPThunk({email: identifier, otp})).unwrap();
+      }
       onComplete();
     } catch (error) {
       console.error('Failed to verify OTP:', error);
@@ -36,13 +57,22 @@ export default function AuthContainer({onComplete}: AuthContainerProps) {
   };
 
   const handleResendOTP = async () => {
-    if (!phoneNumber) return;
+    if (!identifier) return;
 
     try {
-      await dispatch(sendOTPThunk({phoneNumber})).unwrap();
+      if (authType === 'phone') {
+        await dispatch(sendOTPThunk({phoneNumber: identifier})).unwrap();
+      } else {
+        await dispatch(sendOTPThunk({email: identifier})).unwrap();
+      }
     } catch (error) {
       console.error('Failed to resend OTP:', error);
     }
+  };
+
+  const handleGoogleSignIn = (userData: {name: string; email: string; photo?: string}) => {
+    console.log('Google Sign-In successful:', userData);
+    onComplete();
   };
 
   const handleBack = () => {
@@ -52,10 +82,14 @@ export default function AuthContainer({onComplete}: AuthContainerProps) {
   return (
     <View style={styles.container}>
       {step === 'phone' ? (
-        <PhoneAuthScreen onNext={handleSendOTP} loading={loading} />
+        <PhoneAuthScreen 
+          onNext={handleSendOTP} 
+          onGoogleSignIn={handleGoogleSignIn}
+          loading={loading} 
+        />
       ) : (
         <OTPVerificationScreen
-          phoneNumber={phoneNumber || ''}
+          phoneNumber={identifier}
           onVerify={handleVerifyOTP}
           onResend={handleResendOTP}
           onBack={handleBack}
