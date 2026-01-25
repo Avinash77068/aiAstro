@@ -16,7 +16,7 @@ import { Send, Phone, Video, ArrowLeft } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import { sendMessageThunk } from '../redux/slices/chat/chatThunk';
-import { clearMessages } from '../redux/slices/chat/chatSlice';
+
 
 interface Message {
   id: string;
@@ -70,12 +70,6 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
     }
   }, [reduxMessages]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(clearMessages());
-    };
-  }, [dispatch]);
-
   const sendMessage = async () => {
     if (inputText.trim() === '' || !user?.userId) return;
 
@@ -83,14 +77,25 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
     setInputText('');
 
     try {
-      await dispatch(sendMessageThunk({
+      const result = await dispatch(sendMessageThunk({
         userId: user.userId,
         message: messageText,
       })).unwrap();
 
-      setTimeout(() => {
-        flatListRef.current?.scrollToEnd({ animated: true });
-      }, 100);
+      console.log('=== API Response ===');
+      console.log('Full Result:', JSON.stringify(result, null, 2));
+      console.log('User Message:', result.userMessage);
+      console.log('Bot Response:', result.botResponse);
+      console.log('Timestamp:', result.timestamp);
+      console.log('==================');
+
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: result.botResponse,
+        isUser: false,
+        timestamp: new Date(result.timestamp),
+      };
+      setMessages(prev => [...prev, botMessage]);
     } catch (error) {
       console.error('Failed to send message:', error);
       
@@ -102,6 +107,10 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
       };
       setMessages(prev => [...prev, errorMessage]);
     }
+
+    setTimeout(() => {
+      flatListRef.current?.scrollToEnd({ animated: true });
+    }, 100);
   };
 
   const startCall = () => {
