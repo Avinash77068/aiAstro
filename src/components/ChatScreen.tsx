@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,9 +10,13 @@ import {
   Platform,
   SafeAreaView,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import { Send, Phone, Video, ArrowLeft } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
+import { useAppSelector, useAppDispatch } from '../redux/hooks';
+import { sendMessageThunk } from '../redux/slices/chat/chatThunk';
+import { clearMessages } from '../redux/slices/chat/chatSlice';
 
 interface Message {
   id: string;
@@ -38,15 +42,6 @@ interface Astrologer {
   description?: string;
 }
 
-// Mock astrologer data (you can pass this as props later)
-const mockAstrologer: Astrologer = {
-  id: '1',
-  name: 'Dr. Rajesh Kumar',
-  type: 'Vedic Astrology',
-  rating: 4.8,
-  price: '₹50/min',
-  verified: true,
-};
 
 const mockMessages: Message[] = [
   {
@@ -81,40 +76,53 @@ interface ChatScreenProps {
 }
 
 export default function ChatScreen({ route, navigation, onBack }: ChatScreenProps) {
+  const dispatch = useAppDispatch();
   const astrologerData = route?.params?.astrologer;
+  const { user } = useAppSelector(state => state.authReducer);
+  const { messages: reduxMessages, loading } = useAppSelector(state => state.chatReducer);
   
   const [messages, setMessages] = useState<Message[]>(mockMessages);
   const [inputText, setInputText] = useState('');
   const flatListRef = useRef<FlatList>(null);
 
-  const sendMessage = () => {
-    if (inputText.trim() === '') return;
+  useEffect(() => {
+    if (reduxMessages.length > 0) {
+      setMessages(reduxMessages);
+    }
+  }, [reduxMessages]);
 
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text: inputText.trim(),
-      isUser: true,
-      timestamp: new Date(),
+  useEffect(() => {
+    return () => {
+      dispatch(clearMessages());
     };
+  }, [dispatch]);
 
-    setMessages(prev => [...prev, newMessage]);
+  const sendMessage = async () => {
+    if (inputText.trim() === '' || !user?.userId) return;
+
+    const messageText = inputText.trim();
     setInputText('');
 
-    // Auto-scroll to bottom
-    setTimeout(() => {
-      flatListRef.current?.scrollToEnd({ animated: true });
-    }, 100);
+    try {
+      await dispatch(sendMessageThunk({
+        userId: user.userId,
+        message: messageText,
+      })).unwrap();
 
-    // Simulate astrologer response (for demo)
-    setTimeout(() => {
-      const responseMessage: Message = {
+      setTimeout(() => {
+        flatListRef.current?.scrollToEnd({ animated: true });
+      }, 100);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      
+      const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'Thank you for your question. Let me analyze this based on your birth chart...',
+        text: 'Sorry, failed to send message. Please try again.',
         isUser: false,
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, responseMessage]);
-    }, 2000);
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
   const startCall = () => {
@@ -213,10 +221,14 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
           />
           <TouchableOpacity
             onPress={sendMessage}
-            style={[styles.sendButton, inputText.trim() === '' && styles.sendButtonDisabled]}
-            disabled={inputText.trim() === ''}
+            style={[styles.sendButton, (inputText.trim() === '' || loading) && styles.sendButtonDisabled]}
+            disabled={inputText.trim() === '' || loading}
           >
-            <Send size={20} color={inputText.trim() === '' ? COLORS.textTertiary : COLORS.primary} />
+            {loading ? (
+              <ActivityIndicator size="small" color={COLORS.primary} />
+            ) : (
+              <Send size={20} color={inputText.trim() === '' ? COLORS.textTertiary : COLORS.primary} />
+            )}
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

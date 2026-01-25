@@ -5,6 +5,7 @@ import {combineReducers} from '@reduxjs/toolkit';
 import homeReducer from './slices/home/homeSlice';
 import astrologerReducer from './slices/astrologer/astrologerSlice';
 import authReducer from './slices/auth/authSlice';
+import chatReducer from './slices/chat/chatSlice';
 
 const persistConfig = {
   key: 'root',
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   homeReducer,
   astrologerReducer,
   authReducer,
+  chatReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

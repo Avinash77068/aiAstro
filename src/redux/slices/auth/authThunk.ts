@@ -46,13 +46,13 @@ export const verifyOTPThunk = createAsyncThunk(
   async (payload: VerifyOTPPayload, {rejectWithValue}) => {
     try {
       const response = await api.post('/user/verify-otp', payload);
-      console.log('Verify OTP response:', response.data);
       
       if (response.data.success) {
         return {
           phoneNumber: payload.phoneNumber,
           token: response.data.data?.token,
           isNewUser: response.data.data?.isNewUser !== false,
+          userId: response.data.data?.userId,
           user: response.data.data?.user,
         };
       }

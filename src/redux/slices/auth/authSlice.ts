@@ -82,7 +82,7 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(verifyOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber: string; token?: string; isNewUser?: boolean; user?: any}>) => {
+      .addCase(verifyOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber: string; token?: string; isNewUser?: boolean; userId?: string; user?: any}>) => {
         state.loading = false;
         state.phoneVerified = true;
         state.phoneNumber = action.payload.phoneNumber;
@@ -91,13 +91,14 @@ const authSlice = createSlice({
         if (!action.payload.isNewUser && action.payload.user) {
           state.user = {
             ...action.payload.user,
+            userId: action.payload.userId,
             phoneNumber: action.payload.phoneNumber,
             token: action.payload.token,
           } as UserData;
           state.isAuthenticated = true;
           state.onboardingCompleted = true;
         } else if (action.payload.token) {
-          state.user = {...state.user, phoneNumber: action.payload.phoneNumber, token: action.payload.token} as UserData;
+          state.user = {...state.user, userId: action.payload.userId, phoneNumber: action.payload.phoneNumber, token: action.payload.token} as UserData;
         }
       })
       .addCase(verifyOTPThunk.rejected, (state, action) => {
