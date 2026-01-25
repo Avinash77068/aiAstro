@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import {MapPin} from 'lucide-react-native';
+import AddressAutocomplete from '../../components/AddressAutocomplete';
+import {PlaceDetails} from '../../hooks/useGooglePlaces';
 import {COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS} from '../../constants/colors';
 
 interface PlaceStepProps {
@@ -23,6 +24,12 @@ export default function PlaceStep({
   initialValue = '',
 }: PlaceStepProps) {
   const [place, setPlace] = useState(initialValue);
+  const [selectedPlace, setSelectedPlace] = useState<PlaceDetails | null>(null);
+
+  const handlePlaceSelect = (placeDetails: PlaceDetails) => {
+    setSelectedPlace(placeDetails);
+    setPlace(placeDetails.city || placeDetails.formattedAddress);
+  };
 
   const handleNext = () => {
     if (place.trim()) {
@@ -41,18 +48,14 @@ export default function PlaceStep({
 
         <Text style={styles.title}>Where are you from?</Text>
         <Text style={styles.subtitle}>
-          Enter your birth place or current location
+          Search and select your birth place or current location
         </Text>
 
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter city, state, country"
-            placeholderTextColor={COLORS.textTertiary}
-            value={place}
-            onChangeText={setPlace}
-            autoFocus
-            autoCapitalize="words"
+          <AddressAutocomplete
+            onSelectPlace={handlePlaceSelect}
+            placeholder="Search for your city or location"
+            initialValue={initialValue}
           />
         </View>
 
@@ -106,16 +109,23 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xl,
   },
   inputContainer: {
-    marginBottom: SPACING.xl,
+    marginBottom: SPACING.md,
   },
-  input: {
+  selectedPlaceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: COLORS.cardBackground,
-    borderRadius: BORDER_RADIUS.md,
-    padding: SPACING.lg,
-    fontSize: TEXT_SIZES.lg,
-    color: COLORS.textPrimary,
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.sm,
+    marginBottom: SPACING.xl,
+    gap: SPACING.sm,
     borderWidth: 1,
-    borderColor: COLORS.border,
+    borderColor: COLORS.success,
+  },
+  selectedPlaceText: {
+    flex: 1,
+    fontSize: TEXT_SIZES.sm,
+    color: COLORS.textPrimary,
   },
   buttonContainer: {
     flexDirection: 'row',
