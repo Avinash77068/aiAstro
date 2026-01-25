@@ -26,8 +26,8 @@ export default function AstroAIPage() {
   
   const aiOptions = homeData?.aiOptions || [];
   const quickActions = homeData?.quickActions || [];
-  const astrologers = astrologerData.slice(0, 5) || [];
-
+  const astrologers = astrologerData || [];
+  console.log('astrologers', astrologers);
   return (
     <ScrollView style={styles.container}>
       <ScrollView
@@ -35,31 +35,44 @@ export default function AstroAIPage() {
         showsHorizontalScrollIndicator={false}
         style={styles.aiOptions}
       >
-        {aiOptions?.map((option, idx) => (
-          <TouchableOpacity
-            key={idx + 1}
-            style={[styles.aiOption, { backgroundColor: option.bgColor }]}
-          >
-            <View style={styles.aiOptionContent}>
-              {option.image && (
-                <Image
-                  source={{ uri: option.image }}
-                  style={styles.optionImage}
-                  resizeMode="contain"
-                />
-              )}
-              <Text
-                style={[
-                  styles.aiOptionText,
-                  option.bgColor === COLORS.primary &&
-                    styles.aiOptionTextActive,
-                ]}
-              >
-                {option.title}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {aiOptions?.map((option, idx) => {
+          const getNavigationRoute = (title: string) => {
+            if (title.includes('Kundli')) return 'KundliAI';
+            if (title.includes('Matching')) return 'MatchingAI';
+            if (title.includes('Love')) return 'LoveAI';
+            if (title.includes('Health')) return 'HealthAI';
+            return null;
+          };
+
+          const route = getNavigationRoute(option.title);
+
+          return (
+            <TouchableOpacity
+              key={idx + 1}
+              style={[styles.aiOption, { backgroundColor: option.bgColor }]}
+              onPress={() => route && navigation.navigate(route)}
+            >
+              <View style={styles.aiOptionContent}>
+                {option.image && (
+                  <Image
+                    source={{ uri: option.image }}
+                    style={styles.optionImage}
+                    resizeMode="contain"
+                  />
+                )}
+                <Text
+                  style={[
+                    styles.aiOptionText,
+                    option.bgColor === COLORS.primary &&
+                      styles.aiOptionTextActive,
+                  ]}
+                >
+                  {option.title}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </ScrollView>
 
       <View style={styles.inputContainer}>
