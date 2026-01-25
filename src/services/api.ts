@@ -3,7 +3,7 @@ import {startNetworkLogging} from 'react-native-network-logger';
 
 startNetworkLogging();
 
-const API_BASE_URL = 'https://astro-ai-backend-delta.vercel.app/';
+const API_BASE_URL = 'https://astro-ai-backend-delta.vercel.app/api/';
 
 const api = axios.create({
   baseURL: API_BASE_URL,

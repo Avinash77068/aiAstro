@@ -43,27 +43,6 @@ interface Astrologer {
 }
 
 
-const mockMessages: Message[] = [
-  {
-    id: '1',
-    text: 'Hello! I am Dr. Rajesh Kumar. How can I help you with your astrology consultation today?',
-    isUser: false,
-    timestamp: new Date(Date.now() - 300000), // 5 minutes ago
-  },
-  {
-    id: '2',
-    text: 'Hi, I have some questions about my career path. Can you help?',
-    isUser: true,
-    timestamp: new Date(Date.now() - 240000), // 4 minutes ago
-  },
-  {
-    id: '3',
-    text: 'Of course! I would be happy to help you understand your career prospects through astrology. What specific aspects of your career are you concerned about?',
-    isUser: false,
-    timestamp: new Date(Date.now() - 180000), // 3 minutes ago
-  },
-];
-
 interface ChatScreenProps {
   route?: {
     params?: {
@@ -81,7 +60,7 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
   const { user } = useAppSelector(state => state.authReducer);
   const { messages: reduxMessages, loading } = useAppSelector(state => state.chatReducer);
   
-  const [messages, setMessages] = useState<Message[]>(mockMessages);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const flatListRef = useRef<FlatList>(null);
 
