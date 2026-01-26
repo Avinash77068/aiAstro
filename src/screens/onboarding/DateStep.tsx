@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: SPACING.xl,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   iconContainer: {
     width: 80,
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xl,
     borderWidth: 1,
     borderColor: COLORS.border,
+    width: '100%',
   },
   dateText: {
     fontSize: TEXT_SIZES.xl,

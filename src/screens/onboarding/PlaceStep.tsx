@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: SPACING.xl,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   iconContainer: {
     width: 80,
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.cardBackground,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     marginBottom: SPACING.xl,
   },
   title: {
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: SPACING.md,
+    width: '100%',
   },
   selectedPlaceContainer: {
     flexDirection: 'row',
