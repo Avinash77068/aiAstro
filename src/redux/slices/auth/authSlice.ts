@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { loginThunk, sendOTPThunk, verifyOTPThunk } from './authThunk';
+import { loginThunk, sendOTPThunk, verifyOTPThunk, googleSignInThunk } from './authThunk';
 
 
 export interface UserData {
@@ -49,6 +49,18 @@ const authSlice = createSlice({
     clearError: state => {
       state.error = null;
     },
+    googleSignIn: (state, action: PayloadAction<{name: string; email: string; photo?: string}>) => {
+      state.phoneVerified = true;
+      state.isNewUser = true;
+      state.user = {
+        name: action.payload.name,
+        place: '',
+        dateOfBirth: '',
+        gender: '',
+        phoneNumber: action.payload.email,
+      };
+      state.phoneNumber = action.payload.email;
+    },
   },
   extraReducers: builder => {
     builder
@@ -70,9 +82,9 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(sendOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber: string}>) => {
+      .addCase(sendOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber?: string; email?: string}>) => {
         state.loading = false;
-        state.phoneNumber = action.payload.phoneNumber;
+        state.phoneNumber = action.payload.phoneNumber || action.payload.email || null;
       })
       .addCase(sendOTPThunk.rejected, (state, action) => {
         state.loading = false;
@@ -82,31 +94,64 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(verifyOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber: string; token?: string; isNewUser?: boolean; userId?: string; user?: any}>) => {
+      .addCase(verifyOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber?: string; email?: string; token?: string; isNewUser?: boolean; userId?: string; user?: any}>) => {
         state.loading = false;
         state.phoneVerified = true;
-        state.phoneNumber = action.payload.phoneNumber;
+        state.phoneNumber = action.payload.phoneNumber || action.payload.email || null;
         state.isNewUser = action.payload.isNewUser !== false;
         
         if (!action.payload.isNewUser && action.payload.user) {
           state.user = {
             ...action.payload.user,
             userId: action.payload.userId,
-            phoneNumber: action.payload.phoneNumber,
+            phoneNumber: action.payload.phoneNumber || action.payload.email,
             token: action.payload.token,
           } as UserData;
           state.isAuthenticated = true;
           state.onboardingCompleted = true;
         } else if (action.payload.token) {
-          state.user = {...state.user, userId: action.payload.userId, phoneNumber: action.payload.phoneNumber, token: action.payload.token} as UserData;
+          state.user = {...state.user, userId: action.payload.userId, phoneNumber: action.payload.phoneNumber || action.payload.email, token: action.payload.token} as UserData;
         }
       })
       .addCase(verifyOTPThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(googleSignInThunk.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(googleSignInThunk.fulfilled, (state, action: PayloadAction<{name: string; email: string; photo?: string; token?: string; userId?: string; isNewUser?: boolean; user?: any}>) => {
+        state.loading = false;
+        state.phoneVerified = true;
+        state.phoneNumber = action.payload.email;
+        state.isNewUser = action.payload.isNewUser !== false;
+        
+        if (!action.payload.isNewUser && action.payload.user) {
+          state.user = {
+            ...action.payload.user,
+            userId: action.payload.userId,
+            phoneNumber: action.payload.email,
+            token: action.payload.token,
+          } as UserData;
+          state.isAuthenticated = true;
+          state.onboardingCompleted = true;
+        } else {
+          state.user = {
+            name: action.payload.name,
+            place: '',
+            dateOfBirth: '',
+            gender: '',
+            phoneNumber: action.payload.email,
+          };
+        }
+      })
+      .addCase(googleSignInThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
   },
 });
 
-export const {logout, clearError} = authSlice.actions;
+export const {logout, clearError, googleSignIn} = authSlice.actions;
 export default authSlice.reducer;

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
-import {sendOTPThunk, verifyOTPThunk} from '../../redux/slices/auth/authThunk';
+import {sendOTPThunk, verifyOTPThunk, googleSignInThunk} from '../../redux/slices/auth/authThunk';
 import PhoneAuthScreen from './PhoneAuthScreen';
 import OTPVerificationScreen from './OTPVerificationScreen';
 import {COLORS} from '../../constants/colors';
@@ -70,9 +70,18 @@ export default function AuthContainer({onComplete}: AuthContainerProps) {
     }
   };
 
-  const handleGoogleSignIn = (userData: {name: string; email: string; photo?: string}) => {
+  const handleGoogleSignIn = async (userData: {name: string; email: string; photo?: string; idToken?: string}) => {
     console.log('Google Sign-In successful:', userData);
-    onComplete();
+    try {
+      await dispatch(googleSignInThunk({
+        name: userData.name,
+        email: userData.email,
+        photo: userData.photo,
+        idToken: userData.idToken,
+      })).unwrap();
+    } catch (error) {
+      console.error('Failed to complete Google Sign-In:', error);
+    }
   };
 
   const handleBack = () => {

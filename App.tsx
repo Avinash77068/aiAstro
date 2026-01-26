@@ -13,6 +13,7 @@ import { store, persistor } from './src/redux/store';
 import { homeThunk } from './src/redux/slices/home/homeThunk';
 import { astrologerThunk } from './src/redux/slices/astrologer/astrologerThunk';
 
+
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
   
@@ -26,6 +27,10 @@ function App() {
     console.log('Dispatching API calls...');
     store.dispatch(homeThunk());
     store.dispatch(astrologerThunk());
+
+    // Log initial store state
+    console.log('Initial Redux Store State:', store.getState());
+
   }, []);
 
   return (

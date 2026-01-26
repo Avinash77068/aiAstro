@@ -21,6 +21,13 @@ interface VerifyOTPPayload {
   otp: string;
 }
 
+interface GoogleSignInPayload {
+  name: string;
+  email: string;
+  photo?: string;
+  idToken?: string;
+}
+
 export const sendOTPThunk = createAsyncThunk(
   'auth/sendOTP',
   async (payload: SendOTPPayload, {rejectWithValue}) => {
@@ -67,6 +74,44 @@ export const verifyOTPThunk = createAsyncThunk(
       console.error('Verify OTP error:', error);
       return rejectWithValue(
         error.response?.data?.message || error.message || 'Failed to verify OTP',
+      );
+    }
+  },
+);
+
+export const googleSignInThunk = createAsyncThunk(
+  'auth/googleSignIn',
+  async (payload: GoogleSignInPayload, {rejectWithValue}) => {
+    try {
+      const requestPayload = {
+        isGoogleLogin: true,
+        name: payload.name,
+        email: payload.email,
+        photo: payload.photo,
+        token: payload.idToken,
+      };
+      
+      console.log('Google Sign-In payload to backend:', requestPayload);
+      const response = await api.post('/user/google-login', requestPayload);
+      console.log('Google Sign-In response:', response.data);
+      
+      if (response.data.success) {
+        return {
+          name: payload.name,
+          email: payload.email,
+          photo: payload.photo,
+          token: response.data.data?.token,
+          userId: response.data.data?.userId,
+          isNewUser: response.data.data?.isNewUser !== false,
+          user: response.data.data?.user,
+        };
+      }
+
+      throw new Error(response.data.message || 'Google Sign-In failed');
+    } catch (error: any) {
+      console.error('Google Sign-In error:', error);
+      return rejectWithValue(
+        error.response?.data?.message || error.message || 'Failed to sign in with Google',
       );
     }
   },

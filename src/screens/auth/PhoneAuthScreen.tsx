@@ -17,7 +17,7 @@ import {COLORS, SPACING, TEXT_SIZES} from '../../constants/colors';
 
 interface PhoneAuthScreenProps {
   onNext: (identifier: string, type: 'phone' | 'email') => void;
-  onGoogleSignIn?: (userData: {name: string; email: string; photo?: string}) => void;
+  onGoogleSignIn?: (userData: {name: string; email: string; photo?: string; idToken?: string}) => void;
   loading?: boolean;
 }
 
@@ -74,11 +74,16 @@ export default function PhoneAuthScreen({onNext, onGoogleSignIn, loading}: Phone
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       
+      console.log('Google Sign-In userInfo:', userInfo);
+      
       const userData = {
         name: userInfo.data?.user.name || '',
         email: userInfo.data?.user.email || '',
         photo: userInfo.data?.user.photo || undefined,
+        idToken: userInfo.data?.idToken || undefined,
       };
+
+      console.log('Extracted userData with token:', userData);
 
       if (onGoogleSignIn) {
         onGoogleSignIn(userData);
