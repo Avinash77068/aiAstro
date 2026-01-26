@@ -20,8 +20,7 @@ export default function AuthContainer({onComplete}: AuthContainerProps) {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId:
-        '693739184836-j8nch0629ri9v4d8hkgg4v1618d075b3.apps.googleusercontent.com',
+      webClientId: '693739184836-s3rn40uaml3bfq2bdpteb53p8de38ji7.apps.googleusercontent.com',
       offlineAccess: true,
     });
   }, []);

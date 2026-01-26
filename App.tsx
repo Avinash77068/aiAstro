@@ -4,6 +4,7 @@ import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { SidebarProvider } from './src/customComponents/SidebarContext';
 import Sidebar from './src/common/Sidebar';
 import RootNavigator from './src/navigator/RootNavigator';
@@ -16,6 +17,12 @@ function App() {
   const isDarkMode = useColorScheme() === 'dark';
   
   useEffect(() => {
+    // Configure Google Sign-In
+    GoogleSignin.configure({
+      webClientId: '693739184836-s3rn40uaml3bfq2bdpteb53p8de38ji7.apps.googleusercontent.com',
+      offlineAccess: true,
+    });
+
     console.log('Dispatching API calls...');
     store.dispatch(homeThunk());
     store.dispatch(astrologerThunk());

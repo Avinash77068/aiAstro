@@ -28,7 +28,7 @@ export default function OnboardingScreen({onComplete}: OnboardingScreenProps) {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+      webClientId: '693739184836-s3rn40uaml3bfq2bdpteb53p8de38ji7.apps.googleusercontent.com',
       offlineAccess: true,
     });
   }, []);
