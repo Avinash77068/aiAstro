@@ -115,10 +115,12 @@ const styles = StyleSheet.create({
     padding: SPACING.sm,
     borderRadius: BORDER_RADIUS.md,
     backgroundColor: COLORS.cardBackground,
+    opacity: 0.2,
   },
   videoButton: {
     padding: SPACING.sm,
     borderRadius: BORDER_RADIUS.md,
     backgroundColor: COLORS.cardBackground,
+    opacity: 0.2,
   },
 });
