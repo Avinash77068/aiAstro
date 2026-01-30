@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: SPACING.xl,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   iconContainer: {
     width: 80,
@@ -112,6 +113,7 @@ const styles = StyleSheet.create({
   },
   genderContainer: {
     marginBottom: SPACING.xl,
+    width: '100%',
   },
   genderOption: {
     backgroundColor: COLORS.cardBackground,
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     gap: SPACING.md,
-  },
+    },
   backButton: {
     flex: 1,
     backgroundColor: COLORS.cardBackground,

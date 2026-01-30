@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.cardBackground,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     marginBottom: SPACING.xl,
   },
   title: {
