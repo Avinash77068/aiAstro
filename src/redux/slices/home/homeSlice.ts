@@ -6,39 +6,46 @@ export interface AIOption {
   image: string;
   title: string;
   bgColor: string;
+  route: string;
 }
 
 export interface QuickAction {
   label: string;
   iconKey: string;
   image: string;
+  route: string;
 }
 
 export interface HoroscopeItem {
   image: string;
   title: string;
+  route?: string;
 }
 
 export interface Report {
   image: string;
   title: string;
   price: string;
+  route?: string;
 }
 
 export interface PanchangItem {
   image: string;
   title: string;
+  route?: string;
 }
 
 export interface Section2025Item {
   image: string;
   title: string;
+  route?: string;
 }
 
 export interface ConsultFilter {
   label: string;
   iconKey: string | null;
   image: string | null;
+  route?: string;
 }
 
 export interface AppConfig {

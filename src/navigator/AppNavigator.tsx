@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNavigator from './BottomTabNavigator';
 import ChatScreen from '../components/chat/ChatScreen';
-import { KundliAI, MatchingAI, LoveAI, HealthAI } from '../screens/ai-features';
+import { KundliAI, MatchingAI, LoveAI, HealthAI, CareerAI, MentalHealthAI, FinanceAI, EducationAI } from '../screens/ai-features';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +39,26 @@ export default function AppNavigator() {
         <Stack.Screen
           name="/health-ai"
           component={HealthAI}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="/career"
+          component={CareerAI}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="/mental-health"
+          component={MentalHealthAI}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="/finance"
+          component={FinanceAI}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="/education"
+          component={EducationAI}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

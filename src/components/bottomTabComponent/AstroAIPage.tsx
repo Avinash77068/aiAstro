@@ -11,8 +11,9 @@ import {
 import {
   Briefcase,
   User,
-  Calendar,
+  Wallet,
   Heart,
+  Book,
   MessageCircle,
 } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../constants/colors';
@@ -23,11 +24,10 @@ export default function AstroAIPage() {
   const navigation = useNavigation<any>();
   const { data: homeData } = useAppSelector(state => state.homeReducer);
   const { data: astrologerData } = useAppSelector(state => state.astrologerReducer);
-  
   const aiOptions = homeData?.aiOptions || [];
   const quickActions = homeData?.quickActions || [];
+
   const astrologers = astrologerData || [];
-  console.log('astrologers', aiOptions);
   return (
     <ScrollView style={styles.container}>
       <ScrollView
@@ -82,12 +82,15 @@ export default function AstroAIPage() {
         style={styles.quickActions}
       >
         {quickActions.map((action, idx) => {
-          const IconComponent = { Briefcase, User, Calendar, Heart }[
+          const IconComponent = { Briefcase, User, Wallet, Heart, Book }[
             action.iconKey
           ];
           if (!IconComponent) return null;
           return (
-            <TouchableOpacity key={idx} style={styles.quickAction}>
+            <TouchableOpacity key={idx} style={styles.quickAction} onPress={() => { 
+              navigation.navigate(action.route);
+            }}
+            >
               <View style={styles.quickActionIcon}>
                 <IconComponent size={24} color={COLORS.primary} />
               </View>
