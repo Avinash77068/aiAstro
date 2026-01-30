@@ -44,7 +44,6 @@ function App() {
               translucent={true}
             />
             <RootNavigator />
-            <Sidebar />
             <NetworkLoggerButton />
           </SafeAreaProvider>
         </SidebarProvider>
