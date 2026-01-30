@@ -24,10 +24,8 @@ export default function DateStep({
   const [date, setDate] = useState(
     initialValue ? new Date(initialValue) : new Date(),
   );
-  const [show, setShow] = useState(false);
 
   const onChange = (event: any, selectedDate?: Date) => {
-    setShow(Platform.OS === 'ios');
     if (selectedDate) {
       setDate(selectedDate);
     }
@@ -58,22 +56,18 @@ export default function DateStep({
           Select your date of birth for accurate predictions
         </Text>
 
-        <TouchableOpacity
-          style={styles.dateButton}
-          onPress={() => setShow(true)}>
+        <TouchableOpacity style={styles.dateButton}>
           <Text style={styles.dateText}>{formatDate(date)}</Text>
         </TouchableOpacity>
 
-        {show && (
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display="spinner"
-            onChange={onChange}
-            maximumDate={new Date()}
-            minimumDate={new Date(1900, 0, 1)}
-          />
-        )}
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="spinner"
+          onChange={onChange}
+          maximumDate={new Date()}
+          minimumDate={new Date(1900, 0, 1)}
+        />
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={onBack}>

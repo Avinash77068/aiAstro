@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: SPACING.xl,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   iconContainer: {
     width: 80,
