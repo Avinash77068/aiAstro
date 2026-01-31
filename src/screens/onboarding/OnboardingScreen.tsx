@@ -52,7 +52,7 @@ export default function OnboardingScreen({onComplete}: OnboardingScreenProps) {
     const finalData = {
       ...formData,
       isGoogleLogin,
-      token,
+      token: token || undefined,
       gender,
       ...(email ? {email, photo: photo || undefined} : {}),
       ...(phoneNumber && !email ? {phoneNumber} : {}),

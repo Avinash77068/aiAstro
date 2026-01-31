@@ -69,6 +69,8 @@ const authSlice = createSlice({
       state.isNewUser = true;
       state.email = action.payload.email;
       state.photo = action.payload.photo || null;
+      state.token = action.payload.token || null;
+      state.isGoogleLogin = true;
       state.user = {
         name: action.payload.name,
         place: '',
@@ -145,6 +147,8 @@ const authSlice = createSlice({
         state.phoneVerified = true;
         state.email = action.payload.email;
         state.photo = action.payload.photo || null;
+        state.token = action.payload.token || null;
+        state.isGoogleLogin = true;
         state.isNewUser = action.payload.isNewUser !== false;
         
         if (!action.payload.isNewUser && action.payload.user) {
@@ -154,6 +158,7 @@ const authSlice = createSlice({
             email: action.payload.email,
             photo: action.payload.photo,
             token: action.payload.token,
+            isGoogleLogin: true,
           } as UserData;
           state.isAuthenticated = true;
           state.onboardingCompleted = true;
@@ -165,6 +170,8 @@ const authSlice = createSlice({
             gender: '',
             email: action.payload.email,
             photo: action.payload.photo,
+            isGoogleLogin: true,
+            token: action.payload.token,
           };
         }
       })
