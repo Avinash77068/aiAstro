@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,21 +8,36 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import { Heart, Briefcase, Star } from 'lucide-react-native';
-
-
+import { Sparkles, Hand, Hash, Sun, Star } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAppSelector } from '../../redux/hooks';
 import { BORDER_RADIUS, COLORS, SPACING, TEXT_SIZES } from '../../constants/colors';
 
 export default function ConsultSection() {
   const navigation: any = useNavigation();
-  const { data: homeData } = useAppSelector(state => state.homeReducer);
   const { data: astrologerData } = useAppSelector(state => state.astrologerReducer);
 
-  const consultFilters = homeData?.consultFilters || [];
-  const astrologers = astrologerData.length > 0 ? astrologerData : [];
+  const [selectedType, setSelectedType] = useState<string | null>(null);
 
+  const astrologers = astrologerData.length > 0 ? astrologerData : [];
+  const uniqueTypes = ['All', ...new Set(astrologers.map(a => a.type))];
+  const filteredAstrologers = selectedType && selectedType !== 'All' ? astrologers.filter(item => item.type === selectedType) : astrologers;
+
+  console.log('astrologers', astrologers);
+  const getIconByType = (type:string) => {
+    switch (type) {
+      case 'Tarot':
+        return Sparkles;
+      case 'Palmistry':
+        return Hand;
+      case 'Numerology':
+        return Hash;
+      case 'Vedic':
+        return Sun;
+      default:
+        return null;
+    }
+  };
   return (
     <ScrollView style={styles.container}>
       <ScrollView
@@ -30,25 +45,27 @@ export default function ConsultSection() {
         showsHorizontalScrollIndicator={false}
         style={styles.filterContainer}
       >
-        {consultFilters?.map((btn, idx) => {
-          let IconComponent = null;
-          if (btn.iconKey === 'Heart') IconComponent = Heart;
-          if (btn.iconKey === 'Briefcase') IconComponent = Briefcase;
-          
+        {uniqueTypes?.map((type, idx) => {
+          const IconComponent = type === 'All' ? null : getIconByType(type);
+
           return (
             <TouchableOpacity
-              key={idx}
-              style={[styles.filterButton, idx === 0 && styles.activeFilter]}
+              key={type}
+              style={[styles.filterButton, selectedType === type && styles.activeFilter]}
+              onPress={() => setSelectedType(type === 'All' ? null : type)}
             >
               <View style={styles.filterButtonContent}>
-                {IconComponent && <IconComponent size={16} color={COLORS.textInverse} />}
+                {IconComponent && (
+                  <IconComponent size={16} color={COLORS.textInverse} />
+                )}
+
                 <Text
                   style={[
                     styles.filterText,
-                    idx === 0 && styles.activeFilterText,
+                    selectedType === type && styles.activeFilterText,
                   ]}
                 >
-                  {btn.label}
+                  {type}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -57,7 +74,7 @@ export default function ConsultSection() {
       </ScrollView>
 
       <FlatList
-        data={astrologers}
+        data={filteredAstrologers}
         keyExtractor={(item, index) => item._id || index.toString()}
         renderItem={({ item, index }) => (
           <View style={styles.astrologerCard}>
@@ -76,17 +93,23 @@ export default function ConsultSection() {
                   <Text style={styles.name}>{item.name}</Text>
                   {item.verified && <Text style={styles.verified}>✓</Text>}
                   {item.status && (
-                    <View style={[
-                      styles.statusBadge,
-                      item.status === 'ONLINE' ? styles.onlineBadge : styles.offlineBadge
-                    ]}>
+                    <View
+                      style={[
+                        styles.statusBadge,
+                        item.status === 'ONLINE'
+                          ? styles.onlineBadge
+                          : styles.offlineBadge,
+                      ]}
+                    >
                       <Text style={styles.statusText}>{item.status}</Text>
                     </View>
                   )}
                 </View>
                 <Text style={styles.type}>{item.type}</Text>
                 <Text style={styles.languages}>
-                  {item.languages ? item.languages.join(', ') : 'English, Hindi'}
+                  {item.languages
+                    ? item.languages.join(', ')
+                    : 'English, Hindi'}
                 </Text>
                 {item.experience && (
                   <Text style={styles.experience}>Exp: {item.experience}</Text>
@@ -109,12 +132,12 @@ export default function ConsultSection() {
               </Text>
             </View>
             <View style={styles.buttons}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 disabled={item.status !== 'ONLINE'}
-                style={styles.callButton} 
+                style={styles.callButton}
                 onPress={() => {
                   if (navigation) {
-                    navigation.navigate('Chat', { 
+                    navigation.navigate('Chat', {
                       astrologer: {
                         id: item._id || index.toString(),
                         name: item.name,
@@ -127,19 +150,19 @@ export default function ConsultSection() {
                         experience: item.experience,
                         reviews: item.reviews,
                         status: item.status,
-                      }
+                      },
                     });
                   }
                 }}
               >
                 <Text style={styles.buttonText}>Call</Text>
               </TouchableOpacity>
-              <TouchableOpacity 
-                style={styles.chatButton} 
+              <TouchableOpacity
+                style={styles.chatButton}
                 onPress={() => {
                   console.log('Starting chat with', item.name);
                   if (navigation) {
-                    navigation.navigate('Chat', { 
+                    navigation.navigate('Chat', {
                       astrologer: {
                         id: item._id || index.toString(),
                         name: item.name,
@@ -152,7 +175,7 @@ export default function ConsultSection() {
                         experience: item.experience,
                         reviews: item.reviews,
                         status: item.status,
-                      }
+                      },
                     });
                   }
                 }}
