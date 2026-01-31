@@ -118,20 +118,21 @@ const authSlice = createSlice({
       .addCase(verifyOTPThunk.fulfilled, (state, action: PayloadAction<{phoneNumber?: string; email?: string; token?: string; isNewUser?: boolean; userId?: string; user?: any}>) => {
         state.loading = false;
         state.phoneVerified = true;
-        state.phoneNumber = action.payload.phoneNumber || action.payload.email || null;
+        state.phoneNumber = action.payload.phoneNumber|| null;
         state.isNewUser = action.payload.isNewUser !== false;
-        
+        state.email = action.payload.email || null;
         if (!action.payload.isNewUser && action.payload.user) {
           state.user = {
             ...action.payload.user,
             userId: action.payload.userId,
-            phoneNumber: action.payload.phoneNumber || action.payload.email,
+            phoneNumber: action.payload.phoneNumber || null,
+            email: action.payload.email || null,
             token: action.payload.token,
           } as UserData;
           state.isAuthenticated = true;
           state.onboardingCompleted = true;
         } else if (action.payload.token) {
-          state.user = {...state.user, userId: action.payload.userId, phoneNumber: action.payload.phoneNumber || action.payload.email, token: action.payload.token} as UserData;
+          state.user = {...state.user, userId: action.payload.userId, phoneNumber: action.payload.phoneNumber || null, email: action.payload.email || null, token: action.payload.token} as UserData;
         }
       })
       .addCase(verifyOTPThunk.rejected, (state, action) => {
