@@ -1,16 +1,67 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import Header from '../common/Header';
-import { TEXT_SIZES } from '../constants/colors';
+import { TEXT_SIZES, SPACING, BORDER_RADIUS, COLORS } from '../constants/colors';
+import { useAppSelector } from '../redux/hooks';
+import { useNavigation } from '@react-navigation/native';
+import type { Astrologer as AstrologerType } from '../redux/slices/astrologer/astrologerSlice';
 
 export default function AstroAIScreen() {
+  const navigation = useNavigation<any>();
+  const { data: astrologerData } = useAppSelector(state => state.astrologerReducer);
+
+  const handleSelect = (astrologer: AstrologerType) => {
+    navigation.navigate('Chat', {
+      astrologer: {
+        id: astrologer._id,
+        name: astrologer.name,
+        type: astrologer.type,
+        rating: astrologer.rating,
+        reviews: astrologer.reviews,
+        price: astrologer.price,
+        verified: astrologer.verified,
+        image: astrologer.image,
+        experience: astrologer.experience,
+        languages: astrologer.languages,
+        specialization: astrologer.specialization,
+        description: astrologer.description,
+        sessionType: astrologer.sessionType,
+        status: astrologer.status,
+      },
+    });
+  };
+
+  const renderAstrologer = ({ item }: { item: AstrologerType }) => (
+    <TouchableOpacity style={styles.card} onPress={() => handleSelect(item)}>
+      <Image source={{ uri: item.image }} style={styles.avatar} />
+      <Text style={styles.name}>{item.name}</Text>
+      <Text style={styles.type}>{item.type}</Text>
+      <View style={styles.row}> 
+        <Text style={styles.rating}>★ {item.rating.toFixed(1)}</Text>
+        <Text style={styles.price}>{item.price}</Text>
+      </View>
+      <View style={[styles.chip, item.status === 'ONLINE' ? styles.onlineChip : styles.offlineChip]}>
+        <Text style={styles.chipText}>{item.status.toLowerCase()}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
       <Header />
-      <ScrollView style={styles.content}>
-        <Text style={styles.title}>Ask Astro AI</Text>
-        <Text style={styles.subtitle}>Get answers from expert astrologers</Text>
-      </ScrollView>
+      <Text style={styles.title}>Ask Astro AI</Text>
+      <Text style={styles.subtitle}>Tap any astrologer to start a chat</Text>
+      <FlatList
+        data={astrologerData}
+        keyExtractor={item => item._id}
+        renderItem={renderAstrologer}
+        numColumns={2}
+        contentContainerStyle={styles.grid}
+        columnWrapperStyle={styles.rowWrapper}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>Astrologers will appear here once they are fetched.</Text>
+        }
+      />
     </View>
   );
 }
@@ -18,19 +69,91 @@ export default function AstroAIScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
-  },
-  content: {
-    flex: 1,
-    padding: 16,
+    backgroundColor: COLORS.background,
+    paddingTop: 60,
   },
   title: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: TEXT_SIZES['2xl'],
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginHorizontal: SPACING.lg,
+    marginTop: SPACING.md,
   },
   subtitle: {
-    color: '#9CA3AF',
+    color: COLORS.textSecondary,
+    marginHorizontal: SPACING.lg,
+    marginBottom: SPACING.lg,
+  },
+  grid: {
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: SPACING['2xl'],
+  },
+  rowWrapper: {
+    justifyContent: 'space-between',
+    marginBottom: SPACING.lg,
+  },
+  card: {
+    flex: 1,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: BORDER_RADIUS.xl,
+    padding: SPACING.md,
+    margin: SPACING.xs,
+    minHeight: 220,
+    justifyContent: 'space-between',
+  },
+  avatar: {
+    width: '100%',
+    height: 120,
+    borderRadius: BORDER_RADIUS['2xl'],
+    marginBottom: SPACING.sm,
+  },
+  name: {
+    color: COLORS.textPrimary,
+    fontSize: TEXT_SIZES.lg,
+    fontWeight: '600',
+  },
+  type: {
+    color: COLORS.textSecondary,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: SPACING.sm,
+  },
+  rating: {
+    color: COLORS.success,
+    fontWeight: '600',
+  },
+  price: {
+    color: COLORS.primary,
+    fontWeight: '600',
+  },
+  chip: {
+    alignSelf: 'flex-start',
+    paddingVertical: SPACING.xs,
+    paddingHorizontal: SPACING.sm,
+    borderRadius: BORDER_RADIUS.full,
+    marginTop: SPACING.sm,
+  },
+  chipText: {
+    fontSize: TEXT_SIZES.xs,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  onlineChip: {
+    backgroundColor: 'rgba(74, 222, 128, 0.1)',
+    borderColor: COLORS.success,
+    borderWidth: 1,
+  },
+  offlineChip: {
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    borderColor: COLORS.error,
+    borderWidth: 1,
+  },
+  emptyText: {
+    color: COLORS.textTertiary,
+    textAlign: 'center',
+    marginTop: SPACING['2xl'],
   },
 });
