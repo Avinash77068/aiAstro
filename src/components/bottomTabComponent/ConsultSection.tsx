@@ -47,16 +47,18 @@ export default function ConsultSection() {
       >
         {uniqueTypes?.map((type, idx) => {
           const IconComponent = type === 'All' ? null : getIconByType(type);
-
           return (
             <TouchableOpacity
               key={type}
-              style={[styles.filterButton, selectedType === type && styles.activeFilter]}
+              style={[
+                styles.filterButton,
+                selectedType === type && styles.activeFilter,
+              ]}
               onPress={() => setSelectedType(type === 'All' ? null : type)}
             >
               <View style={styles.filterButtonContent}>
                 {IconComponent && (
-                  <IconComponent size={16} color={COLORS.textInverse} />
+                  <IconComponent size={16} color={COLORS.info} />
                 )}
 
                 <Text
