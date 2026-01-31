@@ -82,7 +82,7 @@ export default function OnboardingScreen({onComplete}: OnboardingScreenProps) {
         return (
           <NameStep 
             onNext={handleNameNext} 
-            onGoogleSignIn={handleGoogleSignIn}
+            // onGoogleSignIn={handleGoogleSignIn}
             initialValue={formData.name} 
           />
         );
