@@ -10,7 +10,7 @@ import chatReducer from './slices/chat/chatSlice';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['homeReducer', 'astrologerReducer', 'authReducer'],
+  whitelist: ['homeReducer', 'astrologerReducer', 'authReducer', 'chatReducer'],
 };
 
 const rootReducer = combineReducers({
