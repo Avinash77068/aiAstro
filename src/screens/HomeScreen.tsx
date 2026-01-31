@@ -35,7 +35,7 @@ export default function HomeScreen() {
       case 'Astro Shop':
         return null
       case 'Consult':
-        return <ConsultSection />;
+        return <ConsultSection source="Home" />;
       case 'Reports':
         return <ReportsSection />;
       case 'Panchang':

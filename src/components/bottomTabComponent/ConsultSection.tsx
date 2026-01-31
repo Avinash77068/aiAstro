@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAppSelector } from '../../redux/hooks';
 import { BORDER_RADIUS, COLORS, SPACING, TEXT_SIZES } from '../../constants/colors';
 
-export default function ConsultSection() {
+export default function ConsultSection({ source }: { source?: string }) {
   const navigation: any = useNavigation();
   const { data: astrologerData } = useAppSelector(state => state.astrologerReducer);
 
@@ -45,7 +45,7 @@ export default function ConsultSection() {
         showsHorizontalScrollIndicator={false}
         style={styles.filterContainer}
       >
-        {uniqueTypes?.map((type, idx) => {
+        {source !== 'Home' && uniqueTypes?.map((type, idx) => {
           const IconComponent = type === 'All' ? null : getIconByType(type);
           return (
             <TouchableOpacity
