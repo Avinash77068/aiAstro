@@ -73,22 +73,12 @@ export default function OnboardingScreen({onComplete}: OnboardingScreenProps) {
     }
   };
 
-  const handleGoogleSignIn = (userData: {name: string; email: string; photo?: string}) => {
-    setFormData(prev => ({
-      ...prev,
-      name: userData.name,
-      email: userData.email,
-    }));
-    setCurrentStep(1);
-  };
-
   const renderStep = () => {
     switch (currentStep) {
       case 0:
         return (
           <NameStep 
             onNext={handleNameNext} 
-            // onGoogleSignIn={handleGoogleSignIn}
             initialValue={formData.name} 
           />
         );
