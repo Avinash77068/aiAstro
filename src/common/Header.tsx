@@ -11,13 +11,13 @@ import { AppConfig } from '../redux/slices/home/homeSlice';
 
 export default function Header() {
   const { data: homeData } = useAppSelector(state => state.homeReducer);
-  const appConfig: AppConfig = homeData?.appConfig || { 
-    appName: 'Astro AI', 
+  const appConfig: AppConfig = homeData?.appConfig || {
+    appName: 'Astro AI',
     notificationCount: '0',
     userProfile: {
       name: 'Guest',
-      plan: 'Basic'
-    }
+      plan: 'Basic',
+    },
   };
   const { toggleSidebar } = useSidebar();
   const [showNotifications, setShowNotifications] = useState(false);

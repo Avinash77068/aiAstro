@@ -7,8 +7,9 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { COLORS, TEXT_SIZES, FONT_WEIGHTS, SPACING, BORDER_RADIUS } from '../../constants/colors';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../constants/colors';
 import { useAppSelector } from '../../redux/hooks';
+import Banner from '../../common/Banner';
 
 export default function Section2025() {
   const { data: homeData } = useAppSelector(state => state.homeReducer);
@@ -16,14 +17,7 @@ export default function Section2025() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.banner}>
-        <Text style={styles.bannerTitle}>2026 New Year</Text>
-        <Text style={styles.bannerSubtitle}>LIVE Astrologers</Text>
-        <Text style={styles.bannerText}>Ask Question, Get Solution</Text>
-        <TouchableOpacity style={styles.bannerButton}>
-          <Text style={styles.bannerButtonText}>First Chat Free</Text>
-        </TouchableOpacity>
-      </View>
+     <Banner/>
 
       <View style={styles.grid}>
         {section2025Items.map((item, idx) => (
@@ -48,38 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: SPACING.lg,
   },
-  banner: {
-    backgroundColor: '#1e3a8a', // Use single color instead of gradient array
-    borderRadius: BORDER_RADIUS.md,
-    padding: SPACING['2xl'],
-    marginBottom: SPACING['2xl'],
-    alignItems: 'center',
-  },
-  bannerTitle: {
-    fontSize: TEXT_SIZES['2xl'],
-    fontWeight: 'bold',
-    color: COLORS.primary,
-  },
-  bannerSubtitle: {
-    fontSize: TEXT_SIZES.base,
-    color: COLORS.textPrimary,
-  },
-  bannerText: {
-    fontSize: TEXT_SIZES.sm,
-    color: COLORS.textSecondary,
-  },
-  bannerButton: {
-    marginTop: SPACING.sm,
-    backgroundColor: COLORS.primary,
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.xs,
-    borderRadius: BORDER_RADIUS.sm,
-  },
-  bannerButtonText: {
-    color: COLORS.textInverse,
-    fontWeight: 'bold',
-    fontSize: TEXT_SIZES.base,
-  },
+
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',

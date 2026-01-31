@@ -43,7 +43,7 @@ export default function SearchModal({ visible, onClose }: SearchModalProps) {
       showCloseButton={false}
       visible={visible}
       onClose={onClose}
-      height="10%"
+      height="100%"
       header={
         <View style={styles.header}>
           <View style={styles.searchContainer}>

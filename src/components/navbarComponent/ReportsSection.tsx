@@ -7,21 +7,23 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../constants/colors';
+import {
+  COLORS,
+  TEXT_SIZES,
+  SPACING,
+  BORDER_RADIUS,
+} from '../../constants/colors';
 import { useAppSelector } from '../../redux/hooks';
+import Banner from '../../common/Banner';
 
 export default function ReportsSection() {
   const { data: homeData } = useAppSelector(state => state.homeReducer);
   const reports = homeData?.reports || [];
+  console.log('reports', reports);
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.banner}>
-        <Text style={styles.bannerTitle}>Brihat Kundli</Text>
-        <Text style={styles.bannerSubtitle}>One Solution for all Problems</Text>
-        <Text style={styles.bannerPrice}>Only ₹996</Text>
-      </View>
-
+      <Banner />
       <View style={styles.grid}>
         {reports.map((report, idx) => (
           <View key={idx} style={styles.gridItem}>
@@ -33,9 +35,7 @@ export default function ReportsSection() {
               />
             )}
             <Text style={styles.itemTitle}>{report.title}</Text>
-            {report.price && (
-              <Text style={styles.itemPrice}>{report.price}</Text>
-            )}
+            {report.price && <Text style={styles.itemPrice}>{'Free'}</Text>}
           </View>
         ))}
       </View>
@@ -47,28 +47,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: SPACING.lg,
-  },
-  banner: {
-    backgroundColor: '#dc2626', // Use single color from gradient
-    borderRadius: BORDER_RADIUS.md,
-    padding: SPACING.lg,
-    marginBottom: SPACING['2xl'],
-    alignItems: 'center',
-  },
-  bannerTitle: {
-    fontSize: TEXT_SIZES.lg,
-    fontWeight: 'bold',
-    color: COLORS.textPrimary,
-  },
-  bannerSubtitle: {
-    fontSize: TEXT_SIZES.sm,
-    color: COLORS.textPrimary,
-  },
-  bannerPrice: {
-    fontSize: TEXT_SIZES.lg,
-    fontWeight: 'bold',
-    color: COLORS.primary,
-    marginTop: SPACING.sm,
   },
   grid: {
     flexDirection: 'row',
