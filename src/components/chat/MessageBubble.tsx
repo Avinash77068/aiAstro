@@ -14,7 +14,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         {message.text}
       </Text>
       <Text style={[styles.timestamp, message.isUser ? styles.userTimestamp : styles.astrologerTimestamp]}>
-        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        {message.timestamp?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
       </Text>
     </View>
   );
