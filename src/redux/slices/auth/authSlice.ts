@@ -10,6 +10,9 @@ export interface UserData {
   userId?: string;
   token?: string;
   phoneNumber?: string;
+  email?: string;
+  photo?: string;
+  isGoogleLogin?: boolean;
 }
 
 export interface AuthState {
@@ -20,6 +23,10 @@ export interface AuthState {
   onboardingCompleted: boolean;
   phoneVerified: boolean;
   phoneNumber: string | null;
+  email: string | null;
+  photo: string | null;
+  token: string | null;
+  isGoogleLogin: boolean;
   isNewUser: boolean;
 }
 
@@ -31,6 +38,10 @@ const initialState: AuthState = {
   onboardingCompleted: false,
   phoneVerified: false,
   phoneNumber: null,
+  email: null,
+  photo: null,
+  token: null,
+  isGoogleLogin: false,
   isNewUser: true,
 };
 
@@ -44,22 +55,30 @@ const authSlice = createSlice({
       state.onboardingCompleted = false;
       state.phoneVerified = false;
       state.phoneNumber = null;
+      state.email = null;
+      state.photo = null;
+      state.token = null;
+      state.isGoogleLogin = false;
       state.isNewUser = true;
     },
     clearError: state => {
       state.error = null;
     },
-    googleSignIn: (state, action: PayloadAction<{name: string; email: string; photo?: string}>) => {
+    googleSignIn: (state, action: PayloadAction<{ name: string; email: string; photo?: string; token?: string; isGoogleLogin?: boolean;}>) => {
       state.phoneVerified = true;
       state.isNewUser = true;
+      state.email = action.payload.email;
+      state.photo = action.payload.photo || null;
       state.user = {
         name: action.payload.name,
         place: '',
         dateOfBirth: '',
         gender: '',
-        phoneNumber: action.payload.email,
+        email: action.payload.email,
+        photo: action.payload.photo,
+        isGoogleLogin: true,
+        token: action.payload.token,
       };
-      state.phoneNumber = action.payload.email;
     },
   },
   extraReducers: builder => {
@@ -124,14 +143,16 @@ const authSlice = createSlice({
       .addCase(googleSignInThunk.fulfilled, (state, action: PayloadAction<{name: string; email: string; photo?: string; token?: string; userId?: string; isNewUser?: boolean; user?: any}>) => {
         state.loading = false;
         state.phoneVerified = true;
-        state.phoneNumber = action.payload.email;
+        state.email = action.payload.email;
+        state.photo = action.payload.photo || null;
         state.isNewUser = action.payload.isNewUser !== false;
         
         if (!action.payload.isNewUser && action.payload.user) {
           state.user = {
             ...action.payload.user,
             userId: action.payload.userId,
-            phoneNumber: action.payload.email,
+            email: action.payload.email,
+            photo: action.payload.photo,
             token: action.payload.token,
           } as UserData;
           state.isAuthenticated = true;
@@ -142,7 +163,8 @@ const authSlice = createSlice({
             place: '',
             dateOfBirth: '',
             gender: '',
-            phoneNumber: action.payload.email,
+            email: action.payload.email,
+            photo: action.payload.photo,
           };
         }
       })

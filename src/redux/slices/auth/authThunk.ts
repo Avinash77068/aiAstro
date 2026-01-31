@@ -8,6 +8,9 @@ interface LoginPayload {
   gender: string;
   phoneNumber?: string;
   email?: string;
+  photo?: string;
+  token?: string;
+  isGoogleLogin?: boolean;
 }
 
 interface SendOTPPayload {
