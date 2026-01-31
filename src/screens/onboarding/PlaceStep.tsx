@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import {MapPin} from 'lucide-react-native';
-import AddressAutocomplete from '../../components/AddressAutocomplete';
+import AddressAutocomplete from './AddressAutocomplete';
 import {PlaceDetails} from '../../hooks/useGooglePlaces';
 import {COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS} from '../../constants/colors';
 

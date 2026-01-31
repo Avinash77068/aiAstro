@@ -9,8 +9,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { MapPin } from 'lucide-react-native';
-import { useGooglePlaces, PlaceDetails, PlaceSuggestion } from '../hooks/useGooglePlaces';
-import { COLORS, SPACING, TEXT_SIZES, BORDER_RADIUS } from '../constants/colors';
+import { useGooglePlaces, PlaceDetails, PlaceSuggestion } from '../../hooks/useGooglePlaces';
+import { COLORS, SPACING, TEXT_SIZES, BORDER_RADIUS } from '../../constants/colors';
 
 interface AddressAutocompleteProps {
   onSelectPlace: (place: PlaceDetails) => void;
