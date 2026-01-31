@@ -26,17 +26,20 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         placeholderTextColor={COLORS.textTertiary}
         multiline
         maxLength={500}
+        blurOnSubmit
+        returnKeyType="send"
+        onSubmitEditing={() => {
+          if (!loading && value.trim() !== '') {
+            onSend();
+          }
+        }}
       />
       <TouchableOpacity
         onPress={onSend}
         style={[styles.sendButton, (value.trim() === '' || loading) && styles.sendButtonDisabled]}
         disabled={value.trim() === '' || loading}
       >
-        {loading ? (
-          <ActivityIndicator size="small" color={COLORS.primary} />
-        ) : (
           <Send size={20} color={value.trim() === '' ? COLORS.textTertiary : COLORS.primary} />
-        )}
       </TouchableOpacity>
     </View>
   );

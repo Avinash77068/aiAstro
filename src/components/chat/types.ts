@@ -3,6 +3,8 @@ export interface Message {
   text: string;
   isUser: boolean;
   timestamp: Date;
+  astrologerId?: string;
+  pending?: boolean;
 }
 
 export interface Astrologer {

@@ -24,9 +24,13 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
   
   const [inputText, setInputText] = useState('');
   const [showTypingIndicator, setShowTypingIndicator] = useState(false);
+  const [pendingMessages, setPendingMessages] = useState<Message[]>([]);
   const flatListRef = useRef<FlatList>(null);
 
-  const messages = messagesByAstrologer[astrologerId] || [];
+  const messages = [
+    ...(messagesByAstrologer[astrologerId] || []),
+    ...pendingMessages.filter(message => message.astrologerId === astrologerId),
+  ];
 
   const scrollToEnd = () => {
     flatListRef.current?.scrollToEnd({ animated: true });
@@ -41,6 +45,17 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
     setShowTypingIndicator(true);
     setTimeout(scrollToEnd, 100);
 
+    const pendingMessage: Message = {
+      id: `pending-${Date.now()}`,
+      text: messageText,
+      isUser: true,
+      timestamp: new Date(),
+      astrologerId,
+      pending: true,
+    };
+
+    setPendingMessages(prev => [...prev, pendingMessage]);
+
     try {
       await dispatch(sendMessageThunk({
         userId: user.userId,
@@ -49,10 +64,12 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
       })).unwrap();
 
       setShowTypingIndicator(false);
+      setPendingMessages(prev => prev.filter(message => message.id !== pendingMessage.id));
       setTimeout(scrollToEnd, 100);
     } catch (error) {
       console.error('Failed to send message:', error);
       setShowTypingIndicator(false);
+      setPendingMessages(prev => prev.filter(message => message.id !== pendingMessage.id));
     }
   };
 
