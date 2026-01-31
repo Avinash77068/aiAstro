@@ -19,7 +19,7 @@ import { COLORS, TEXT_SIZES } from '../constants/colors';
 
 export default function HomeScreen() {
   const route = useRoute<any>();
-  const [selectedSection, setSelectedSection] = useState('2025');
+  const [selectedSection, setSelectedSection] = useState('Home');
   const { data: homeData } = useAppSelector(state => state.homeReducer);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function HomeScreen() {
   const renderContent = () => {
     switch (selectedSection) {
       case '2025':
-        return <Section2025 />;
+        return null
       case 'Astro Shop':
         return null
       case 'Consult':
