@@ -1,46 +1,46 @@
-// Centralized color constants for the Astro AI app
+// Centralized color constants for the Astro AI app (Logo based theme)
 export const COLORS = {
-  // Primary colors
-  primary: '#FBBF24', // yellow-400
-  primaryDark: '#F59E0B', // yellow-500
-  
-  // Background colors
-  background: '#111827', // gray-900
-  cardBackground: '#374151', // gray-800
-  headerBackground: '#000000',
-  
-  // Text colors
+  // 🌟 Primary brand colors (from logo)
+  primary: '#edb33eff', // Gold (CTA, highlights)
+  primaryDark: '#D9A027', // Dark gold
+
+  // 🌌 Background colors (galaxy theme)
+  background: '#1B1145', // Deep galaxy blue
+  cardBackground: 'rgba(255,255,255,0.08)', // Glassmorphism
+  headerBackground: '#2A145D', // Deep purple
+
+  // 📝 Text colors
   textPrimary: '#FFFFFF',
-  textSecondary: '#D1D5DB', // gray-300
-  textTertiary: '#9CA3AF', // gray-400
-  textInverse: '#000000',
-  
-  // Status colors
-  success: '#10B981', // green-500
-  error: '#EF4444', // red-500
-  warning: '#F59E0B', // yellow-500
-  info: '#3B82F6', // blue-500
-  
-  // Gradient colors
+  textSecondary: '#E6E1FF', // Soft lavender
+  textTertiary: '#B6AFFF', // Muted purple
+  textInverse: '#3B1A78',
+
+  // ✅ Status colors (aligned with theme)
+  success: '#4ADE80', // Soft green
+  error: '#F87171', // Soft red
+  warning: '#F5B942', // Gold
+  info: '#A78BFA', // Purple accent
+
+  // 🌈 Gradient colors
   gradients: {
-    blueToPurple: ['#1e3a8a', '#7c3aed'], // blue-900 to purple-900
-    redToOrange: ['#dc2626', '#ea580c'], // red-900 to orange-900
+    galaxy: ['#1B1145', '#3B1A78', '#6A35FF'],
+    goldGlow: ['#FFD77A', '#F5B942', '#D9A027'],
   },
-  
-  // Border colors
-  border: '#4B5563', // gray-700
-  borderLight: '#374151', // gray-800
-  
-  // Shadow colors
-  shadow: 'rgba(0, 0, 0, 0.3)',
-  
-  // Overlay colors
-  overlay: 'rgba(0, 0, 0, 0.5)',
-  
-  // Specific component colors
-  notificationBadge: '#DC2626', // red-700
-  verified: '#3B82F6', // blue-500
-  freePrice: '#10B981', // green-500
+
+  // 🧱 Borders
+  border: 'rgba(255,255,255,0.15)',
+  borderLight: 'rgba(255,255,255,0.08)',
+
+  // 🌑 Shadow
+  shadow: 'rgba(0, 0, 0, 0.4)',
+
+  // 🕶 Overlay
+  overlay: 'rgba(27,17,69,0.7)',
+
+  // 🔔 Component specific
+  notificationBadge: '#EF4444',
+  verified: '#F5B942',
+  freePrice: '#4ADE80',
 };
 
 // Text sizes
@@ -91,14 +91,14 @@ export const COMMON_STYLES = {
     flex: 1,
     backgroundColor: COLORS.background,
   },
-  
+
   // Card styles
   card: {
     backgroundColor: COLORS.cardBackground,
     borderRadius: BORDER_RADIUS.md,
     padding: SPACING.lg,
   },
-  
+
   // Button styles
   button: {
     backgroundColor: COLORS.primary,
@@ -107,7 +107,7 @@ export const COMMON_STYLES = {
     paddingHorizontal: SPACING.lg,
     alignItems: 'center',
   },
-  
+
   buttonSecondary: {
     backgroundColor: COLORS.cardBackground,
     borderRadius: BORDER_RADIUS.sm,
@@ -115,23 +115,23 @@ export const COMMON_STYLES = {
     paddingHorizontal: SPACING.lg,
     alignItems: 'center',
   },
-  
+
   // Text styles
   textPrimary: {
     color: COLORS.textPrimary,
     fontSize: TEXT_SIZES.base,
   },
-  
+
   textSecondary: {
     color: COLORS.textSecondary,
     fontSize: TEXT_SIZES.sm,
   },
-  
+
   textTertiary: {
     color: COLORS.textTertiary,
     fontSize: TEXT_SIZES.sm,
   },
-  
+
   // Input styles
   input: {
     backgroundColor: COLORS.cardBackground,
@@ -139,21 +139,21 @@ export const COMMON_STYLES = {
     padding: SPACING.md,
     color: COLORS.textPrimary,
   },
-  
+
   // Banner styles
   banner: {
     borderRadius: BORDER_RADIUS.md,
     padding: SPACING['2xl'],
     alignItems: 'center',
   },
-  
+
   // Grid styles
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-  
+
   gridItem: {
     width: '30%',
     backgroundColor: COLORS.cardBackground,

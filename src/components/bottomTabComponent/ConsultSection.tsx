@@ -195,7 +195,8 @@ export default function ConsultSection() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: SPACING.lg,
+    paddingHorizontal: SPACING.lg,
+    backgroundColor: COLORS.background,
   },
   filterContainer: {
     marginBottom: SPACING.lg,

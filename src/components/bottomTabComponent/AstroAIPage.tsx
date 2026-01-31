@@ -68,7 +68,7 @@ export default function AstroAIPage() {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Should I talk to a friend now?"
+          placeholder="Share with your friends get free chat."
           placeholderTextColor="#9CA3AF"
         />
         <TouchableOpacity style={styles.sendButton}>
@@ -161,7 +161,7 @@ export default function AstroAIPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
+    backgroundColor: COLORS.background,
     padding: 16,
   },
   aiOptions: {
