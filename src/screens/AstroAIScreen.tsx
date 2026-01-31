@@ -49,19 +49,22 @@ export default function AstroAIScreen() {
   return (
     <View style={styles.container}>
       <Header />
-      <Text style={styles.title}>Ask Astro AI</Text>
-      <Text style={styles.subtitle}>Tap any astrologer to start a chat</Text>
-      <FlatList
-        data={astrologerData}
-        keyExtractor={item => item._id}
-        renderItem={renderAstrologer}
-        numColumns={2}
-        contentContainerStyle={styles.grid}
-        columnWrapperStyle={styles.rowWrapper}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>Astrologers will appear here once they are fetched.</Text>
-        }
-      />
+
+      <View style={styles.container1}>
+        <FlatList
+          data={astrologerData}
+          keyExtractor={item => item._id}
+          renderItem={renderAstrologer}
+          numColumns={2}
+          contentContainerStyle={styles.grid}
+          columnWrapperStyle={styles.rowWrapper}
+          ListEmptyComponent={
+            <Text style={styles.emptyText}>
+              Astrologers will appear here once they are fetched.
+            </Text>
+          }
+        />
+      </View>
     </View>
   );
 }
@@ -70,23 +73,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
-    paddingTop: 60,
+    // paddingTop: 60,
   },
-  title: {
-    color: COLORS.textPrimary,
-    fontSize: TEXT_SIZES['2xl'],
-    fontWeight: 'bold',
-    marginHorizontal: SPACING.lg,
-    marginTop: SPACING.md,
-  },
-  subtitle: {
-    color: COLORS.textSecondary,
-    marginHorizontal: SPACING.lg,
-    marginBottom: SPACING.lg,
+  container1: {
+    flex: 1,
+    backgroundColor: COLORS.background,
+    paddingTop: 20,
   },
   grid: {
-    paddingHorizontal: SPACING.lg,
+    paddingHorizontal: SPACING.sm,
     paddingBottom: SPACING['2xl'],
+    columnGap: SPACING.md,
   },
   rowWrapper: {
     justifyContent: 'space-between',

@@ -65,7 +65,7 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Live"
         component={LiveScreen}
-        options={{ title: 'Live', headerShown: false }}
+        options={{ title: 'Blog', headerShown: false }}
       />
       <Tab.Screen
         name="Ask"
