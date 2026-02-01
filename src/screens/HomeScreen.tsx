@@ -17,7 +17,7 @@ import AstroAIPage from '../components/bottomTabComponent/AstroAIPage';
 import { useAppSelector } from '../redux/hooks';
 import { COLORS, TEXT_SIZES } from '../constants/colors';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}:any) {
   const route = useRoute<any>();
   const [selectedSection, setSelectedSection] = useState('Home');
   const { data: homeData } = useAppSelector(state => state.homeReducer);
@@ -37,7 +37,7 @@ export default function HomeScreen() {
       case 'Consult':
         return <ConsultSection source="Home" />;
       case 'Reports':
-        return <ReportsSection />;
+        return <ReportsSection navigation={navigation}/>;
       case 'Panchang':
         return <PanchangSection />;
       case 'Horoscope':

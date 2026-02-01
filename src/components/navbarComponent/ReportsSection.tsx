@@ -16,17 +16,22 @@ import {
 import { useAppSelector } from '../../redux/hooks';
 import Banner from '../../common/Banner';
 
-export default function ReportsSection() {
+export default function ReportsSection({navigation}:any) {
   const { data: homeData } = useAppSelector(state => state.homeReducer);
   const reports = homeData?.reports || [];
-  console.log('reports', reports);
+
+
 
   return (
     <ScrollView style={styles.container}>
       <Banner />
       <View style={styles.grid}>
-        {reports.map((report, idx) => (
-          <View key={idx} style={styles.gridItem}>
+        {reports.map((report:any, idx:number) => (
+          <TouchableOpacity
+            key={idx}
+            style={styles.gridItem}
+            onPress={() =>report.route && navigation.navigate(report.route)}
+          >
             {report.image && (
               <Image
                 source={{ uri: report.image }}
@@ -36,7 +41,7 @@ export default function ReportsSection() {
             )}
             <Text style={styles.itemTitle}>{report.title}</Text>
             {report.price && <Text style={styles.itemPrice}>{'Free'}</Text>}
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </ScrollView>
