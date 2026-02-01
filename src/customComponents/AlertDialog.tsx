@@ -78,11 +78,13 @@ const styles = StyleSheet.create({
     padding: SPACING.xl,
   },
   dialog: {
-    backgroundColor: COLORS.cardBackground,
+    backgroundColor: COLORS.background,
     borderRadius: BORDER_RADIUS.lg,
     padding: SPACING.xl,
     width: width - SPACING.xl * 2,
     maxWidth: 400,
+    borderColor: COLORS.border,
+    borderWidth: 1,
   },
   title: {
     fontSize: TEXT_SIZES.xl,

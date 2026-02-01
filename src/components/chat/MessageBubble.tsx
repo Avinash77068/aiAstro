@@ -8,13 +8,21 @@ interface MessageBubbleProps {
 }
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
+  const normalizedTimestamp = message.timestamp
+    ? typeof message.timestamp === 'string'
+      ? new Date(message.timestamp)
+      : message.timestamp
+    : undefined;
+
   return (
     <View style={[styles.messageContainer, message.isUser ? styles.userMessage : styles.astrologerMessage]}>
       <Text style={[styles.messageText, message.isUser ? styles.userMessageText : styles.astrologerMessageText]}>
         {message.text}
       </Text>
       <Text style={[styles.timestamp, message.isUser ? styles.userTimestamp : styles.astrologerTimestamp]}>
-        {message.timestamp?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        {normalizedTimestamp
+          ? normalizedTimestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          : '--:--'}
       </Text>
     </View>
   );

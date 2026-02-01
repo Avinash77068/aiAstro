@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     top: 60,
     left: 0,
     right: 0,
-    backgroundColor: COLORS.cardBackground,
+    backgroundColor: COLORS.background,
     borderRadius: BORDER_RADIUS.md,
     borderWidth: 1,
     borderColor: COLORS.border,

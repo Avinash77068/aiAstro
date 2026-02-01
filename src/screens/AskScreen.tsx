@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../common/Header';
-import { TEXT_SIZES } from '../constants/colors';
+import { COLORS, TEXT_SIZES } from '../constants/colors';
 import ConsultSection from '../components/bottomTabComponent/ConsultSection';
 
 export default function AskScreen() {
@@ -23,18 +23,18 @@ export default function AskScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
+    backgroundColor: COLORS.background,
   },
   consultSection: {
     marginTop: 16,
   },
   title: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: TEXT_SIZES['2xl'],
     fontWeight: 'bold',
     marginBottom: 16,
   },
   subtitle: {
-    color: '#9CA3AF',
+    color: COLORS.textSecondary,
   },
 });

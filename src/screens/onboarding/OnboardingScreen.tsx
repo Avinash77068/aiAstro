@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
     marginTop: SPACING.md,
     color: COLORS.textSecondary,
     fontSize: TEXT_SIZES.base,
+    backgroundColor: COLORS.background,
   },
   errorContainer: {
     position: 'absolute',
