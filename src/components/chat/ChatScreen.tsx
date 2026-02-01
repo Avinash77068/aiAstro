@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -14,18 +14,34 @@ import { ChatHeader } from './ChatHeader';
 import { MessageBubble } from './MessageBubble';
 import { ChatInput } from './ChatInput';
 import { TypingIndicator } from './TypingIndicator';
+import AlertDialog from '../../components/customComponents/AlertDialog';
 
-export default function ChatScreen({ route, navigation, onBack }: ChatScreenProps) {
+export default function ChatScreen({
+  route,
+  navigation,
+  onBack,
+}: ChatScreenProps) {
   const dispatch = useAppDispatch();
   const astrologerData = route?.params?.astrologer;
   const astrologerId = astrologerData?.id || 'default';
   const { user } = useAppSelector(state => state.authReducer);
-  const { messagesByAstrologer, loading } = useAppSelector(state => state.chatReducer);
-  
+  const { messagesByAstrologer, loading } = useAppSelector(
+    state => state.chatReducer,
+  );
+
   const [inputText, setInputText] = useState('');
   const [showTypingIndicator, setShowTypingIndicator] = useState(false);
   const [pendingMessages, setPendingMessages] = useState<Message[]>([]);
+  const [showRechargeModal, setShowRechargeModal] = useState(false);
   const flatListRef = useRef<FlatList>(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setShowRechargeModal(true);
+    }, 120000); 
+
+    return () => clearInterval(timer); 
+  }, []);
 
   const messages = [
     ...(messagesByAstrologer[astrologerId] || []),
@@ -57,19 +73,25 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
     setPendingMessages(prev => [...prev, pendingMessage]);
 
     try {
-      await dispatch(sendMessageThunk({
-        userId: user.userId,
-        message: messageText,
-        astrologerId: astrologerId,
-      })).unwrap();
+      await dispatch(
+        sendMessageThunk({
+          userId: user.userId,
+          message: messageText,
+          astrologerId: astrologerId,
+        }),
+      ).unwrap();
 
       setShowTypingIndicator(false);
-      setPendingMessages(prev => prev.filter(message => message.id !== pendingMessage.id));
+      setPendingMessages(prev =>
+        prev.filter(message => message.id !== pendingMessage.id),
+      );
       setTimeout(scrollToEnd, 100);
     } catch (error) {
       console.error('Failed to send message:', error);
       setShowTypingIndicator(false);
-      setPendingMessages(prev => prev.filter(message => message.id !== pendingMessage.id));
+      setPendingMessages(prev =>
+        prev.filter(message => message.id !== pendingMessage.id),
+      );
     }
   };
 
@@ -94,38 +116,50 @@ export default function ChatScreen({ route, navigation, onBack }: ChatScreenProp
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ChatHeader
-        astrologer={astrologerData}
-        onBack={handleBack}
-        onCall={startCall}
-        onVideoCall={startVideoCall}
-        showBackButton={!!(onBack || navigation)}
-      />
-
-      <FlatList
-        ref={flatListRef}
-        data={messages}
-        keyExtractor={(item) => item.id}
-        renderItem={renderMessage}
-        style={styles.messagesContainer}
-        contentContainerStyle={styles.messagesList}
-        showsVerticalScrollIndicator={false}
-        onContentSizeChange={scrollToEnd}
-        ListFooterComponent={showTypingIndicator ? <TypingIndicator /> : null}
-      />
-
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <ChatInput
-          value={inputText}
-          onChangeText={setInputText}
-          onSend={sendMessage}
-          loading={loading}
+    <>
+      <SafeAreaView style={styles.container}>
+        <ChatHeader
+          astrologer={astrologerData}
+          onBack={handleBack}
+          onCall={startCall}
+          onVideoCall={startVideoCall}
+          showBackButton={!!(onBack || navigation)}
         />
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+
+        <FlatList
+          ref={flatListRef}
+          data={messages}
+          keyExtractor={item => item.id}
+          renderItem={renderMessage}
+          style={styles.messagesContainer}
+          contentContainerStyle={styles.messagesList}
+          showsVerticalScrollIndicator={false}
+          onContentSizeChange={scrollToEnd}
+          ListFooterComponent={showTypingIndicator ? <TypingIndicator /> : null}
+        />
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <ChatInput
+            value={inputText}
+            onChangeText={setInputText}
+            onSend={sendMessage}
+            loading={loading}
+          />
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+
+      <AlertDialog
+        visible={showRechargeModal}
+        title="Recharge Required"
+        message="Recharge is mandatory to continue using the chat service."
+        onConfirm={() => {
+          setShowRechargeModal(false);
+          navigation.goBack();
+        }}
+      />
+    </>
   );
 }
 
