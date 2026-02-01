@@ -14,7 +14,7 @@ import {
   TEXT_SIZES,
   SPACING,
   BORDER_RADIUS,
-} from '../constants/colors';
+} from '../../constants/colors';
 
 const { height } = Dimensions.get('window');
 

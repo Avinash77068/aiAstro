@@ -22,9 +22,9 @@ import {
   User,
   LogOut,
 } from 'lucide-react-native';
-import { useSidebar } from '../customComponents/SidebarContext';
-import SidebarItem from '../customComponents/SidebarItem';
-import AlertDialog from '../customComponents/AlertDialog';
+import { useSidebar } from '../components/customComponents/SidebarContext';
+import SidebarItem from '../components/customComponents/SidebarItem';
+import AlertDialog from '../components/customComponents/AlertDialog';
 import { sidebarMenuItems } from '../data/data';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { AppConfig } from '../redux/slices/home/homeSlice';

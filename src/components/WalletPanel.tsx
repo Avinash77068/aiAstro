@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Wallet, X, CreditCard, TrendingUp, TrendingDown, Plus, ArrowUpRight, ArrowDownLeft } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
-import BottomModal from '../customComponents/BottomModal';
+import BottomModal from './customComponents/BottomModal';
 
 const { width, height } = Dimensions.get('window');
 

@@ -5,13 +5,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { SidebarProvider } from './src/customComponents/SidebarContext';
-import Sidebar from './src/common/Sidebar';
-import RootNavigator from './src/navigator/RootNavigator';
-import NetworkLoggerButton from './src/customComponents/NetworkLoggerButton';
+import { SidebarProvider } from './src/components/customComponents/SidebarContext';
+import NetworkLoggerButton from './src/components/customComponents/NetworkLoggerButton';
 import { store, persistor } from './src/redux/store';
 import { homeThunk } from './src/redux/slices/home/homeThunk';
 import { astrologerThunk } from './src/redux/slices/astrologer/astrologerThunk';
+import RootNavigator from './src/components/navigator/RootNavigator';
 
 
 function App() {

@@ -7,12 +7,12 @@ import {
   MessageCircle,
   Clock,
 } from 'lucide-react-native'; // Assuming we use this, or replace with SVG
-import HomeScreen from '../screens/HomeScreen';
-import AstroAIScreen from '../screens/AstroAIScreen';
-import LiveScreen from '../screens/LiveScreen';
-import AskScreen from '../screens/AskScreen';
-import HistoryScreen from '../screens/HistoryScreen';
-import { COLORS } from '../constants/colors';
+import HomeScreen from '../../screens/HomeScreen';
+import AstroAIScreen from '../../screens/AstroAIScreen';
+import LiveScreen from '../../screens/LiveScreen';
+import AskScreen from '../../screens/AskScreen';
+import HistoryScreen from '../../screens/HistoryScreen';
+import { COLORS } from '../../constants/colors';
 
 
 const Tab = createBottomTabNavigator();

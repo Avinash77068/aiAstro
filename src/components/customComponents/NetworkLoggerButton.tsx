@@ -1,4 +1,4 @@
-import { TEXT_SIZES } from '../constants/colors';
+import { TEXT_SIZES } from '../../constants/colors';
 import React, {useState} from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import NetworkLogger from 'react-native-network-logger';

@@ -7,7 +7,7 @@ import {
   Modal,
   Dimensions,
 } from 'react-native';
-import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
+import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../constants/colors';
 
 const { width } = Dimensions.get('window');
 

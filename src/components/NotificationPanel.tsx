@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Bell, X, Clock, MessageCircle, Star, TrendingUp } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../constants/colors';
-import BottomModal from '../customComponents/BottomModal';
+import BottomModal from './customComponents/BottomModal';
 
 const { width, height } = Dimensions.get('window');
 
