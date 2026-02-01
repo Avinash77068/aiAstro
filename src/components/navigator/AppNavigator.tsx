@@ -3,13 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNavigator from './BottomTabNavigator';
 import ChatScreen from '../../components/chat/ChatScreen';
-import { KundliAI, MatchingAI, LoveAI, HealthAI, CareerAI, MentalHealthAI, FinanceAI, EducationAI } from '../../screens/ai-features';
+import { KundliAI, MatchingAI, LoveAI, HealthAI, CareerAI, MentalHealthAI, FinanceAI, EducationAI } from '../screens/ai-features';
 import Sidebar from '../../common/Sidebar';
-import SettingsScreen from '../../screens/sidebar/SettingsScreen';
-import PremiumScreen from '../../screens/sidebar/PremiumScreen';
-import FeedbackScreen from '../../screens/sidebar/FeedbackScreen';
-import AboutScreen from '../../screens/sidebar/AboutScreen';
-import FeaturesScreen from '../../screens/sidebar/FeaturesScreen';
+import SettingsScreen from '../screens/sidebar/SettingsScreen';
+import PremiumScreen from '../screens/sidebar/PremiumScreen';
+import FeedbackScreen from '../screens/sidebar/FeedbackScreen';
+import AboutScreen from '../screens/sidebar/AboutScreen';
+import FeaturesScreen from '../screens/sidebar/FeaturesScreen';
 
 const Stack = createStackNavigator();
 

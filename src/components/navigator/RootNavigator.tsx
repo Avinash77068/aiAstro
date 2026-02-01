@@ -3,9 +3,9 @@ import { View } from 'react-native';
 
 import AppNavigator from './AppNavigator';
 import { useAppSelector } from '../../redux/hooks';
-import AuthContainer from '../../screens/auth/AuthContainer';
-import OnboardingScreen from '../../screens/onboarding/OnboardingScreen';
-import SplashScreen from '../../screens/auth/SplashScreen';
+import AuthContainer from '../screens/auth/AuthContainer';
+import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
+import SplashScreen from '../screens/auth/SplashScreen';
 
 
 const RootNavigator: React.FC = () => {
