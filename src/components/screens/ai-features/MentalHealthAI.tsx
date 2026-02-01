@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { ArrowLeft, User, Heart, Sparkles } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../../constants/colors';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { analyzeMentalHealthThunk } from '../../../redux/slices/aiFeatures/aiFeaturesThunk';
 
 interface MentalHealthAIProps {
   navigation?: any;
@@ -21,6 +23,7 @@ export default function MentalHealthAI({ navigation, onBack }: MentalHealthAIPro
   const [stressLevel, setStressLevel] = useState('');
   const [feelings, setFeelings] = useState('');
   const [mentalHealthAnalysis, setMentalHealthAnalysis] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleBack = () => {
     if (onBack) {
@@ -30,9 +33,15 @@ export default function MentalHealthAI({ navigation, onBack }: MentalHealthAIPro
     }
   };
 
-  const analyzeMentalHealth = () => {
+  const analyzeMentalHealth = async () => {
     if (currentMood && stressLevel && feelings) {
-      setMentalHealthAnalysis(true);
+      try {
+        await dispatch(analyzeMentalHealthThunk({ currentMood, stressLevel, feelings })).unwrap();
+        setMentalHealthAnalysis(true);
+      } catch (error) {
+        console.error('API call failed', error);
+        setMentalHealthAnalysis(true);
+      }
     }
   };
 

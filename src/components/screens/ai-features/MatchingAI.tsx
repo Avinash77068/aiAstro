@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { ArrowLeft, Heart, User, Calendar } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../../constants/colors';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { analyzeMatchingThunk } from '../../../redux/slices/aiFeatures/aiFeaturesThunk';
 
 interface MatchingAIProps {
   navigation?: any;
@@ -22,6 +24,7 @@ export default function MatchingAI({ navigation, onBack }: MatchingAIProps) {
   const [partnerName, setPartnerName] = useState('');
   const [partnerDOB, setPartnerDOB] = useState('');
   const [matchingResult, setMatchingResult] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleBack = () => {
     if (onBack) {
@@ -31,9 +34,15 @@ export default function MatchingAI({ navigation, onBack }: MatchingAIProps) {
     }
   };
 
-  const checkCompatibility = () => {
+  const checkCompatibility = async () => {
     if (userName && userDOB && partnerName && partnerDOB) {
-      setMatchingResult(true);
+      try {
+        await dispatch(analyzeMatchingThunk({ userName, userDOB, partnerName, partnerDOB })).unwrap();
+        setMatchingResult(true);
+      } catch (error) {
+        console.error('API call failed', error);
+        setMatchingResult(true);
+      }
     }
   };
 

@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { ArrowLeft, Heart, User, Sparkles } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../../constants/colors';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { analyzeLoveThunk } from '../../../redux/slices/aiFeatures/aiFeaturesThunk';
 
 interface LoveAIProps {
   navigation?: any;
@@ -20,6 +22,7 @@ export default function LoveAI({ navigation, onBack }: LoveAIProps) {
   const [userName, setUserName] = useState('');
   const [partnerName, setPartnerName] = useState('');
   const [loveAnalysis, setLoveAnalysis] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleBack = () => {
     if (onBack) {
@@ -29,9 +32,15 @@ export default function LoveAI({ navigation, onBack }: LoveAIProps) {
     }
   };
 
-  const analyzeLove = () => {
+  const analyzeLove = async () => {
     if (userName && partnerName) {
-      setLoveAnalysis(true);
+      try {
+        await dispatch(analyzeLoveThunk({ userName, partnerName })).unwrap();
+        setLoveAnalysis(true);
+      } catch (error) {
+        console.error('API call failed', error);
+        setLoveAnalysis(true);
+      }
     }
   };
 

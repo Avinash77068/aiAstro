@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { ArrowLeft, Book, GraduationCap, Sparkles } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../../constants/colors';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { analyzeEducationThunk } from '../../../redux/slices/aiFeatures/aiFeaturesThunk';
 
 interface EducationAIProps {
   navigation?: any;
@@ -21,6 +23,7 @@ export default function EducationAI({ navigation, onBack }: EducationAIProps) {
   const [fieldOfInterest, setFieldOfInterest] = useState('');
   const [learningGoals, setLearningGoals] = useState('');
   const [educationAnalysis, setEducationAnalysis] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleBack = () => {
     if (onBack) {
@@ -30,9 +33,15 @@ export default function EducationAI({ navigation, onBack }: EducationAIProps) {
     }
   };
 
-  const analyzeEducation = () => {
+  const analyzeEducation = async () => {
     if (educationLevel && fieldOfInterest && learningGoals) {
-      setEducationAnalysis(true);
+      try {
+        await dispatch(analyzeEducationThunk({ educationLevel, fieldOfInterest, learningGoals })).unwrap();
+        setEducationAnalysis(true);
+      } catch (error) {
+        console.error('API call failed', error);
+        setEducationAnalysis(true);
+      }
     }
   };
 

@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { ArrowLeft, Briefcase, User, Sparkles } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../../constants/colors';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { analyzeCareerThunk } from '../../../redux/slices/aiFeatures/aiFeaturesThunk';
 
 interface CareerAIProps {
   navigation?: any;
@@ -20,6 +22,7 @@ export default function CareerAI({ navigation, onBack }: CareerAIProps) {
   const [currentJob, setCurrentJob] = useState('');
   const [experience, setExperience] = useState('');
   const [careerAnalysis, setCareerAnalysis] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleBack = () => {
     if (onBack) {
@@ -29,9 +32,15 @@ export default function CareerAI({ navigation, onBack }: CareerAIProps) {
     }
   };
 
-  const analyzeCareer = () => {
+  const analyzeCareer = async () => {
     if (currentJob && experience) {
-      setCareerAnalysis(true);
+      try {
+        await dispatch(analyzeCareerThunk({ currentJob, experience })).unwrap();
+        setCareerAnalysis(true);
+      } catch (error) {
+        console.error('API call failed', error);
+        setCareerAnalysis(true);
+      }
     }
   };
 

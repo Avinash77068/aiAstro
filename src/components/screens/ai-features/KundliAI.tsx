@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { ArrowLeft, Sparkles, Calendar, MapPin, Clock } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../../constants/colors';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { analyzeKundliThunk } from '../../../redux/slices/aiFeatures/aiFeaturesThunk';
 
 interface KundliAIProps {
   navigation?: any;
@@ -22,6 +24,7 @@ export default function KundliAI({ navigation, onBack }: KundliAIProps) {
   const [timeOfBirth, setTimeOfBirth] = useState('');
   const [placeOfBirth, setPlaceOfBirth] = useState('');
   const [kundliGenerated, setKundliGenerated] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleBack = () => {
     if (onBack) {
@@ -31,9 +34,15 @@ export default function KundliAI({ navigation, onBack }: KundliAIProps) {
     }
   };
 
-  const generateKundli = () => {
+  const generateKundli = async () => {
     if (name && dateOfBirth && timeOfBirth && placeOfBirth) {
-      setKundliGenerated(true);
+      try {
+        await dispatch(analyzeKundliThunk({ name, dateOfBirth, timeOfBirth, placeOfBirth })).unwrap();
+        setKundliGenerated(true);
+      } catch (error) {
+        console.error('API call failed', error);
+        setKundliGenerated(true);
+      }
     }
   };
 

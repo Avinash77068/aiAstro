@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { ArrowLeft, Activity, User, Calendar, Droplet } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../../constants/colors';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { analyzeHealthThunk } from '../../../redux/slices/aiFeatures/aiFeaturesThunk';
 
 interface HealthAIProps {
   navigation?: any;
@@ -20,6 +22,7 @@ export default function HealthAI({ navigation, onBack }: HealthAIProps) {
   const [name, setName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [healthAnalysis, setHealthAnalysis] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleBack = () => {
     if (onBack) {
@@ -29,9 +32,15 @@ export default function HealthAI({ navigation, onBack }: HealthAIProps) {
     }
   };
 
-  const analyzeHealth = () => {
+  const analyzeHealth = async () => {
     if (name && dateOfBirth) {
-      setHealthAnalysis(true);
+      try {
+        await dispatch(analyzeHealthThunk({ name, dateOfBirth })).unwrap();
+        setHealthAnalysis(true);
+      } catch (error) {
+        console.error('API call failed', error);
+        setHealthAnalysis(true);
+      }
     }
   };
 

@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { ArrowLeft, DollarSign, TrendingUp, Sparkles } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../../constants/colors';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { analyzeFinanceThunk } from '../../../redux/slices/aiFeatures/aiFeaturesThunk';
 
 interface FinanceAIProps {
   navigation?: any;
@@ -21,6 +23,7 @@ export default function FinanceAI({ navigation, onBack }: FinanceAIProps) {
   const [monthlyExpenses, setMonthlyExpenses] = useState('');
   const [financialGoals, setFinancialGoals] = useState('');
   const [financeAnalysis, setFinanceAnalysis] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleBack = () => {
     if (onBack) {
@@ -30,9 +33,15 @@ export default function FinanceAI({ navigation, onBack }: FinanceAIProps) {
     }
   };
 
-  const analyzeFinance = () => {
+  const analyzeFinance = async () => {
     if (monthlyIncome && monthlyExpenses && financialGoals) {
-      setFinanceAnalysis(true);
+      try {
+        await dispatch(analyzeFinanceThunk({ monthlyIncome, monthlyExpenses, financialGoals })).unwrap();
+        setFinanceAnalysis(true);
+      } catch (error) {
+        console.error('API call failed', error);
+        setFinanceAnalysis(true);
+      }
     }
   };
 
