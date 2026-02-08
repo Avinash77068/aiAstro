@@ -22,7 +22,7 @@ function App() {
       webClientId: '693739184836-s3rn40uaml3bfq2bdpteb53p8de38ji7.apps.googleusercontent.com',
       offlineAccess: true,
     });
-
+    
     console.log('Dispatching API calls...');
     store.dispatch(homeThunk());
     store.dispatch(astrologerThunk());

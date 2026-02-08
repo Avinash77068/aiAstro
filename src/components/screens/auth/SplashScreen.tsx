@@ -109,20 +109,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: TEXT_SIZES['4xl'],
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     marginBottom: 8,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: TEXT_SIZES.base,
-    color: '#9CA3AF',
+    color: COLORS.textSecondary,
     marginBottom: 40,
     textAlign: 'center',
   },
   loadingBar: {
     width: 200,
     height: 4,
-    backgroundColor: '#374151',
+    backgroundColor: COLORS.textSecondary,
     borderRadius: 2,
     overflow: 'hidden',
   },
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     bottom: 40,
   },
   footerText: {
-    color: '#6B7280',
+    color: COLORS.textSecondary,
     fontSize: TEXT_SIZES.base,
     textAlign: 'center',
   },

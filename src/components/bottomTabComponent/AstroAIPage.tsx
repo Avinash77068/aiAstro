@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     color: COLORS.textInverse,
   },
   inputContainer: {
-    backgroundColor: '#374151',
+    backgroundColor: COLORS.background,
     borderRadius: BORDER_RADIUS.md,
     padding: 16,
     marginBottom: 24,

@@ -1,48 +1,53 @@
 // Centralized color constants for the Astro AI app (Logo based theme)
 export const COLORS = {
-  // 🌟 Primary brand colors (from logo)
-  primary: '#edb33eff', // Gold (CTA, highlights)
+  // 🌟 Primary brand colors (Gold CTA)
+  primary: '#EDB33E', // Gold CTA
   primaryDark: '#D9A027', // Dark gold
+  primarySoft: '#FFF3D6', // Soft gold background
 
-  // 🌌 Background colors (galaxy theme)
-  background: '#1B1145', // Deep galaxy blue
-  cardBackground: 'rgba(255,255,255,0.08)', // Glassmorphism
-  headerBackground: '#2A145D', // Deep purple
+  // 🌌 Background colors (Clean + Calm)
+  background: '#FFFFFF',
+  cardBackground: '#F6F3FF', // Very light lavender
+  headerBackground: '#FFFFFF',
 
-  // 📝 Text colors
-  textPrimary: '#FFFFFF',
-  textSecondary: '#E6E1FF', // Soft lavender
-  textTertiary: '#B6AFFF', // Muted purple
-  textInverse: '#3B1A78',
+  // 📝 Text colors (Readable on white)
+  textPrimary: '#111827', // Almost black
+  textSecondary: '#4B5563', // Gray
+  textTertiary: '#6B7280', // Lighter gray
+  textInverse: '#FFFFFF',
 
-  // ✅ Status colors (aligned with theme)
-  success: '#4ADE80', // Soft green
-  error: '#F87171', // Soft red
-  warning: '#F5B942', // Gold
-  info: '#A78BFA', // Purple accent
+  // 🎨 Accent colors (Spiritual purple/indigo)
+  accentPurple: '#6A35FF',
+  accentIndigo: '#4338CA',
+  accentLavender: '#EDE9FE',
 
-  // 🌈 Gradient colors
+  // ✅ Status colors (soft)
+  success: '#22C55E',
+  error: '#EF4444',
+  warning: '#F59E0B',
+  info: '#8B5CF6',
+
+  // 🌈 Gradients (light, not heavy)
   gradients: {
-    galaxy: ['#1B1145', '#3B1A78', '#6A35FF'],
-    goldGlow: ['#FFD77A', '#F5B942', '#D9A027'],
+    spiritual: ['#FFFFFF', '#F6F3FF', '#EDE9FE'],
+    goldGlow: ['#FFF7E6', '#FFD77A', '#EDB33E'],
   },
 
-  // 🧱 Borders
-  border: 'rgba(255,255,255,0.15)',
-  borderLight: 'rgba(255,255,255,0.08)',
+  // 🧱 Borders (light)
+  border: 'rgba(17, 24, 39, 0.10)',
+  borderLight: 'rgba(17, 24, 39, 0.06)',
 
-  // 🌑 Shadow
-  shadow: 'rgba(0, 0, 0, 0.4)',
+  // 🌑 Shadow (soft)
+  shadow: 'rgba(17, 24, 39, 0.12)',
 
-  // 🕶 Overlay
-  overlay: 'rgba(27,17,69,0.7)',
+  // 🕶 Overlay (very light)
+  overlay: 'rgba(17, 24, 39, 0.25)',
 
   // 🔔 Component specific
   notificationBadge: '#EF4444',
-  verified: '#F5B942',
-  freePrice: '#4ADE80',
+  verified: '#EDB33E',
+  freePrice: '#22C55E',
 };
-
 // Text sizes
 export const TEXT_SIZES = {
   xs: 10,

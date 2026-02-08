@@ -181,7 +181,7 @@ const Sidebar: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: COLORS.background,
     paddingTop: 40,
   },
   overlay: {
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     left: 0,
     height: '100%',
     width: SIDEBAR_WIDTH,
-    backgroundColor: '#000000',
+    backgroundColor: COLORS.background,
     zIndex: 50,
     elevation: 5,
   },
