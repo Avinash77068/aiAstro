@@ -22,6 +22,7 @@ export default function CareerAI({ navigation, onBack }: CareerAIProps) {
   const [currentJob, setCurrentJob] = useState('');
   const [experience, setExperience] = useState('');
   const [careerAnalysis, setCareerAnalysis] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleBack = () => {
@@ -34,12 +35,15 @@ export default function CareerAI({ navigation, onBack }: CareerAIProps) {
 
   const analyzeCareer = async () => {
     if (currentJob && experience) {
+      setLoading(true);
       try {
         await dispatch(analyzeCareerThunk({ currentJob, experience })).unwrap();
         setCareerAnalysis(true);
       } catch (error) {
         console.error('API call failed', error);
         setCareerAnalysis(true);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -116,6 +120,15 @@ export default function CareerAI({ navigation, onBack }: CareerAIProps) {
             <Text style={styles.analyzeButtonText}>Analyze Career Path</Text>
           </TouchableOpacity>
         </View>
+
+        {loading && (
+          <View style={styles.resultSection}>
+            <View style={styles.loadingContainer}>
+              <Sparkles size={24} color="#3B82F6" fill="#3B82F6" />
+              <Text style={styles.loadingText}>Analyzing your career...</Text>
+            </View>
+          </View>
+        )}
 
         {careerAnalysis && (
           <View style={styles.resultSection}>
@@ -464,5 +477,15 @@ const styles = StyleSheet.create({
     fontSize: TEXT_SIZES.base,
     color: COLORS.textSecondary,
     lineHeight: 24,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: SPACING.lg,
+  },
+  loadingText: {
+    fontSize: TEXT_SIZES.base,
+    color: COLORS.textPrimary,
+    marginTop: SPACING.sm,
   },
 });

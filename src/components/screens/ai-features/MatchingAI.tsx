@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { ArrowLeft, Heart, User, Calendar } from 'lucide-react-native';
+import { ArrowLeft, Heart, User, Calendar, Sparkles } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../../constants/colors';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import { analyzeMatchingThunk } from '../../../redux/slices/aiFeatures/aiFeaturesThunk';
@@ -24,6 +24,7 @@ export default function MatchingAI({ navigation, onBack }: MatchingAIProps) {
   const [partnerName, setPartnerName] = useState('');
   const [partnerDOB, setPartnerDOB] = useState('');
   const [matchingResult, setMatchingResult] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleBack = () => {
@@ -36,12 +37,15 @@ export default function MatchingAI({ navigation, onBack }: MatchingAIProps) {
 
   const checkCompatibility = async () => {
     if (userName && userDOB && partnerName && partnerDOB) {
+      setLoading(true);
       try {
         await dispatch(analyzeMatchingThunk({ userName, userDOB, partnerName, partnerDOB })).unwrap();
         setMatchingResult(true);
       } catch (error) {
         console.error('API call failed', error);
         setMatchingResult(true);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -167,6 +171,15 @@ export default function MatchingAI({ navigation, onBack }: MatchingAIProps) {
             <Text style={styles.checkButtonText}>Check Compatibility</Text>
           </TouchableOpacity>
         </View>
+
+        {loading && (
+          <View style={styles.resultSection}>
+            <View style={styles.loadingContainer}>
+              <Sparkles size={24} color="#F59E0B" fill="#F59E0B" />
+              <Text style={styles.loadingText}>Analyzing compatibility...</Text>
+            </View>
+          </View>
+        )}
 
         {matchingResult && (
           <View style={styles.resultSection}>
@@ -485,5 +498,20 @@ const styles = StyleSheet.create({
     fontSize: TEXT_SIZES.base,
     color: COLORS.textSecondary,
     lineHeight: 24,
+  },
+  adviceItem: {
+    fontSize: TEXT_SIZES.base,
+    color: COLORS.textSecondary,
+    lineHeight: 24,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: SPACING.lg,
+  },
+  loadingText: {
+    fontSize: TEXT_SIZES.base,
+    color: COLORS.textPrimary,
+    marginTop: SPACING.sm,
   },
 });

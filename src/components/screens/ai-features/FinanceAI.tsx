@@ -23,6 +23,7 @@ export default function FinanceAI({ navigation, onBack }: FinanceAIProps) {
   const [monthlyExpenses, setMonthlyExpenses] = useState('');
   const [financialGoals, setFinancialGoals] = useState('');
   const [financeAnalysis, setFinanceAnalysis] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleBack = () => {
@@ -35,12 +36,15 @@ export default function FinanceAI({ navigation, onBack }: FinanceAIProps) {
 
   const analyzeFinance = async () => {
     if (monthlyIncome && monthlyExpenses && financialGoals) {
+      setLoading(true);
       try {
         await dispatch(analyzeFinanceThunk({ monthlyIncome, monthlyExpenses, financialGoals })).unwrap();
         setFinanceAnalysis(true);
       } catch (error) {
         console.error('API call failed', error);
         setFinanceAnalysis(true);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -131,6 +135,15 @@ export default function FinanceAI({ navigation, onBack }: FinanceAIProps) {
             <Text style={styles.analyzeButtonText}>Analyze Finances</Text>
           </TouchableOpacity>
         </View>
+
+        {loading && (
+          <View style={styles.resultSection}>
+            <View style={styles.loadingContainer}>
+              <Sparkles size={24} color="#10B981" fill="#10B981" />
+              <Text style={styles.loadingText}>Analyzing your finances...</Text>
+            </View>
+          </View>
+        )}
 
         {financeAnalysis && (
           <View style={styles.resultSection}>
@@ -490,5 +503,15 @@ const styles = StyleSheet.create({
     fontSize: TEXT_SIZES.base,
     color: COLORS.textSecondary,
     lineHeight: 24,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: SPACING.lg,
+  },
+  loadingText: {
+    fontSize: TEXT_SIZES.base,
+    color: COLORS.textPrimary,
+    marginTop: SPACING.sm,
   },
 });

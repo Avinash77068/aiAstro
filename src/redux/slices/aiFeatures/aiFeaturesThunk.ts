@@ -1,11 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { API_BASE_URL } from '../../../api';
 
 // Career Analysis Thunk
 export const analyzeCareerThunk = createAsyncThunk(
   'aiFeatures/analyzeCareer',
   async ({ currentJob, experience }: { currentJob: string; experience: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/analyze-career', {
+      await new Promise<void>(resolve => setTimeout(() => resolve(), 2000));
+      const response = await fetch(`${API_BASE_URL}/analyze-career`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +87,8 @@ export const analyzeEducationThunk = createAsyncThunk(
   'aiFeatures/analyzeEducation',
   async ({ educationLevel, fieldOfInterest, learningGoals }: { educationLevel: string; fieldOfInterest: string; learningGoals: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/analyze-education', {
+      await new Promise<void>(resolve => setTimeout(() => resolve(), 2000));
+      const response = await fetch(`${API_BASE_URL}/analyze-education`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -163,7 +166,8 @@ export const analyzeFinanceThunk = createAsyncThunk(
   'aiFeatures/analyzeFinance',
   async ({ monthlyIncome, monthlyExpenses, financialGoals }: { monthlyIncome: string; monthlyExpenses: string; financialGoals: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/analyze-finance', {
+      await new Promise<void>(resolve => setTimeout(() => resolve(), 2000));
+      const response = await fetch(`${API_BASE_URL}/analyze-finance`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -241,7 +245,8 @@ export const analyzeHealthThunk = createAsyncThunk(
   'aiFeatures/analyzeHealth',
   async ({ name, dateOfBirth }: { name: string; dateOfBirth: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/analyze-health', {
+      await new Promise<void>(resolve => setTimeout(() => resolve(), 2000));
+      const response = await fetch(`${API_BASE_URL}/analyze-health`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -331,7 +336,8 @@ export const analyzeKundliThunk = createAsyncThunk(
   'aiFeatures/analyzeKundli',
   async ({ name, dateOfBirth, timeOfBirth, placeOfBirth }: { name: string; dateOfBirth: string; timeOfBirth: string; placeOfBirth: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/analyze-kundli', {
+      await new Promise<void>(resolve => setTimeout(() => resolve(), 2000));
+      const response = await fetch(`${API_BASE_URL}/analyze-kundli`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -421,7 +427,8 @@ export const analyzeLoveThunk = createAsyncThunk(
   'aiFeatures/analyzeLove',
   async ({ userName, partnerName }: { userName: string; partnerName: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/analyze-love', {
+      await new Promise<void>(resolve => setTimeout(() => resolve(), 2000));
+      const response = await fetch(`${API_BASE_URL}/analyze-love`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -501,7 +508,8 @@ export const analyzeMatchingThunk = createAsyncThunk(
   'aiFeatures/analyzeMatching',
   async ({ userName, userDOB, partnerName, partnerDOB }: { userName: string; userDOB: string; partnerName: string; partnerDOB: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/analyze-matching', {
+      await new Promise<void>(resolve => setTimeout(() => resolve(), 2000));
+      const response = await fetch(`${API_BASE_URL}/analyze-matching`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -591,7 +599,8 @@ export const analyzeMentalHealthThunk = createAsyncThunk(
   'aiFeatures/analyzeMentalHealth',
   async ({ currentMood, stressLevel, feelings }: { currentMood: string; stressLevel: string; feelings: string }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/analyze-mental-health', {
+      await new Promise<void>(resolve => setTimeout(() => resolve(), 2000));
+      const response = await fetch(`${API_BASE_URL}/analyze-mental-health`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

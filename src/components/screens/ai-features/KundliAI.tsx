@@ -24,6 +24,7 @@ export default function KundliAI({ navigation, onBack }: KundliAIProps) {
   const [timeOfBirth, setTimeOfBirth] = useState('');
   const [placeOfBirth, setPlaceOfBirth] = useState('');
   const [kundliGenerated, setKundliGenerated] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleBack = () => {
@@ -36,12 +37,15 @@ export default function KundliAI({ navigation, onBack }: KundliAIProps) {
 
   const generateKundli = async () => {
     if (name && dateOfBirth && timeOfBirth && placeOfBirth) {
+      setLoading(true);
       try {
         await dispatch(analyzeKundliThunk({ name, dateOfBirth, timeOfBirth, placeOfBirth })).unwrap();
         setKundliGenerated(true);
       } catch (error) {
         console.error('API call failed', error);
         setKundliGenerated(true);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -130,6 +134,15 @@ export default function KundliAI({ navigation, onBack }: KundliAIProps) {
             <Text style={styles.generateButtonText}>Generate Kundli</Text>
           </TouchableOpacity>
         </View>
+
+        {loading && (
+          <View style={styles.resultSection}>
+            <View style={styles.loadingContainer}>
+              <Sparkles size={24} color="#7C3AED" fill="#7C3AED" />
+              <Text style={styles.loadingText}>Generating your Kundli...</Text>
+            </View>
+          </View>
+        )}
 
         {kundliGenerated && (
           <View style={styles.resultSection}>
@@ -360,5 +373,15 @@ const styles = StyleSheet.create({
     fontSize: TEXT_SIZES.base,
     color: COLORS.textSecondary,
     lineHeight: 24,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: SPACING.lg,
+  },
+  loadingText: {
+    fontSize: TEXT_SIZES.base,
+    color: COLORS.textPrimary,
+    marginTop: SPACING.sm,
   },
 });

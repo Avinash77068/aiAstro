@@ -23,6 +23,7 @@ export default function EducationAI({ navigation, onBack }: EducationAIProps) {
   const [fieldOfInterest, setFieldOfInterest] = useState('');
   const [learningGoals, setLearningGoals] = useState('');
   const [educationAnalysis, setEducationAnalysis] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleBack = () => {
@@ -35,12 +36,15 @@ export default function EducationAI({ navigation, onBack }: EducationAIProps) {
 
   const analyzeEducation = async () => {
     if (educationLevel && fieldOfInterest && learningGoals) {
+      setLoading(true);
       try {
         await dispatch(analyzeEducationThunk({ educationLevel, fieldOfInterest, learningGoals })).unwrap();
         setEducationAnalysis(true);
       } catch (error) {
         console.error('API call failed', error);
         setEducationAnalysis(true);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -129,6 +133,15 @@ export default function EducationAI({ navigation, onBack }: EducationAIProps) {
             <Text style={styles.analyzeButtonText}>Analyze Education</Text>
           </TouchableOpacity>
         </View>
+
+        {loading && (
+          <View style={styles.resultSection}>
+            <View style={styles.loadingContainer}>
+              <Sparkles size={24} color="#8B5CF6" fill="#8B5CF6" />
+              <Text style={styles.loadingText}>Analyzing your education...</Text>
+            </View>
+          </View>
+        )}
 
         {educationAnalysis && (
           <View style={styles.resultSection}>
@@ -488,5 +501,15 @@ const styles = StyleSheet.create({
     fontSize: TEXT_SIZES.base,
     color: COLORS.textSecondary,
     lineHeight: 24,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: SPACING.lg,
+  },
+  loadingText: {
+    fontSize: TEXT_SIZES.base,
+    color: COLORS.textPrimary,
+    marginTop: SPACING.sm,
   },
 });

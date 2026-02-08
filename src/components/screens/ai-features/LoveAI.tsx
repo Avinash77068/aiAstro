@@ -22,6 +22,7 @@ export default function LoveAI({ navigation, onBack }: LoveAIProps) {
   const [userName, setUserName] = useState('');
   const [partnerName, setPartnerName] = useState('');
   const [loveAnalysis, setLoveAnalysis] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleBack = () => {
@@ -34,12 +35,15 @@ export default function LoveAI({ navigation, onBack }: LoveAIProps) {
 
   const analyzeLove = async () => {
     if (userName && partnerName) {
+      setLoading(true);
       try {
         await dispatch(analyzeLoveThunk({ userName, partnerName })).unwrap();
         setLoveAnalysis(true);
       } catch (error) {
         console.error('API call failed', error);
         setLoveAnalysis(true);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -115,6 +119,15 @@ export default function LoveAI({ navigation, onBack }: LoveAIProps) {
             <Text style={styles.analyzeButtonText}>Analyze Love Connection</Text>
           </TouchableOpacity>
         </View>
+
+        {loading && (
+          <View style={styles.resultSection}>
+            <View style={styles.loadingContainer}>
+              <Sparkles size={24} color="#EC4899" fill="#EC4899" />
+              <Text style={styles.loadingText}>Analyzing your love compatibility...</Text>
+            </View>
+          </View>
+        )}
 
         {loveAnalysis && (
           <View style={styles.resultSection}>
@@ -463,5 +476,15 @@ const styles = StyleSheet.create({
     fontSize: TEXT_SIZES.base,
     color: COLORS.textSecondary,
     lineHeight: 24,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: SPACING.lg,
+  },
+  loadingText: {
+    fontSize: TEXT_SIZES.base,
+    color: COLORS.textPrimary,
+    marginTop: SPACING.sm,
   },
 });

@@ -23,6 +23,7 @@ export default function MentalHealthAI({ navigation, onBack }: MentalHealthAIPro
   const [stressLevel, setStressLevel] = useState('');
   const [feelings, setFeelings] = useState('');
   const [mentalHealthAnalysis, setMentalHealthAnalysis] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleBack = () => {
@@ -35,12 +36,15 @@ export default function MentalHealthAI({ navigation, onBack }: MentalHealthAIPro
 
   const analyzeMentalHealth = async () => {
     if (currentMood && stressLevel && feelings) {
+      setLoading(true);
       try {
         await dispatch(analyzeMentalHealthThunk({ currentMood, stressLevel, feelings })).unwrap();
         setMentalHealthAnalysis(true);
       } catch (error) {
         console.error('API call failed', error);
         setMentalHealthAnalysis(true);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -130,6 +134,15 @@ export default function MentalHealthAI({ navigation, onBack }: MentalHealthAIPro
             <Text style={styles.analyzeButtonText}>Analyze Mental Health</Text>
           </TouchableOpacity>
         </View>
+
+        {loading && (
+          <View style={styles.resultSection}>
+            <View style={styles.loadingContainer}>
+              <Sparkles size={24} color="#8B5CF6" fill="#8B5CF6" />
+              <Text style={styles.loadingText}>Analyzing your mental health...</Text>
+            </View>
+          </View>
+        )}
 
         {mentalHealthAnalysis && (
           <View style={styles.resultSection}>
@@ -489,5 +502,15 @@ const styles = StyleSheet.create({
     fontSize: TEXT_SIZES.base,
     color: COLORS.textSecondary,
     lineHeight: 24,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: SPACING.lg,
+  },
+  loadingText: {
+    fontSize: TEXT_SIZES.base,
+    color: COLORS.textPrimary,
+    marginTop: SPACING.sm,
   },
 });
