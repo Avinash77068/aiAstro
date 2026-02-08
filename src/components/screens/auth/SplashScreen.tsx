@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Sparkles } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES } from '../../../constants/colors';
+import { useAppSelector } from '../../../redux/hooks';
 
 
 interface SplashScreenProps {
@@ -35,7 +36,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
 
     return () => clearTimeout(timer);
   }, [fadeAnim, scaleAnim, onFinish]);
-
+const { data: homeData } = useAppSelector(state => state.homeReducer);
+  const appConfig: any = homeData?.appConfig
   return (
     <View style={styles.container}>
       <Animated.View
@@ -50,8 +52,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
         <View style={styles.iconContainer}>
           <Sparkles size={80} color={COLORS.primary} />
         </View>
-        <Text style={styles.title}>AstroSage AI</Text>
-        <Text style={styles.subtitle}>Your Personal Astrology Guide</Text>
+        <Text style={styles.title}>{appConfig?.appName}</Text>
+        <Text style={styles.subtitle}>{appConfig?.subtitle || 'Your Personal Astrology Guide'}</Text>
         <View style={styles.loadingBar}>
           <Animated.View
             style={[
