@@ -232,11 +232,13 @@ const styles = StyleSheet.create({
   quickActionIcon: {
     width: 64,
     height: 64,
-    backgroundColor: '#374151',
-    borderRadius: 32,
+    backgroundColor: COLORS.cardBackground,
+    borderRadius: BORDER_RADIUS.full,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
+    borderWidth: 10,
+    borderColor: 'transparent',
   },
   quickActionLabel: {
     fontSize: TEXT_SIZES.sm,
@@ -297,7 +299,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
-    opacity:.3
+    opacity: 0.3,
   },
   callText: {
     color: COLORS.textInverse,
