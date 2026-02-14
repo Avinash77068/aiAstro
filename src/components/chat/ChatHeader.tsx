@@ -27,7 +27,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
 
   useEffect(() => {
     setRemainingSeconds(countdownSeconds);
-
+ 
     if (!showTimer) {
       return undefined;
     }
