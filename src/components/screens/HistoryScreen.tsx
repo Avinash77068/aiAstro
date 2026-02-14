@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Header from '../../common/Header';
-import { TEXT_SIZES } from '../../constants/colors';
+import { TEXT_SIZES, COLORS } from '../../constants/colors';
 
 export default function HistoryScreen() {
   return (
@@ -18,19 +18,19 @@ export default function HistoryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
+    backgroundColor: COLORS.background,
   },
   content: {
     flex: 1,
     padding: 16,
   },
   title: {
-    color: '#FFFFFF',
+    color: COLORS.textPrimary,
     fontSize: TEXT_SIZES['2xl'],
     fontWeight: 'bold',
     marginBottom: 16,
   },
   subtitle: {
-    color: '#9CA3AF',
+    color: COLORS.textSecondary,
   },
 });
