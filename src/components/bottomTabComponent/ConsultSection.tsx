@@ -45,34 +45,35 @@ export default function ConsultSection({ source }: { source?: string }) {
         showsHorizontalScrollIndicator={false}
         style={styles.filterContainer}
       >
-        {source !== 'Home' && uniqueTypes?.map((type, idx) => {
-          const IconComponent = type === 'All' ? null : getIconByType(type);
-          return (
-            <TouchableOpacity
-              key={type}
-              style={[
-                styles.filterButton,
-                selectedType === type && styles.activeFilter,
-              ]}
-              onPress={() => setSelectedType(type === 'All' ? null : type)}
-            >
-              <View style={styles.filterButtonContent}>
-                {IconComponent && (
-                  <IconComponent size={16} color={COLORS.info} />
-                )}
+        {source !== 'Home' &&
+          uniqueTypes?.map((type, idx) => {
+            const IconComponent = type === 'All' ? null : getIconByType(type);
+            return (
+              <TouchableOpacity
+                key={type}
+                style={[
+                  styles.filterButton,
+                  selectedType === type && styles.activeFilter,
+                ]}
+                onPress={() => setSelectedType(type === 'All' ? null : type)}
+              >
+                <View style={styles.filterButtonContent}>
+                  {IconComponent && (
+                    <IconComponent size={16} color={COLORS.info} />
+                  )}
 
-                <Text
-                  style={[
-                    styles.filterText,
-                    selectedType === type && styles.activeFilterText,
-                  ]}
-                >
-                  {type}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+                  <Text
+                    style={[
+                      styles.filterText,
+                      selectedType === type && styles.activeFilterText,
+                    ]}
+                  >
+                    {type}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
       </ScrollView>
 
       <FlatList
