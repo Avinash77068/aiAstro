@@ -43,7 +43,7 @@ function App() {
               translucent={true}
             />
             <RootNavigator />
-            <NetworkLoggerButton />
+            {/* <NetworkLoggerButton /> */}
           </SafeAreaProvider>
         </SidebarProvider>
       </PersistGate>
