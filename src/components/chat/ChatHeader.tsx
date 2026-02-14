@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Phone, Video, ArrowLeft } from 'lucide-react-native';
 import { COLORS, TEXT_SIZES, SPACING, BORDER_RADIUS } from '../../constants/colors';
@@ -10,6 +10,8 @@ interface ChatHeaderProps {
   onCall: () => void;
   onVideoCall: () => void;
   showBackButton: boolean;
+  showTimer?: boolean;
+  countdownSeconds?: number;
 }
 
 export const ChatHeader: React.FC<ChatHeaderProps> = ({
@@ -18,7 +20,33 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
   onCall,
   onVideoCall,
   showBackButton,
+  showTimer = true,
+  countdownSeconds = 60,
 }) => {
+  const [remainingSeconds, setRemainingSeconds] = useState(countdownSeconds);
+
+  useEffect(() => {
+    setRemainingSeconds(countdownSeconds);
+
+    if (!showTimer) {
+      return undefined;
+    }
+
+    const interval = setInterval(() => {
+      setRemainingSeconds(prev => Math.max(prev - 1, 0));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [showTimer, countdownSeconds]);
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${minutes} : ${secs}`;
+  };
+
   return (
     <View style={styles.header}>
       <View style={styles.headerLeft}>
@@ -29,7 +57,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
         )}
         <View style={styles.astrologerInfo}>
           {astrologer?.image ? (
-            <Image  
+            <Image
               source={{ uri: astrologer.image }}
               style={styles.avatar}
               resizeMode="cover"
@@ -47,14 +75,20 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
           </View>
         </View>
       </View>
-      <View style={styles.headerRight}>
-        <TouchableOpacity onPress={onCall} style={styles.callButton}>
-          <Phone size={20} color={COLORS.primary} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onVideoCall} style={styles.videoButton}>
-          <Video size={20} color={COLORS.primary} />
-        </TouchableOpacity>
-      </View>
+      {showTimer ? (
+        <View style={styles.headerRightForTimer}>
+          <Text style={styles.timerText}>{formatTime(remainingSeconds)}</Text>
+        </View>
+      ) : (
+        <View style={styles.headerRight}>
+          <TouchableOpacity onPress={onCall} style={styles.callButton}>
+            <Phone size={20} color={COLORS.primary} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onVideoCall} style={styles.videoButton}>
+            <Video size={20} color={COLORS.primary} />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
@@ -110,6 +144,16 @@ const styles = StyleSheet.create({
   headerRight: {
     flexDirection: 'row',
     gap: SPACING.sm,
+  },
+  headerRightForTimer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: SPACING.sm,
+  },
+  timerText: {
+    color: COLORS.primaryDark,
+    fontSize: TEXT_SIZES.lg,
+    fontWeight: 'bold',
   },
   callButton: {
     padding: SPACING.sm,
